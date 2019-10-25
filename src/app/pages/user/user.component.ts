@@ -33,6 +33,7 @@ export class UserComponent implements OnInit{
     save: boolean=false;
     edit: boolean=false;
     prospect: any;
+    titleList:any;
     constructor(private globalService: GlobalService, private bsModalService: BsModalService,public  route: ActivatedRoute) {
        this.user=[];
        
@@ -70,7 +71,19 @@ export class UserComponent implements OnInit{
             }
           );
     }
-    
+    gettitle() {
+      this.globalService.getModel("/title").then(
+        
+        result => {
+          console.log(result);
+          this.titleList = result;
+        },
+        err => {
+          console.log(err);
+          //this.loader.dismiss();
+        }
+      );
+  }
     
   
     deleteUser() {

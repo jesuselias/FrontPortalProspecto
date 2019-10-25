@@ -46,7 +46,6 @@ export class DashboardComponent implements OnInit{
     ngOnInit(){
       this.getsoftware();
       this.getprospects();
-      this.gettitle();
       this.getcountry();
       this.getcity(); 
       this.chartColor = "#FFFFFF";
@@ -71,6 +70,8 @@ export class DashboardComponent implements OnInit{
       this.softwareList = [];
       this.software = [];
       this.softwares= [];
+      this.countryList=[];
+      this.cityList=[];
     }
     loadPage(item){
       // console.log(item);
@@ -151,13 +152,27 @@ export class DashboardComponent implements OnInit{
             console.log(result);
             this.prospectList = result;
           },
+          
           err => {
             console.log(err);
             //this.loader.dismiss();
           }
         );
-        
-  }
+     
+          this.globalService.getModel("/title").then(
+            
+            result => {
+              console.log(result);
+              this.titleList = result;
+            },
+            err => {
+              console.log(err);
+              //this.loader.dismiss();
+            }
+          );
+      
+      }
+
 
   getcity() {
     
@@ -191,19 +206,7 @@ export class DashboardComponent implements OnInit{
       );
 }
 
-  gettitle() {
-    this.globalService.getModel("/title").then(
-      
-      result => {
-        console.log(result);
-        this.titleList = result;
-      },
-      err => {
-        console.log(err);
-        //this.loader.dismiss();
-      }
-    );
-}
+ 
 
 getsoftware() {
   this.globalService.getModel("/software").then(
