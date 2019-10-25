@@ -84,11 +84,11 @@ export class DashboardComponent implements OnInit{
     checkTitle(id) {
      var title= this.titleList.find(function(element) {
        if(element.title_id==id)
-          return element.title_name;
+          return element;
           else return " ";
           });
       
-      return  title;
+      return  title.title_name;
     }
     
     OpenProspectModal(template: TemplateRef<any>, option, index:number) {
