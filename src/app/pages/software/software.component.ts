@@ -18,7 +18,7 @@ export class SoftwareComponent implements OnInit{
     }
 
 
-  
+    pageActual: number = 1;
     softwareList: any;
     bsModalRef: BsModalRef;
     software: any;
@@ -29,6 +29,7 @@ export class SoftwareComponent implements OnInit{
        this.software=[];
        
     }
+
     OpenSoftwareModal(template: TemplateRef<any>, option, index:number) {
       this.software=[]
       if(option==="save"){

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalService } from "../Pages/providers/global.service";
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private globalService: GlobalService) { }
 
   ngOnInit() {
+    this.getLogin();
   }
+
+  loginList: any;
+
+  getLogin() {
+    this.globalService.getModel("/user/password").then(
+        result => {
+          console.log(result);
+          this.loginList = result;
+        },
+        err => {
+          console.log(err);
+          //this.loader.dismiss();
+        }
+      );
+}
 
 }

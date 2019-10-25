@@ -19,10 +19,11 @@ import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import {SoftwareComponent} from '../../pages/software/software.component';
 import {AssignmentComponent} from '../../pages/assignment/assignment.component';
 import { NgxMultiselectModule } from '@ngx-lib/multiselect';
+import {NgxPaginationModule} from 'ngx-pagination'; 
 
 @NgModule({
   imports: [
-    CommonModule,
+    CommonModule,NgxPaginationModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     ReactiveFormsModule,
