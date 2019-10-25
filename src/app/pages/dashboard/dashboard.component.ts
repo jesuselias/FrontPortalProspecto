@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { GlobalService } from "../providers/global.service";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { timingSafeEqual } from 'crypto';
 
 @Component({
     selector: 'dashboard-cmp',
@@ -44,22 +45,24 @@ export class DashboardComponent implements OnInit{
   selectedsoftware;
 
     ngOnInit(){
+      this.gettile(); 
       this.getsoftware();
       this.getprospects();
-      this.getcountry();
-      this.getcity(); 
+     // this.getcountry();
+      this.getcity();
+      
       this.chartColor = "#FFFFFF";
 
-      this.software = [
-        { id: 1, name: "Postman"},
-        { id: 2, name: "Visual Studio" },
-        { id: 3, name: "Eclipse" },
-    ];
+    //   this.software = [
+    //     { id: 1, name: "Postman"},
+    //     { id: 2, name: "Visual Studio" },
+    //     { id: 3, name: "Eclipse" },
+    // ];
     
-    this.selectedsoftware = [{
-        id: 1,
-        name: "Postman"
-    }];
+    // this.selectedsoftware = [{
+    //     id: 1,
+    //     name: "Postman"
+    // }];
     } 
 
    
@@ -78,11 +81,21 @@ export class DashboardComponent implements OnInit{
       //localStorage.setItem("prospect", item);
       
     }
-
+    checkTitle(id) {
+     var title= this.titleList.find(function(element) {
+       if(element.title_id==id)
+          return element.title_name;
+          else return " ";
+          });
+      
+      return  title;
+    }
+    
     OpenProspectModal(template: TemplateRef<any>, option, index:number) {
       this.prospect=[]
-      this.software = [];
+     // this.software = [];
       this.title= [];
+      this.city= [];
       if(option==="save"){
         this.titleModal='Create prospect';
         this.save=true;
@@ -117,8 +130,8 @@ export class DashboardComponent implements OnInit{
   }
 
   showCity() {
-    console.log(this.country);
-    this.globalService.getModel("/city/" + this.country.city_id).then(
+    console.log(this.city);
+    this.globalService.getModel("/city/" +  "1").then(
       result => {
         console.log(result);
         this.cityList = result;
@@ -130,9 +143,12 @@ export class DashboardComponent implements OnInit{
     );
 }
 
+
+
+
     showTitle() {
       console.log(this.title);
-      this.globalService.getModel("/title/" + this.country.title_id).then(
+      this.globalService.getModel("/title/" + "1").then(
         result => {
           console.log(result);
           this.titleList = result;
@@ -191,13 +207,13 @@ export class DashboardComponent implements OnInit{
 
 
 
-  getcountry() {
+gettile() {
     
-    this.globalService.getModel("/country").then(
+    this.globalService.getModel("/title").then(
       
         result => {
           console.log(result);
-          this.countryList = result;
+          this.titleList = result;
         },
         err => {
           console.log(err);
@@ -213,6 +229,7 @@ getsoftware() {
       result => {
         console.log(result);
         this.softwareList = result;
+       
         this.softwareList.map(item=>{
           this.software.push({ id: item.software_id, name: item.software_name})
         })
