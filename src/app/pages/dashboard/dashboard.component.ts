@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit{
   titleModal: string="";
   save: boolean=false;
   edit: boolean=false;
-  
+  softwares: any;
   software: any;
   software_Prospect: any;
   softwareList: any;
@@ -62,6 +62,7 @@ export class DashboardComponent implements OnInit{
       this.prospect=[];
       this.prospectList=[];
       this.software_Prospect=[];
+      this.softwares= [];
     
     }
     loadPage(item){
@@ -82,10 +83,9 @@ export class DashboardComponent implements OnInit{
       console.log(this.prospect)
     }
     
-    OpenProspectModal(template: TemplateRef<any>, option, index:number) {
+    OpenProspectModal(template: TemplateRef<any>, option, index:number, item=[]) {
       this.prospect=[]
-     // this.software = [];
-     
+     //console.log(item)
       if(option==="save"){
         this.titleModal='Create prospect';
         this.save=true;
@@ -93,9 +93,7 @@ export class DashboardComponent implements OnInit{
       if(option==="edit"){
         this.titleModal='Edit prospect';
         this.edit=true;
-        console.log(this.prospectList[index])
         this.prospect=this.prospectList[index];
-        console.log(this.prospect);
       }else
       if(option==='delete'){
         this.prospect=this.prospectList[index];
@@ -109,7 +107,6 @@ export class DashboardComponent implements OnInit{
       console.log(this.country);
       this.globalService.getModel("/country/" + this.country.country_id).then(
         result => {
-          console.log(result);
           this.countryList = result;
         },
         err => {
@@ -123,7 +120,6 @@ export class DashboardComponent implements OnInit{
     console.log(this.city);
     this.globalService.getModel("/city/" +  this.city.city_id).then(
       result => {
-        console.log(result);
         this.cityList = result;
       },
       err => {
@@ -140,7 +136,6 @@ export class DashboardComponent implements OnInit{
       console.log(this.title);
       this.globalService.getModel("/title/" + this.title.title_id).then(
         result => {
-          console.log(result);
           this.titleList = result;
         },
         err => {
@@ -155,7 +150,6 @@ export class DashboardComponent implements OnInit{
       this.globalService.getModel("/prospect").then(
         
           result => {
-            console.log(result);
             this.prospectList = result;
           },
           
@@ -173,7 +167,6 @@ export class DashboardComponent implements OnInit{
     this.globalService.getModel("/city").then(
       
         result => {
-          console.log(result);
           this.cityList = result;
         },
         err => {
@@ -205,7 +198,6 @@ gettile() {
 getsoftware() {
   this.globalService.getModel("/software").then(
       result => {
-        console.log(result);
         this.softwareList = result;
        
         this.softwareList.map(item=>{
@@ -217,6 +209,7 @@ getsoftware() {
       }
     );
 }
+
   deleteprospect() {
     this.globalService.removeModel(this.prospect.prospect_id,"/prospect").then(
       result => {
@@ -232,16 +225,13 @@ getsoftware() {
     
     this.onClose()
   }
-
   editprospect() {
-    console.log(this.prospect)
-    console.log(this.software_Prospect)
 
     let arraysoft=[];
-    this.software.map(item=>{
-      arraysoft.push(item.software_id)
+    this.softwares.map(item=>{
+      arraysoft.push({'software_id':item.id})
 
-      
+     
       })
     
     let postprospect = {
@@ -249,19 +239,19 @@ getsoftware() {
       'prospect_name': this.prospect.prospect_name,
       'prospect_lastname': this.prospect.prospect_lastname,
       'prospect_birthday': this.prospect.prospect_birthday,
-      'prospect_phonenumber': this.prospect.prospect_phonenumber,
       'city_id': this.prospect.city_id,
       'prospect_address': this.prospect.prospect_address,
-      'prospect_cv': this.prospect.prospect_address,
-      'prospect_photo': this.prospect.prospect_photo,
+      'prospect_phonenumber': this.prospect.prospect_phonenumber,
+      'prospect_cv':  this.prospect.prospect_cv,
+      'prospect_photo':  this.prospect.prospect_photo,
       'prospect_link': this.prospect.prospect_link,
       'prospect_salary': this.prospect.prospect_salary,
       'title_id': this.prospect.title_id,
-      'software_Prospect': arraysoft,
-     
+      'software_prospect': arraysoft,
+      
     };
 
-    this.globalService.updateModel(this.prospect.id,postprospect, "/prospect").then(
+    this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect").then(
       result => {
         console.log(result);
         this.getprospects();
@@ -275,16 +265,14 @@ getsoftware() {
     this.onClose()
   }
 
-
   saveprospect() {
-    console.log(this.prospect)
-    console.log(this.software_Prospect)
+   
 
     let arraysoft=[];
-    this.software.map(item=>{
-      arraysoft.push(item.software_id)
+    this.softwares.map(item=>{
+      arraysoft.push({'software_id':item.id})
 
-      
+     
       })
     
     
@@ -301,10 +289,10 @@ getsoftware() {
       'prospect_link': this.prospect.prospect_link,
       'prospect_salary': this.prospect.prospect_salary,
       'title_id': this.prospect.title_id,
-      'software_Prospect': arraysoft,
+      'software_prospect': arraysoft,
      
     };
-
+     console.log(postprospect)
     this.globalService.addModel(postprospect, "/prospect").then(
       result => {
         console.log(result);
