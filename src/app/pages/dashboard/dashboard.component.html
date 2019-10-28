@@ -19,7 +19,7 @@
               <th>Eliminar</th>
             </thead>
             <tbody>
-              <tr *ngFor="let item of prospectList;let i = index">
+              <tr *ngFor="let item of prospectList| paginate: {itemsPerPage: 5, currentPage: pageActual};let i = index">
                 <td>{{item.prospect_name}}</td>
                 <td>{{item.prospect_lastname}}</td>
                 <td>{{checkTitle(item.title_id)}}</td>
@@ -36,6 +36,7 @@
               </tr>
             </tbody>
           </table>
+          <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
     </div>
   </div>
 

@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { GlobalService } from "../providers/global.service";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { element } from 'protractor';
 
 
 @Component({
@@ -38,10 +39,7 @@ export class DashboardComponent implements OnInit{
   software_Prospect: any;
   softwareList: any;
 
-  UserList :any;
-
-  prospect;
-  selectedsoftware;
+  prospect:any;
 
     ngOnInit(){
       this.getsoftware();
@@ -56,12 +54,10 @@ export class DashboardComponent implements OnInit{
    
 
     constructor(private globalService: GlobalService, private bsModalService: BsModalService) {
-      this.UserList = [];
       this.softwareList = [];
       this.software = [];
       this.prospect=[];
       this.prospectList=[];
-      this.software_Prospect=[];
       this.softwares= [];
     
     }
@@ -70,6 +66,10 @@ export class DashboardComponent implements OnInit{
       //localStorage.setItem("prospect", item);
       
     }
+    checkSoftware(item) {
+        //if(item.id)
+     }
+     
     checkTitle(id) {
      var title= this.titleList.find(function(element) {
        if(element.title_id==id)
@@ -84,7 +84,8 @@ export class DashboardComponent implements OnInit{
     }
     
     OpenProspectModal(template: TemplateRef<any>, option, index:number, item=[]) {
-      this.prospect=[]
+      this.prospect=[];
+      this.softwares=[];
      //console.log(item)
       if(option==="save"){
         this.titleModal='Create prospect';
@@ -94,6 +95,17 @@ export class DashboardComponent implements OnInit{
         this.titleModal='Edit prospect';
         this.edit=true;
         this.prospect=this.prospectList[index];
+       
+        console.log(this.prospect.software_Prospect);
+        this.prospect.software_Prospect.map(item=>{
+            this.softwares.push({
+            disabled: undefined,
+            id: item.software_id,
+            name: this.checkSoftware(item.software_id),
+            ticked: true,
+            });
+           console.log(this.checkSoftware(6))
+        })
       }else
       if(option==='delete'){
         this.prospect=this.prospectList[index];
@@ -104,7 +116,6 @@ export class DashboardComponent implements OnInit{
       
     }
     showCountry() {
-      console.log(this.country);
       this.globalService.getModel("/country/" + this.country.country_id).then(
         result => {
           this.countryList = result;
@@ -117,7 +128,6 @@ export class DashboardComponent implements OnInit{
   }
 
   showProspect() {
-    console.log(this.city);
     this.globalService.getModel("/city/" +  this.city.city_id).then(
       result => {
         this.cityList = result;
@@ -133,7 +143,6 @@ export class DashboardComponent implements OnInit{
 
 
     showTitle() {
-      console.log(this.title);
       this.globalService.getModel("/title/" + this.title.title_id).then(
         result => {
           this.titleList = result;
@@ -229,6 +238,7 @@ getsoftware() {
 
     let arraysoft=[];
     this.softwares.map(item=>{
+      console.log(item);
       arraysoft.push({'software_id':item.id})
 
      
@@ -250,6 +260,7 @@ getsoftware() {
       'software_prospect': arraysoft,
       
     };
+    console.log(postprospect)
 
     this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect").then(
       result => {
@@ -267,7 +278,7 @@ getsoftware() {
 
   saveprospect() {
    
-
+    console.log(this.softwares);
     let arraysoft=[];
     this.softwares.map(item=>{
       arraysoft.push({'software_id':item.id})
