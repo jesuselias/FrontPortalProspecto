@@ -15,6 +15,8 @@ export const ROUTES: RouteInfo[] = [
   { path: '/dashboard',          title: 'Dashboard',      icon:'nc-single-02',  class: '' },
   { path: '/user',          title: 'User',      icon:'nc-single-02',  class: '' },
   { path: '/software',         title: 'Software',        icon:'nc-tile-56',    class: '' },
+  { path: '/title',         title: 'title',        icon:'nc-tile-56',    class: '' },
+
 
 ];
 

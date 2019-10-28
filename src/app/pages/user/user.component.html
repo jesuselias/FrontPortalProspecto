@@ -10,7 +10,7 @@
           border-color: blue;">
           <p class="text-center" style="color: blue;">{{prospect.prospect_name}}</p>
          <p class="text-center">Specialty</p>
-         <button name="submit" type="submit" class="btn btn-primary btn-xs">Setting</button>
+         <!-- <button name="submit" type="submit" class="btn btn-primary btn-xs">Setting</button> -->
          <button type="button" class="btn btn-default" onclick="location.href='#/dashboard'">Back</button>
         </div>
       </div>
@@ -22,9 +22,15 @@
                         <hr>
                       </div>
                   </div>
-                  <div class="row">
+               <div class="row">
                       <div class="col-md-12">
                           <form>
+                            <div class="form-group row">
+                  <label class="col-4 col-form-label">Id*</label> 
+                  <div class="col-8">
+                    <input name="prospect_id" class="form-control here"  [(ngModel)]="prospect.prospect_id" >
+                  </div>
+                </div>
               <div class="form-group row">
                   <label class="col-4 col-form-label">Nombre*</label> 
                   <div class="col-8">
@@ -44,48 +50,29 @@
                     </div>
                   </div>
                   <div class="form-group row">
+                      <label class="col-4 col-form-label">Ciudad*</label> 
+                      <div class="col-8">
+                        <input name="prospect.city_id" class="form-control here" [(ngModel)]="prospect.city_id">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Direccion*</label> 
+                        <div class="col-8">
+                          <input name="prospect.prospect_address" class="form-control here" [(ngModel)]="prospect.prospect_address">
+                        </div>
+                      </div>
+                  <div class="form-group row">
                     <label class="col-4 col-form-label">Telefono*</label> 
                     <div class="col-8">
                       <input name="prospect_phonenumber" class="form-control here" [(ngModel)]="prospect.prospect_phonenumber">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-4 col-form-label">Software*</label> 
+                    <label class="col-4 col-form-label">Titulo*</label> 
                     <div class="col-8">
-                      <ngx-multiselect name="software"
-                      [(ngModel)]="softwares"
-                      [options]="software"
-                      ngDefaultControl>
-                    </ngx-multiselect>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="pass" class="col-4 col-form-label">Titulo</label> 
-                    <div class="col-8">
-                      <input name="title_id" class="form-control here" [(ngModel)]="prospect.title_id">
-                    </div>
-                  </div>
 
-                <!-- <div class="form-group row">
-                  <label class="col-4 col-form-label">Pais*</label> 
-                  <div  class="col-8">
-                        <select class="form-control"   [(ngModel)]="prospect.country_id" (ngModelChange)="showCountry()">
-                          <option name="title_id" *ngFor="let item of countryList; let i = index" [ngValue]="countryList[i].country_id">
-                             {{countryList[i].country_name}}
-                           </option>
-                          </select>
                     </div>
-                </div> -->
-                <div class="form-group row">
-                  <label class="col-4 col-form-label">Ciudad*</label> 
-                  <div  class="col-8">
-                  <select class="form-control"   [(ngModel)]="prospect.city_id" (ngModelChange)="showCity()">
-                    <option name="city_id"  *ngFor="let item of cityList; let i = index" [ngValue]="cityList[i].city_id">
-                       {{cityList[i].city_name}}
-                     </option>
-                    </select>                                    
-                 </div>
-              </div>
+                  </div>
                 <div class="form-group row">
                   <label for="pass" class="col-4 col-form-label">Salario</label> 
                   <div class="col-8">
@@ -99,23 +86,11 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="pass" class="col-4 col-form-label">Foto</label> 
-                  <div class="col-8">
-                    <input name="prospect_photo" class="form-control here" [(ngModel)]="prospect.prospect_photo">
-                  </div>
-                </div>
-                <div class="form-group row">
                   <label for="pass" class="col-4 col-form-label">Fuente</label> 
                   <div class="col-8">
                     <input  name="prospect_link" class="form-control here" [(ngModel)]="prospect.prospect_link">
                   </div>
                 </div>
-                <!-- <div class="form-group row">
-                  <label for="pass" class="col-4 col-form-label">Referido Por:</label> 
-                  <div class="col-8">
-                    <input class="form-control here" [(ngModel)]="prospect.prospect_referencia">
-                  </div>
-                </div> -->
               </form>
                       </div>
                   </div>

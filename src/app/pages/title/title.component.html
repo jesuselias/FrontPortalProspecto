@@ -5,24 +5,24 @@
           <h4 class="card-title"></h4>
         </div>
       
-          <span  (click)="OpenSoftwareModal(template,'save')" class="btn btn-primary btn-xs">Agregar Nuevo Software</span>
+          <span  (click)="OpenTitleModal(template,'save')" class="btn btn-primary btn-xs">Registre un Nuevo Titulo</span>
           <br /><br />
           <div class="table-responsive">
             <table id="mytable" class="table table-bordred table-striped">
               <thead>
-                <th>Software Id</th>
-                <th>Nombre de Software</th>
+                <th>Id de Titulo</th>
+                <th>Nombre de Titulo</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
               </thead>
               <tbody>
-                <tr *ngFor="let item of softwareList | paginate: {itemsPerPage: 5, currentPage: pageActual};let i = index">
-                  <td>{{item.software_id}}</td>
-                  <td>{{item.software_name}}</td>
+                <tr *ngFor="let item of titleList | paginate: {itemsPerPage: 5, currentPage: pageActual};let i = index">
+                  <td>{{item.title_id}}</td>
+                  <td>{{item.title_name}}</td>
                   
-                  <td><span class="btn btn-primary btn-xs" (click)="OpenSoftwareModal(template,'edit',i)">
+                  <td><span class="btn btn-primary btn-xs" (click)="OpenTitleModal(template,'edit',i)">
                       <span class="nc-icon nc-ruler-pencil"></span></span></td>
-                  <td><span class="btn btn-danger btn-xs" (click)="OpenSoftwareModal(confirm,'delete', i)">
+                  <td><span class="btn btn-danger btn-xs" (click)="OpenTitleModal(confirm,'delete', i)">
                       <span class="nc-icon nc-simple-remove"></span></span></td>
                 </tr>
               </tbody>
@@ -39,24 +39,25 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label class="col-sm-2 control-label">Nombre de Software</label>
+            <label class="col-sm-2 control-label">Nombre de Titulo</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control"  [(ngModel)]="software.software_name"/>
+              <input type="text" class="form-control"  [(ngModel)]="title.title_name"/>
             </div>
+            
           </div>
           
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
-          <div *ngIf="save"><button (click)="saveSoftware()" type="submit" class="btn btn-primary">Guardar</button></div>
-          <div *ngIf="edit"><button (click)="editSoftware()" type="submit" class="btn btn-primary">Editar</button></div>
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Close</button>
+          <div *ngIf="save"><button (click)="saveTitle()" type="submit" class="btn btn-primary">Save</button></div>
+          <div *ngIf="edit"><button (click)="editTitle()" type="submit" class="btn btn-primary">Edit</button></div>
         </div>
     
     </ng-template>
     <ng-template #confirm>
       <div class="modal-body text-center">
         <p>Estas seguro de Eliminar?</p>
-        <button type="button" class="btn btn-default" (click)="deleteSoftware()" >Si</button>
+        <button type="button" class="btn btn-default" (click)="deleteTitle()" >Si</button>
         <button type="button" class="btn btn-primary" (click)="onClose()" >No</button>
       </div>
     </ng-template>

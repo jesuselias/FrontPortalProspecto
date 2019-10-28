@@ -32,6 +32,7 @@ import { NgxMultiselectModule } from '@ngx-lib/multiselect';
     AdminLayoutComponent,
     LoginComponent,
     RegisterComponent,
+
   ],
   imports: [
     FormsModule, ReactiveFormsModule,NgxMultiselectModule,

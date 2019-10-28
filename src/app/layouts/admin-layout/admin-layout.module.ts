@@ -17,6 +17,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import {SoftwareComponent} from '../../pages/software/software.component';
+import { TitleComponent } from '../../pages/title/title.component';
+
 import {AssignmentComponent} from '../../pages/assignment/assignment.component';
 import { NgxMultiselectModule } from '@ngx-lib/multiselect';
 import {NgxPaginationModule} from 'ngx-pagination'; 
@@ -42,6 +44,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     MapsComponent,
     NotificationsComponent,
     SoftwareComponent,
+    TitleComponent,
     AssignmentComponent,
    
   ],
