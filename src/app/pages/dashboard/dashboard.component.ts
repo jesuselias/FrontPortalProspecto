@@ -3,6 +3,7 @@ import { GlobalService } from "../providers/global.service";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { element } from 'protractor';
+import { observable } from 'rxjs';
 
 
 @Component({
@@ -66,22 +67,32 @@ export class DashboardComponent implements OnInit{
       //localStorage.setItem("prospect", item);
       
     }
-    checkSoftware(item) {
-        //if(item.id)
-     }
+    checkSoftware(id) 
+    {
+       let item;
+       console.log(this.softwareList)
+        for(item of this.softwareList)
+        {
+
+        console.log(item)
+         if(item.software_id==id)
+            return item.software_name;
+        }
+
+    }
      
     checkTitle(id) {
-     var title= this.titleList.find(function(element) {
-       if(element.title_id==id)
-          return element;
-          else return " ";
-          });
-      
-      return  title.title_name;
+      let item;
+      console.log(this.titleList)
+       for(item of this.titleList)
+       {
+
+       console.log(item)
+        if(item.title_id==id)
+           return item.title_name;
+       }
     }
-    showAlgo(){
-      console.log(this.prospect)
-    }
+  
     
     OpenProspectModal(template: TemplateRef<any>, option, index:number, item=[]) {
       this.prospect=[];
@@ -95,13 +106,13 @@ export class DashboardComponent implements OnInit{
         this.titleModal='Edit prospect';
         this.edit=true;
         this.prospect=this.prospectList[index];
-       
+         
         console.log(this.prospect.software_Prospect);
         this.prospect.software_Prospect.map(item=>{
             this.softwares.push({
             disabled: undefined,
             id: item.software_id,
-            name: this.checkSoftware(item.software_id),
+             name: this.checkSoftware(item.software_id),
             ticked: true,
             });
            console.log(this.checkSoftware(6))
@@ -192,7 +203,7 @@ gettile() {
     this.globalService.getModel("/title").then(
       
         result => {
-          console.log(result);
+          //console.log(result);
           this.titleList = result;
         },
         err => {
@@ -260,7 +271,7 @@ getsoftware() {
       'software_prospect': arraysoft,
       
     };
-    console.log(postprospect)
+   
 
     this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect").then(
       result => {
@@ -303,7 +314,6 @@ getsoftware() {
       'software_prospect': arraysoft,
      
     };
-     console.log(postprospect)
     this.globalService.addModel(postprospect, "/prospect").then(
       result => {
         console.log(result);
