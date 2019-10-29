@@ -2,6 +2,11 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { GlobalService } from "../providers/global.service";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+<<<<<<< HEAD
+=======
+import { element } from 'protractor';
+import { observable } from 'rxjs';
+>>>>>>> ffa8aa34d2dd5632e4604b9f141fc2917eb4620f
 
 
 @Component({
@@ -69,18 +74,35 @@ export class DashboardComponent implements OnInit{
       //localStorage.setItem("prospect", item);
       
     }
+<<<<<<< HEAD
+=======
+    checkSoftware(id) 
+    {
+       let item;
+       console.log(this.softwareList)
+        for(item of this.softwareList)
+        {
+
+        console.log(item)
+         if(item.software_id==id)
+            return item.software_name;
+        }
+
+    }
+     
+>>>>>>> ffa8aa34d2dd5632e4604b9f141fc2917eb4620f
     checkTitle(id) {
-     var title= this.titleList.find(function(element) {
-       if(element.title_id==id)
-          return element;
-          else return " ";
-          });
-      
-      return  title.title_name;
+      let item;
+      console.log(this.titleList)
+       for(item of this.titleList)
+       {
+
+       console.log(item)
+        if(item.title_id==id)
+           return item.title_name;
+       }
     }
-    showAlgo(){
-      console.log(this.prospect)
-    }
+  
     
     OpenProspectModal(template: TemplateRef<any>, option, index:number) {
       this.prospect=[]
@@ -95,7 +117,21 @@ export class DashboardComponent implements OnInit{
         this.edit=true;
         console.log(this.prospectList[index])
         this.prospect=this.prospectList[index];
+<<<<<<< HEAD
         console.log(this.prospect);
+=======
+         
+        console.log(this.prospect.software_Prospect);
+        this.prospect.software_Prospect.map(item=>{
+            this.softwares.push({
+            disabled: undefined,
+            id: item.software_id,
+             name: this.checkSoftware(item.software_id),
+            ticked: true,
+            });
+           console.log(this.checkSoftware(6))
+        })
+>>>>>>> ffa8aa34d2dd5632e4604b9f141fc2917eb4620f
       }else
       if(option==='delete'){
         this.prospect=this.prospectList[index];
@@ -235,7 +271,7 @@ gettile() {
     this.globalService.getModel("/title").then(
       
         result => {
-          console.log(result);
+          //console.log(result);
           this.titleList = result;
         },
         err => {
@@ -305,6 +341,10 @@ getsoftware() {
       'software_Prospect': arraysoft,
      
     };
+<<<<<<< HEAD
+=======
+   
+>>>>>>> ffa8aa34d2dd5632e4604b9f141fc2917eb4620f
 
     this.globalService.updateModel(this.prospect.id,postprospect, "/prospect").then(
       result => {
@@ -349,7 +389,10 @@ getsoftware() {
       'software_Prospect': arraysoft,
      
     };
+<<<<<<< HEAD
 
+=======
+>>>>>>> ffa8aa34d2dd5632e4604b9f141fc2917eb4620f
     this.globalService.addModel(postprospect, "/prospect").then(
       result => {
         console.log(result);
