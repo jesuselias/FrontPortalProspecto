@@ -43,14 +43,73 @@ export class SidebarComponent implements OnInit {
     selectedSoftware;
     softwareList: any;
     softwares: any;
-
-    
-    
-
+    softwareTest:any;
+    cityTest:any;
+    countryTest:any;
+    countryList:any;
+    cityList:any;
+    age_min:any;
+    age_max:any;
+    exp_min:any;
+    exp_max:any;
+    exp_level_min:any;
+    exp_level_max:any;
+    salary_min:any;
+    salary_max:any;
     constructor(private globalService: GlobalService) {
       this.software = [];
       this.softwareList = [];
       this.softwares=[];
+      this.cityTest = [];
+      this.softwareTest = [];
+      this.countryTest = [];
+      this.exp_min = [];
+      this.exp_max = [];
+      this.exp_level_min = [];
+      this.exp_level_max = [];
+      this.age_min = [];
+      this. age_max = [];
+      this.salary_min = [];
+      this.salary_max = [];
+
+    }
+    selectSoftware(event){
+    localStorage.setItem("soft", this.softwareTest)
+    }
+    selectCity(event){
+      console.log(this.cityTest)
+    localStorage.setItem("city", this.cityTest)
+    }
+    selectCountry(event){
+    localStorage.setItem("country", this.countryTest)
+    }
+    selectYearsExp(event){
+      this.exp_min = event.value.lower;
+      this.exp_max = event.value.upper;
+      localStorage.setItem("exp_min", this.exp_min);
+      localStorage.setItem("exp_max", this.exp_max);
+    }
+
+    selectLevelExp(event){
+      this.exp_level_min = event.value.lower;
+      this.exp_level_max = event.value.upper;
+      localStorage.setItem("exp_level_min", this.exp_level_min);
+      localStorage.setItem("exp_level_max", this.exp_level_max);
+    }
+
+    selectAgeExp(event){
+      console.log(this.age_min)
+      this.age_min = event.value.lower;
+      this.age_max = event.value.upper;
+      localStorage.setItem("age_min", this.age_min);
+      localStorage.setItem("age_max", this.age_max);
+    }
+
+    selectSalaryExp(event){
+      this.salary_min = event.value.lower;
+      this.salary_max = event.value.upper;
+      localStorage.setItem("salary_min", this.salary_min);
+      localStorage.setItem("salary_max",  this.salary_max);
     }
 
     getSotware() {
@@ -68,13 +127,36 @@ export class SidebarComponent implements OnInit {
         );
   }
 
-  
-  
+  getCountry() {
+    this.globalService.getModel("/Country").then(
+        result => {
+          console.log(result);
+          this.countryList = result;
+      
+        },
+        err => {
+          console.log(err);
+        }
+      );
+  }
+  getCity() {
+  this.globalService.getModel("/City").then(
+      result => {
+        console.log(result);
+        this.cityList = result;
     
-  
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
     ngOnInit() {
 
       this.getSotware();
+      this.getCity();
+      this.getCountry();
         this.menuItems = ROUTES.filter(menuItem => menuItem);
 
        /* this.software = [

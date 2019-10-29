@@ -7,36 +7,39 @@
     
        <span  (click)="OpenProspectModal(template,'save')" class="btn btn-primary btn-xs">Agregar nuevo Prospecto</span>
         <br /><br />
+        <button  class="btn btn-primary btn-xs" (click)="prospectfilter()">Buscar</button>
         <div class="table-responsive">
+      
           <table id="mytable" class="table table-bordred table-striped">
             <thead>
               <th>Nombre</th>
               <th>Apellido</th>
+<<<<<<< HEAD
+=======
               <th>Title</th>
+>>>>>>> ffa8aa34d2dd5632e4604b9f141fc2917eb4620f
               <th>Salario</th>
               <th>Detalles</th>
               <th>Editar</th>
               <th>Eliminar</th>
             </thead>
             <tbody>
-              <tr *ngFor="let item of prospectList| paginate: {itemsPerPage: 5, currentPage: pageActual};let i = index">
+              <tr *ngFor="let item of prospectList;let i = index">
                 <td>{{item.prospect_name}}</td>
                 <td>{{item.prospect_lastname}}</td>
-                <td>{{checkTitle(item.title_id)}}</td>
-                <td>{{item.prospect_salary}}</td>
+                <td>{{checkTitle(item.prospect_salary)}}</td>
                 
                
               
                 <td><span (click)="loadPage(item)" class="btn btn-primary btn-xs" [routerLink]="['/user']" [queryParams]="item">
                     <span class="nc-icon nc-tap-01"></span></span></td>
-                    <td><span class="btn btn-primary btn-xs" (click)="OpenProspectModal(template,'edit',i, item)">
+                    <td><span class="btn btn-primary btn-xs" (click)="OpenProspectModal(template,'edit',i)">
                       <span class="nc-icon nc-ruler-pencil"></span></span></td> 
                 <td><span class="btn btn-danger btn-xs" (click)="OpenProspectModal(confirm,'delete', i)">
                     <span class="nc-icon nc-simple-remove"></span></span></td>
               </tr>
             </tbody>
           </table>
-          <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
     </div>
   </div>
 
@@ -75,17 +78,11 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-4 col-form-label">Direccion*</label> 
-                    <div class="col-8">
-                      <input name="prospect_lastname" class="form-control here" [(ngModel)]="prospect.prospect_address">
-                    </div>
-                  </div>
-                  <div class="form-group row">
                     <label class="col-4 col-form-label">Software*</label> 
                    
                       <ngx-multiselect
                         name="software_Prospect"
-                        [(ngModel)]="softwares"
+                        [(ngModel)]="software_Prospect"
                         [options]="software"
                         ngDefaultControl>
                       </ngx-multiselect>
@@ -105,7 +102,7 @@
                 <div class="form-group row">
                   <label class="col-4 col-form-label">Ciudad*</label> 
                   <div  class="col-8">
-                  <select class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" >
+                  <select (click)="showAlgo()" class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" >
                     <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
                        {{cityList[i].city_name}}
                      </option>
@@ -150,7 +147,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
         <div *ngIf="save"><button (click)="saveprospect()" type="submit" class="btn btn-primary">Guardar</button></div>
-        <div *ngIf="edit"><button (click)="editprospect()" type="submit" class="btn btn-primary">Edit</button></div>
+
       </div>
   
   </ng-template>
