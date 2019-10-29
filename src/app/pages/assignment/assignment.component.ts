@@ -20,6 +20,7 @@ export class AssignmentComponent implements OnInit {
 
   title = 'AngularCRUDExample';
   UserList: any;
+  index:any;
   HardwareList: any;
   SoftwareList: any;
   AssignmentList: any;

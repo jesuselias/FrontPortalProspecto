@@ -16,7 +16,7 @@ export class TitleComponent implements OnInit{
       this.getTitle();
   }
 
-
+  index:any;
   pageActual: number = 1;
   titleList: any;
   bsModalRef: BsModalRef;

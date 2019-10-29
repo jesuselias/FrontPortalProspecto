@@ -1,161 +1,165 @@
 <div class="row">
-  <div class="col-md-12">
-    
-      <div class="card-header">
-        <h4 class="card-title align-center">Prospecto</h4>
-      </div>
-    
-       <span  (click)="OpenProspectModal(template,'save')" class="btn btn-primary btn-xs">Agregar nuevo Prospecto</span>
-        <br /><br />
-        <button  class="btn btn-primary btn-xs" (click)="prospectfilter()">Buscar</button>
-        <div class="table-responsive">
+    <div class="col-md-12">
       
-          <table id="mytable" class="table table-bordred table-striped">
-            <thead>
-              <th>Nombre</th>
-              <th>Apellido</th>
-<<<<<<< HEAD
-=======
-              <th>Title</th>
->>>>>>> ffa8aa34d2dd5632e4604b9f141fc2917eb4620f
-              <th>Salario</th>
-              <th>Detalles</th>
-              <th>Editar</th>
-              <th>Eliminar</th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of prospectList;let i = index">
-                <td>{{item.prospect_name}}</td>
-                <td>{{item.prospect_lastname}}</td>
-                <td>{{checkTitle(item.prospect_salary)}}</td>
+        <div class="card-header">
+          <h4 class="card-title align-center">Prospecto</h4>
+        </div>
+        <button  class="btn btn-primary btn-xs" (click)="prospectfilter()">Buscar por Filtro</button>
+         <span  (click)="OpenProspectModal(template,'save',index)" class="btn btn-primary btn-xs">Agregar nuevo Prospecto</span>
+         
+          <br /><br />
+          <div class="table-responsive">
+            <table id="mytable" class="table table-bordred table-striped">
+              <thead>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Title</th>
+                <th>Salario</th>
+                <th>Detalles</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of prospectList| paginate: {itemsPerPage: 5, currentPage: pageActual};let i = index">
+                  <td>{{item.prospect_name}}</td>
+                  <td>{{item.prospect_lastname}}</td>
+                  <td>{{checkTitle(item.title_id)}}</td>
+                  <td>{{item.prospect_salary}}</td>
+                  
+                 
                 
-               
-              
-                <td><span (click)="loadPage(item)" class="btn btn-primary btn-xs" [routerLink]="['/user']" [queryParams]="item">
-                    <span class="nc-icon nc-tap-01"></span></span></td>
-                    <td><span class="btn btn-primary btn-xs" (click)="OpenProspectModal(template,'edit',i)">
-                      <span class="nc-icon nc-ruler-pencil"></span></span></td> 
-                <td><span class="btn btn-danger btn-xs" (click)="OpenProspectModal(confirm,'delete', i)">
-                    <span class="nc-icon nc-simple-remove"></span></span></td>
-              </tr>
-            </tbody>
-          </table>
-    </div>
-  </div>
-
-  <ng-template #template>
-   
-      <div class="modal-header">
-       
-        <h4 class="modal-title" id="add-modal-label">Prospecto</h4>
+                  <td><span (click)="loadPage(item)" class="btn btn-primary btn-xs" [routerLink]="['/user']" [queryParams]="item">
+                      <span class="nc-icon nc-tap-01"></span></span></td>
+                      <td><span class="btn btn-primary btn-xs" (click)="OpenProspectModal(template,'edit',i, item)">
+                        <span class="nc-icon nc-ruler-pencil"></span></span></td> 
+                  <td><span class="btn btn-danger btn-xs" (click)="OpenProspectModal(confirm,'delete', i)">
+                      <span class="nc-icon nc-simple-remove"></span></span></td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
       </div>
-      <div class="modal-body">       
-        <div class="form-group">
-          <div class="col-sm-10">
-            <form>
-              <div class="form-group row">
-                  <label class="col-4 col-form-label">Nombre*</label> 
-                  <div class="col-8">
-                    <input name="prospect_name" class="form-control here"  [(ngModel)]="prospect.prospect_name" >
-                  </div>
-                </div>
+    </div>
+  
+    <ng-template #template>
+     
+        <div class="modal-header">
+         
+          <h4 class="modal-title" id="add-modal-label">Prospecto</h4>
+        </div>
+        <div class="modal-body">       
+          <div class="form-group">
+            <div class="col-sm-10">
+              <form>
                 <div class="form-group row">
-                    <label class="col-4 col-form-label">Apellido*</label> 
+                    <label class="col-4 col-form-label">Nombre*</label> 
                     <div class="col-8">
-                      <input name="prospect_lastname" class="form-control here" [(ngModel)]="prospect.prospect_lastname">
+                      <input name="prospect_name" class="form-control here"  [(ngModel)]="prospect.prospect_name" >
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-4 col-form-label">Fecha de Nacimiento*</label> 
-                    <div class="col-8">
-                      <input name="prospect_birthday" class="form-control here" [(ngModel)]="prospect.prospect_birthday">
+                      <label class="col-4 col-form-label">Apellido*</label> 
+                      <div class="col-8">
+                        <input name="prospect_lastname" class="form-control here" [(ngModel)]="prospect.prospect_lastname">
+                      </div>
                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-4 col-form-label">Telefono*</label> 
-                    <div class="col-8">
-                      <input name="prospect_phonenumber" class="form-control here" [(ngModel)]="prospect.prospect_phonenumber">
+                    <div class="form-group row">
+                      <label class="col-4 col-form-label">Fecha de Nacimiento*</label> 
+                      <div class="col-8">
+                        <input name="prospect_birthday" class="form-control here" [(ngModel)]="prospect.prospect_birthday">
+                      </div>
                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-4 col-form-label">Software*</label> 
-                   
-                      <ngx-multiselect
-                        name="software_Prospect"
-                        [(ngModel)]="software_Prospect"
-                        [options]="software"
-                        ngDefaultControl>
-                      </ngx-multiselect>
+                    <div class="form-group row">
+                      <label class="col-4 col-form-label">Telefono*</label> 
+                      <div class="col-8">
+                        <input name="prospect_phonenumber" class="form-control here" [(ngModel)]="prospect.prospect_phonenumber">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-4 col-form-label">Direccion*</label> 
+                      <div class="col-8">
+                        <input name="prospect_address" class="form-control here" [(ngModel)]="prospect.prospect_address">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-4 col-form-label">Software*</label> 
                      
+                        <ngx-multiselect
+                          name="software_Prospect"
+                          [(ngModel)]="softwares"
+                          [options]="software"
+                          ngDefaultControl>
+                        </ngx-multiselect>
+                       
+                    </div>
+                  <div class="form-group row">
+                    <label class="col-4 col-form-label">Titulo*</label> 
+                    <div  class="col-8">
+                      <select name="title_id" class="form-control"  [(ngModel)]="prospect.title_id" (ngModelChange)="prospect.title_id">
+                        <option  *ngFor="let item of titleList; let i = index" [ngValue]="item.title_id">
+                           {{titleList[i].title_name}}
+                         </option>
+                        </select>                                    
+                     </div>
                   </div>
-                <div class="form-group row">
-                  <label class="col-4 col-form-label">Titulo*</label> 
-                  <div  class="col-8">
-                    <select name="title_id" class="form-control"  [(ngModel)]="prospect.title_id" (ngModelChange)="prospect.title_id">
-                      <option  *ngFor="let item of titleList; let i = index" [ngValue]="item.title_id">
-                         {{titleList[i].title_name}}
+  
+                  <div class="form-group row">
+                    <label class="col-4 col-form-label">Ciudad*</label> 
+                    <div  class="col-8">
+                    <select class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" >
+                      <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
+                         {{cityList[i].city_name}}
                        </option>
                       </select>                                    
                    </div>
                 </div>
-
-                <div class="form-group row">
-                  <label class="col-4 col-form-label">Ciudad*</label> 
-                  <div  class="col-8">
-                  <select (click)="showAlgo()" class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" >
-                    <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
-                       {{cityList[i].city_name}}
-                     </option>
-                    </select>                                    
-                 </div>
-              </div>
-                <div class="form-group row">
-                  <label for="pass" class="col-4 col-form-label">Salario</label> 
-                  <div class="col-8">
-                    <input name="prospect_salary" class="form-control here" [(ngModel)]="prospect.prospect_salary">
+                  <div class="form-group row">
+                    <label for="pass" class="col-4 col-form-label">Salario</label> 
+                    <div class="col-8">
+                      <input name="prospect_salary" class="form-control here" [(ngModel)]="prospect.prospect_salary">
+                    </div>
                   </div>
-                </div>
-                <div class="form-group row">
-                  <label for="pass" class="col-4 col-form-label">CV</label> 
-                  <div class="col-8">
-                    <input name="prospect_cv" class="form-control here" [(ngModel)]="prospect.prospect_cv">
+                  <div class="form-group row">
+                    <label for="pass" class="col-4 col-form-label">CV</label> 
+                    <div class="col-8">
+                      <input name="prospect_cv" class="form-control here" [(ngModel)]="prospect.prospect_cv">
+                    </div>
                   </div>
-                </div>
-                <div class="form-group row">
-                  <label for="pass" class="col-4 col-form-label">Foto</label> 
-                  <div class="col-8">
-                    <input name="prospect_photo" class="form-control here" [(ngModel)]="prospect.prospect_photo">
+                  <div class="form-group row">
+                    <label for="pass" class="col-4 col-form-label">Foto</label> 
+                    <div class="col-8">
+                      <input name="prospect_photo" class="form-control here" [(ngModel)]="prospect.prospect_photo">
+                    </div>
                   </div>
-                </div>
-                <div class="form-group row">
-                  <label for="pass" class="col-4 col-form-label">Fuente</label> 
-                  <div class="col-8">
-                    <input  name="prospect_link" class="form-control here" [(ngModel)]="prospect.prospect_link">
+                  <div class="form-group row">
+                    <label for="pass" class="col-4 col-form-label">Fuente</label> 
+                    <div class="col-8">
+                      <input  name="prospect_link" class="form-control here" [(ngModel)]="prospect.prospect_link">
+                    </div>
                   </div>
-                </div>
-                <!-- <div class="form-group row">
-                  <label for="pass" class="col-4 col-form-label">Referido Por:</label> 
-                  <div class="col-8">
-                    <input class="form-control here" [(ngModel)]="prospect.prospect_referencia">
-                  </div>
-                </div> -->
-              </form>
+                  <!-- <div class="form-group row">
+                    <label for="pass" class="col-4 col-form-label">Referido Por:</label> 
+                    <div class="col-8">
+                      <input class="form-control here" [(ngModel)]="prospect.prospect_referencia">
+                    </div>
+                  </div> -->
+                </form>
+            </div>
           </div>
+          
+        </div> 
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
+          <div *ngIf="save"><button (click)="saveprospect()" type="submit" class="btn btn-primary">Guardar</button></div>
+          <div *ngIf="edit"><button (click)="editprospect()" type="submit" class="btn btn-primary">Edit</button></div>
         </div>
-        
-      </div> 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
-        <div *ngIf="save"><button (click)="saveprospect()" type="submit" class="btn btn-primary">Guardar</button></div>
-
+    
+    </ng-template>
+    <ng-template #confirm>
+      <div class="modal-body text-center">
+        <p>Esta seguro de Eliminar?</p>
+        <button type="button" class="btn btn-default" (click)="deleteprospect()" >Si</button>
+        <button type="button" class="btn btn-primary" (click)="onClose()" >No</button>
       </div>
-  
-  </ng-template>
-  <ng-template #confirm>
-    <div class="modal-body text-center">
-      <p>Esta seguro de Eliminar?</p>
-      <button type="button" class="btn btn-default" (click)="deleteprospect()" >Si</button>
-      <button type="button" class="btn btn-primary" (click)="onClose()" >No</button>
-    </div>
-  </ng-template>
-</div>
+    </ng-template>
+  </div>

@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   loginList: any;
 
   getLogin() {
-    this.globalService.getModel("/user/password").then(
+    this.globalService.getModel("/users/{user_name}/{user_password}").then(
         result => {
           console.log(result);
           this.loginList = result;

@@ -17,7 +17,7 @@ export class SoftwareComponent implements OnInit{
         this.getSoftwares();
     }
 
-
+    index:any;
     pageActual: number = 1;
     softwareList: any;
     bsModalRef: BsModalRef;
