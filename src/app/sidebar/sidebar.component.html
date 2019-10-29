@@ -1,89 +1,95 @@
 <div style="background-color: #6c757d; width: 280px; "  class="sidebar-wrapper sidebar-transparent">
-    <div class="logo">
-      <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-  
-        <i class="fa fa-filter" aria-hidden="true"></i>
-      </a>
-      <a href="" class="simple-text logo-normal">
-        Filtros
-      </a>
-    </div>
-      <ul class="nav">
-        
-          <div class="container">
-              <div class="form-group">
-              <label class="text-white">Software</label>
-                    <div class="d-flex justify-content-center my-2">  
-                  <ngx-multiselect
-                    [(ngModel)]="softwares"
-                    [options]="software"
-                    ngDefaultControl>
-                  </ngx-multiselect>
-                </div>
-              </div>
-                     
-             
-                <div class="form-group">
-                    <label class="text-white">Pais</label>
-                    <div class="input-group">
-                  
-                      <select  name="UserID"  class="form-control">
-                        <option value="0">-Select-</option>
-                        <option >Mexico</option>
-                      </select>
-                    </div>
-                  </div>
-          
-                    <div class="form-group">
-                        <label class="text-white">Ciudad</label>
-                        <div class="input-group">
-                      
-                          <select  name="UserID"  class="form-control">
-                            <option value="0">-Select-</option>
-                            <option >Texas</option>
-                          </select>
-                        </div>
-                        </div>
+  <div class="logo">
+    <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+
+      <i class="fa fa-filter" aria-hidden="true"></i>
+    </a>
+    <a href="" class="simple-text logo-normal">
+      Filtros
+    </a>
+  </div>
+    <ul class="nav">
+      
+        <div class="container">
+            <div class="form-group">
+            <label class="text-white">Software</label>
+            <div class="input-group">
+                
               
-              <label class="text-white">Años de Experiencia</label>
-              <div class="d-flex justify-content-center my-4">
-                <span class="font-weight-bold purple-text mr-2 mt-1">0</span>
-                <form class="range-field w-75">
-                <igx-slider [type]="sliderType.RANGE" [minValue]="0" [maxValue]="100" ></igx-slider>
-              </form>
-              <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
-              </div>
-              <label class="text-white">Nivel de Experiencia</label>
-              <div class="d-flex justify-content-center my-4">
-                <span class="font-weight-bold purple-text mr-2 mt-1">0</span>
-                <form class="range-field w-75">
-              <igx-slider class="color:black!important;" [type]="sliderType.RANGE" [minValue]="0" [maxValue]="10" ></igx-slider>
-            </form>
-            <span class="font-weight-bold indigo-text ml-2 mt-1">10</span>
+            
+
+            <select (click)="selectSoftware($event)" class="form-control"  [(ngModel)]="softwareTest">
+              <option *ngFor="let software of softwareList; let i = index" [ngValue]="softwareList[i].software_id">
+                 {{softwareList[i].software_name}}
+               </option>
+              </select>
+
+
             </div>
-            <label class="text-white">Edad</label>
-              <div class="d-flex justify-content-center my-4">
-                <span class="font-weight-bold purple-text mr-2 mt-1">0</span>
-                <form class="range-field w-75">
-              <igx-slider [type]="sliderType.RANGE" [minValue]="0" [maxValue]="100" ></igx-slider>
+            </div>
+                   
+           
+              <div class="form-group">
+                  <label class="text-white">Pais</label>
+                  <div class="input-group">
+                
+                      <select (click)="selectCountry($event)" class="form-control" [(ngModel)]="countryTest" >
+                          <option *ngFor="let country of countryList; let i = index" [ngValue]="countryList[i].country_id">
+                             {{countryList[i].country_name}}
+                           </option>
+                          </select>
+                  </div>
+                </div>
+        
+                  <div class="form-group">
+                      <label class="text-white">Ciudad</label>
+                      <div class="input-group">
+                    
+                          <select (click)="selectCity($event)" class="form-control" [(ngModel)]="cityTest" >
+                              <option *ngFor="let city of cityList; let i = index" [ngValue]="cityList[i].city_id">
+                                 {{cityList[i].city_name}}
+                               </option>
+                              </select>
+                      </div>
+                      </div>
+            
+            <label class="text-white">Años de Experiencia</label>
+            <div class="d-flex justify-content-center my-4">
+              <span class="font-weight-bold purple-text mr-2 mt-1">0</span>
+              <form class="range-field w-75">
+              <igx-slider (onValueChange)="selectYearsExp($event)"  [type]="sliderType.RANGE" [minValue]="0" [maxValue]="100" ></igx-slider>
             </form>
             <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
             </div>
-            <label class="text-white">Salario</label>
-              <div class="d-flex justify-content-center my-4">
-                  <span class="font-weight-bold purple-text mr-2 mt-1">$0</span>
-                  <form class="range-field w-75">
-                    <igx-slider style="border: #0000ff;" [type]="sliderType.RANGE" [minValue]="0" [maxValue]="1000"></igx-slider>
-            </form>
-            <span class="font-weight-bold indigo-text ml-2 mt-1">$10000</span>
-            </div>
-            </div>
-
+            <label class="text-white">Nivel de Experiencia</label>
             <div class="d-flex justify-content-center my-4">
-            <span class="btn btn-primary btn-xs">Buscar</span>
+              <span class="font-weight-bold purple-text mr-2 mt-1">0</span>
+              <form class="range-field w-75">
+            <igx-slider class="color:black!important;"  (onValueChange)="selectLevelExp($event)" [type]="sliderType.RANGE" [minValue]="0" [maxValue]="10" ></igx-slider>
+          </form>
+          <span class="font-weight-bold indigo-text ml-2 mt-1">10</span>
           </div>
-      </ul>
-  
-     
-      
-  </div>
+          <label class="text-white">Edad</label>
+            <div class="d-flex justify-content-center my-4">
+              <span class="font-weight-bold purple-text mr-2 mt-1">0</span>
+              <form class="range-field w-75">
+            <igx-slider (onValueChange)="selectAgeExp($event)" [type]="sliderType.RANGE" [minValue]="0" [maxValue]="100" ></igx-slider>
+          </form>
+          <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
+          </div>
+          <label class="text-white">Salario</label>
+            <div class="d-flex justify-content-center my-4">
+                <span class="font-weight-bold purple-text mr-2 mt-1">$0</span>
+                <form class="range-field w-75">
+                  <igx-slider (onValueChange)="selectSalaryExp($event)"  style="border: #0000ff;" [type]="sliderType.RANGE" [minValue]="0" [maxValue]="1000"></igx-slider>
+          </form>
+          <span class="font-weight-bold indigo-text ml-2 mt-1">$10000</span>
+          </div>
+          </div>
+
+
+    </ul>
+
+   
+    
+</div>
