@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from "../Pages/providers/global.service";
-
+import { ToastrService } from "ngx-toastr";
+import { AlertsService } from 'angular-alert-module';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,23 +9,31 @@ import { GlobalService } from "../Pages/providers/global.service";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private globalService: GlobalService) { }
+  constructor(private globalService: GlobalService,private toastr: ToastrService,private alerts: AlertsService) { }
 
   ngOnInit() {
     this.getLogin();
   }
 
   loginList: any;
-
+  
+ password:"";
+  username:"";
+  
   getLogin() {
-    this.globalService.getModel("/users/{user_name}/{user_password}").then(
+    console.log(this.username);
+    this.globalService.getModel("/users/"+this.username+"/"+this.password).then(
         result => {
+         
           console.log(result);
-          this.loginList = result;
+          if (result==0)
+          return location.href='#/dashboard';
+          else
+          
+         return  this.toastr.success('Registrado Exitosamente', 'Software. Registrado')
         },
         err => {
           console.log(err);
-          //this.loader.dismiss();
         }
       );
 }

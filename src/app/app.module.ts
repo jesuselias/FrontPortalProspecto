@@ -22,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { NgxMultiselectModule } from '@ngx-lib/multiselect';
 
+import { AlertsModule } from 'angular-alert-module';
 
 
 
@@ -39,6 +40,7 @@ import { NgxMultiselectModule } from '@ngx-lib/multiselect';
     BrowserAnimationsModule,  
     BrowserModule, NgxPaginationModule,
     HttpClientModule,
+    AlertsModule.forRoot(),
     RouterModule.forRoot(AppRoutes, {
       useHash: true
     }),
