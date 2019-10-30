@@ -1,7 +1,6 @@
 
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { GlobalService } from "../providers/global.service";
-
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { element } from 'protractor';
 import { observable } from 'rxjs';
@@ -65,19 +64,19 @@ export class DashboardComponent implements OnInit{
       this.softwares= [];
     
     }
-    loadPage(item){
+    //loadPage(item){
       // console.log(item);
       //localStorage.setItem("prospect", item);
       
-    }
+   // }
     checkSoftware(id) 
     {
        let item;
-       console.log(this.softwareList)
+      // console.log(this.softwareList)
         for(item of this.softwareList)
         {
 
-        console.log(item)
+      //  console.log(item)
          if(item.software_id==id)
             return item.software_name;
         }
@@ -86,11 +85,11 @@ export class DashboardComponent implements OnInit{
      
     checkTitle(id) {
       let item;
-      console.log(this.titleList)
+      //console.log(this.titleList)
        for(item of this.titleList)
        {
 
-       console.log(item)
+     //  console.log(item)
         if(item.title_id==id)
            return item.title_name;
        }
@@ -110,7 +109,7 @@ export class DashboardComponent implements OnInit{
         this.edit=true;
         this.prospect=this.prospectList[index];
          
-        console.log(this.prospect.software_Prospect);
+        //console.log(this.prospect.software_Prospect);
         this.prospect.software_Prospect.map(item=>{
             this.softwares.push({
             disabled: undefined,
@@ -149,12 +148,12 @@ export class DashboardComponent implements OnInit{
     this.prospect.software_id = localStorage.getItem('soft');
     this.prospect.city_id = localStorage.getItem('city');
 
-    console.log('edad_min',localStorage.getItem('age_min'))
-    console.log('edad_max',localStorage.getItem('age_max'))
-    console.log('salary_min',localStorage.getItem('salary_min'))
-    console.log('salary_max',localStorage.getItem('salary_max'))
-    console.log('city',this.prospect.city_id);
-    console.log('software',this.prospect.software_id);
+    // console.log('edad_min',localStorage.getItem('age_min'))
+    // console.log('edad_max',localStorage.getItem('age_max'))
+    // console.log('salary_min',localStorage.getItem('salary_min'))
+    // console.log('salary_max',localStorage.getItem('salary_max'))
+    // console.log('city',this.prospect.city_id);
+    // console.log('software',this.prospect.software_id);
     //localStorage.getItem('age_min') === null?"":localStorage.getItem('age_min')
      let postprospect = {
       "prospect_id": this.prospect.prospect_id,
@@ -195,10 +194,6 @@ export class DashboardComponent implements OnInit{
       }
     );
 }
-
-
-
-
     showTitle() {
       this.globalService.getModel("/title/" + this.title.title_id).then(
         result => {
@@ -278,7 +273,7 @@ getsoftware() {
   deleteprospect() {
     this.globalService.removeModel(this.prospect.prospect_id,"/prospect").then(
       result => {
-        console.log(result);
+  //      console.log(result);
         this.getprospects();
       },
       err => {
@@ -294,7 +289,7 @@ getsoftware() {
 
     let arraysoft=[];
     this.softwares.map(item=>{
-      console.log(item);
+   //   console.log(item);
       arraysoft.push({'software_id':item.id})
 
      
@@ -320,7 +315,7 @@ getsoftware() {
 
     this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect").then(
       result => {
-        console.log(result);
+    //    console.log(result);
         this.getprospects();
       },
       err => {
@@ -334,7 +329,7 @@ getsoftware() {
 
   saveprospect() {
    
-    console.log(this.softwares);
+  //  console.log(this.softwares);
     let arraysoft=[];
     this.softwares.map(item=>{
       arraysoft.push({'software_id':item.id})
@@ -361,7 +356,7 @@ getsoftware() {
     };
     this.globalService.addModel(postprospect, "/prospect").then(
       result => {
-        console.log(result);
+  //      console.log(result);
         this.getprospects();
       },
       err => {

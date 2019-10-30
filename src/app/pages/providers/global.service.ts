@@ -45,11 +45,27 @@ export class GlobalService {
         return new Promise(resolve => {
             this.http.get(this.apiBaseUrl + "" + tipo, httpOptions).subscribe(data => {
                 resolve(data);
-                console.log(data);
+               console.log(data);
                 
 
             }, err => {
                 console.log(err);
+                //return this.toastr.error('Usuario no registrado')
+
+            })
+        })
+    }
+    getUser(tipo: String, httpOptions = httpOptionsDefault) {
+
+        return new Promise(resolve => {
+            this.http.get(this.apiBaseUrl + "" + tipo, httpOptions).subscribe(data => {
+                resolve(data);
+               console.log(data);
+                
+
+            }, err => {
+                console.log(err);
+                return this.toastr.error('No existe Usuario o Contraseña Invalida')
 
             })
         })

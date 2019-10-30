@@ -15,10 +15,7 @@ font-family: 'Roboto', sans-serif;">
     <!-- Login Form -->
     <form>
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="Nombre de Usuario" [(ngModel)]="username">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña" [(ngModel)]="password">
-      <span style="width:48%; text-align:left;  display: inline-block;"><a href="#">Forgot
-          password?</a></span>
-
+      <input type="password" id="password"  name="login" placeholder="Contraseña" [(ngModel)]="password" class="input">
       <input type="button" class="fadeIn fourth" value="Log In" (click)="getLogin()">
 
 
