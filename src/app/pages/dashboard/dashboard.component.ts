@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit{
     ngOnInit(){
       this.getsoftware();
       this.getprospects();
-     // this.getcountry();
+      this.getcountry();
       this.gettile();
       this.getcity();
       this.chartColor = "#FFFFFF";
@@ -168,8 +168,10 @@ export class DashboardComponent implements OnInit{
       "yearsExpierenceMax": "",
       "software_id": this.prospect.software_id
      };
+
+     
  
-     this.globalService.addModel(postprospect, "/prospect/filter").then(
+     this.globalService.addfilter(postprospect, "/prospect/filter").then(
        result => {
         
         this.prospectList = result;
@@ -183,6 +185,11 @@ export class DashboardComponent implements OnInit{
     
      this.onClose();
    }
+   
+
+   
+
+   
 
   showProspect() {
     this.globalService.getModel("/city/" +  this.city.city_id).then(
@@ -239,6 +246,20 @@ getcity() {
           //this.loader.dismiss();
         }
       );
+}
+
+getcountry() {
+    
+  this.globalService.getModel("/country").then(
+    
+      result => {
+        this.countryList = result;
+      },
+      err => {
+        console.log(err);
+        //this.loader.dismiss();
+      }
+    );
 }
 
 

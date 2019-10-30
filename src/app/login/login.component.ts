@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from "../Pages/providers/global.service";
 import { ToastrService } from "ngx-toastr";
-import { AlertsService } from 'angular-alert-module';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,7 +9,7 @@ import { AlertsService } from 'angular-alert-module';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private globalService: GlobalService,private toastr: ToastrService,private alerts: AlertsService) { }
+  constructor(private globalService: GlobalService,private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getLogin();

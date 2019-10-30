@@ -102,8 +102,19 @@
                         </select>                                    
                      </div>
                   </div>
+                  <div class="form-group row">
+                      <label class="col-4 col-form-label">Pais*</label> 
+                      <div  class="col-8">
+                      <select class="form-control" name="country_id"  [(ngModel)]="prospect.country_id" >
+                        <option   *ngFor="let item of countryList; let i = index" [ngValue]="item.country_id" >
+                           {{countryList[i].country_name}}
+                         </option>
+                        </select>                                    
+                     </div>
+                  </div>
   
                   <div class="form-group row">
+                      <div *ngIf="prospect.country_id">
                     <label class="col-4 col-form-label">Ciudad*</label> 
                     <div  class="col-8">
                     <select class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" >
@@ -113,6 +124,7 @@
                       </select>                                    
                    </div>
                 </div>
+              </div>
                   <div class="form-group row">
                     <label for="pass" class="col-4 col-form-label">Salario</label> 
                     <div class="col-8">
@@ -128,7 +140,7 @@
                   <div class="form-group row">
                     <label for="pass" class="col-4 col-form-label">Foto</label> 
                     <div class="col-8">
-                      <input name="prospect_photo" class="form-control here" [(ngModel)]="prospect.prospect_photo">
+                      <input type="url" name="prospect_photo" class="form-control here" [(ngModel)]="prospect.prospect_photo">
                     </div>
                   </div>
                   <div class="form-group row">

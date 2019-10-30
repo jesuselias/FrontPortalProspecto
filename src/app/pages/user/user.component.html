@@ -26,71 +26,71 @@
                       <div class="col-md-12">
                           <form>
                             <div class="form-group row">
-                  <label class="col-4 col-form-label">Id*</label> 
-                  <div class="col-8">
-                    <input name="prospect_id" class="form-control here"  [(ngModel)]="prospect.prospect_id" >
-                  </div>
-                </div>
-              <div class="form-group row">
-                  <label class="col-4 col-form-label">Nombre*</label> 
-                  <div class="col-8">
-                    <input name="prospect_name" class="form-control here"  [(ngModel)]="prospect.prospect_name" >
-                  </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Apellido*</label> 
+                              <div class="col-4 col-form-label">Id*</div> 
+                              <div class="col-8">
+                                {{prospect.prospect_id}}
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <div class="col-4 col-form-label">Nombre*</div> 
+                              <div class="col-8">
+                                {{prospect.prospect_name}}
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <div class="col-4 col-form-label">apellido*</div> 
+                              <div class="col-8">
+                                {{prospect.prospect_lastname}}
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <div class="col-4 col-form-label">Fecha de nacimiento*</div> 
+                              <div class="col-8">
+                                {{prospect.prospect_lastname}}
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <div class="col-4 col-form-label">Ciudad*</div> 
+                              <div class="col-8">
+                                {{checkCity(prospect.city_id)}}
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <div class="col-4 col-form-label">Direccion*</div> 
+                              <div class="col-8">
+                                {{prospect.prospect_address}}
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <div class="col-4 col-form-label">Telefono*</div> 
+                              <div class="col-8">
+                                {{prospect.prospect_phonenumber}}
+                              </div>
+                            </div>
+                  <div class="form-group row">
+                    <div class="col-4 col-form-label">Titulo*</div> 
                     <div class="col-8">
-                      <input name="prospect_lastname" class="form-control here" [(ngModel)]="prospect.prospect_lastname">
+                     {{checkTitle(prospect.title_id)}}
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-4 col-form-label">Fecha de Nacimiento*</label> 
+                    <div class="col-4 col-form-label">Salario*:</div> 
                     <div class="col-8">
-                      <input name="prospect_birthday" class="form-control here" [(ngModel)]="prospect.prospect_birthday">
+                      {{prospect.prospect_salary}}
                     </div>
                   </div>
                   <div class="form-group row">
-                      <label class="col-4 col-form-label">Ciudad*</label> 
-                      <div class="col-8">
-                        <input name="prospect.city_id" class="form-control here" [(ngModel)]="prospect.city_id">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-4 col-form-label">Direccion*</label> 
-                        <div class="col-8">
-                          <input name="prospect.prospect_address" class="form-control here" [(ngModel)]="prospect.prospect_address">
-                        </div>
-                      </div>
-                  <div class="form-group row">
-                    <label class="col-4 col-form-label">Telefono*</label> 
+                    <div class="col-4 col-form-label">cv*</div> 
                     <div class="col-8">
-                      <input name="prospect_phonenumber" class="form-control here" [(ngModel)]="prospect.prospect_phonenumber">
+                      {{prospect.prospect_cv}}
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-4 col-form-label">Titulo*</label> 
+                    <div class="col-4 col-form-label">fuente*</div> 
                     <div class="col-8">
-
+                      {{prospect.prospect_link}}
                     </div>
                   </div>
-                <div class="form-group row">
-                  <label for="pass" class="col-4 col-form-label">Salario</label> 
-                  <div class="col-8">
-                    <input name="prospect_salary" class="form-control here" [(ngModel)]="prospect.prospect_salary">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="pass" class="col-4 col-form-label">CV</label> 
-                  <div class="col-8">
-                    <input name="prospect_cv" class="form-control here" [(ngModel)]="prospect.prospect_cv">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="pass" class="col-4 col-form-label">Fuente</label> 
-                  <div class="col-8">
-                    <input  name="prospect_link" class="form-control here" [(ngModel)]="prospect.prospect_link">
-                  </div>
-                </div>
               </form>
                       </div>
                   </div>
