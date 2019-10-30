@@ -39,6 +39,7 @@ import { NgxMultiselectModule } from '@ngx-lib/multiselect';
     BrowserAnimationsModule,  
     BrowserModule, NgxPaginationModule,
     HttpClientModule,
+    
     RouterModule.forRoot(AppRoutes, {
       useHash: true
     }),
