@@ -32,6 +32,14 @@ export class UserComponent implements OnInit{
               // Defaults to 0 if no query param provided.
               this.title=params;
             });
+
+            this.route
+          .queryParams
+          .subscribe(params => {
+            console.log(params);
+              // Defaults to 0 if no query param provided.
+              this.experiencieList=params;
+            });
           
     }
 
@@ -93,9 +101,6 @@ export class UserComponent implements OnInit{
          return item.city_name;
      }
   }
-
-  
-  
   checkTitle(id) {
     let item;
     console.log(this.titleList)
@@ -107,5 +112,27 @@ export class UserComponent implements OnInit{
          return item.title_name;
      }
   }
+  
+  public experiencieList: any = [
+    {
+      experience_level: "Basico",
+      id: 1
+    },
+    {
+      experience_level: "Intermedio",
+      id: 2
+    },
+    {
+      experience_level: "Experto",
+      id: 3
+    },
+    {
+      experience_level: "Master",
+      id: 4
+    }
+    
+  ]
+  
 }
+
 

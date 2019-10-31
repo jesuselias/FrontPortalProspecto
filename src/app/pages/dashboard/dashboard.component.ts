@@ -43,7 +43,6 @@ export class DashboardComponent implements OnInit{
   prospect:any;
   FiltersProspects:any;
 
-
     ngOnInit(){
       this.getsoftware();
       this.getprospects();
@@ -64,11 +63,27 @@ export class DashboardComponent implements OnInit{
       this.softwares= [];
     
     }
-    //loadPage(item){
-      // console.log(item);
-      //localStorage.setItem("prospect", item);
-      
-   // }
+ 
+   public experiencieList: any = [
+    {
+      experience_level: "Basico",
+      id: 1
+    },
+    {
+      experience_level: "Intermedio",
+      id: 2
+    },
+    {
+      experience_level: "Experto",
+      id: 3
+    },
+    {
+      experience_level: "Master",
+      id: 4
+    }
+    
+  ]
+
     checkSoftware(id) 
     {
        let item;
@@ -82,6 +97,7 @@ export class DashboardComponent implements OnInit{
         }
 
     }
+   
      
     checkTitle(id) {
       let item;
@@ -94,7 +110,7 @@ export class DashboardComponent implements OnInit{
            return item.title_name;
        }
     }
-  
+   
     
     OpenProspectModal(template: TemplateRef<any>, option, index:number) {
       this.prospect=[];
@@ -184,12 +200,6 @@ export class DashboardComponent implements OnInit{
     
      this.onClose();
    }
-   
-
-   
-
-   
-
   showProspect() {
     this.globalService.getModel("/city/" +  this.city.city_id).then(
       result => {
@@ -342,6 +352,8 @@ getsoftware() {
       'prospect_salary': this.prospect.prospect_salary,
       'title_id': this.prospect.title_id,
       'software_prospect': arraysoft,
+      'experience_years': this.prospect.experience_years,
+      'experience_level': this.prospect.experience_level,
       
     };
    
@@ -362,7 +374,7 @@ getsoftware() {
 
   saveprospect() {
    
-  //  console.log(this.softwares);
+   console.log(this.experiencieList);
     let arraysoft=[];
     this.softwares.map(item=>{
       arraysoft.push({'software_id':item.id})
@@ -385,6 +397,9 @@ getsoftware() {
       'prospect_salary': this.prospect.prospect_salary,
       'title_id': this.prospect.title_id,
       'software_prospect': arraysoft,
+      'experience_years': this.prospect.experience_years,
+      'experience_level': this.prospect.experience_level,
+
      
     };
     this.globalService.addModel(postprospect, "/prospect").then(
