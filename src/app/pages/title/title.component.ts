@@ -26,7 +26,7 @@ export class TitleComponent implements OnInit{
   edit: boolean=false;
   constructor(private globalService: GlobalService, private bsModalService: BsModalService) {
      this.title=[];
-     
+     this.titleList=[];
   }
 
   OpenTitleModal(template: TemplateRef<any>, option, index:number) {
