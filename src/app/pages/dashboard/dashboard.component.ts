@@ -213,6 +213,18 @@ export class DashboardComponent implements OnInit{
       );
     }
 
+    showcity() {
+      this.globalService.getModel("/country/" + this.prospect.country_id + "/city").then(
+        result => {
+          this.cityList = result;
+        },
+        err => {
+          console.log(err);
+          //this.loader.dismiss();
+        }
+      );
+    }
+
     getprospects() {
     
       this.globalService.getModel("/prospect").then(
