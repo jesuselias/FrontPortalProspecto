@@ -114,9 +114,9 @@
                   </div>
   
                   <div class="form-group row">
-                    <div *ngIf="prospect.country_id">
+                    
                     <label class="col-4 col-form-label">Ciudad*</label> 
-                    <div  class="col-8">
+                    <div *ngIf="prospect.country_id" class="col-8">
                     <select class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" >
                       <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
                          {{cityList[i].city_name}}
@@ -124,7 +124,6 @@
                       </select>                                    
                    </div>
                 </div>
-              </div>
 
                   <div class="form-group row">
                     <label for="pass" class="col-4 col-form-label">Salario</label> 
