@@ -56,8 +56,10 @@ export class SidebarComponent implements OnInit {
     exp_level_max:any;
     salary_min:any;
     salary_max:any;
+    levelTest:any;
     constructor(private globalService: GlobalService) {
       this.software1 = [];
+      this.levelTest = [];
       this.softwareList = [];
       this.softwares=[];
       this.cityTest = [];
@@ -71,24 +73,60 @@ export class SidebarComponent implements OnInit {
       this. age_max = [];
       this.salary_min = [];
       this.salary_max = [];
-
+     
+      
     }
+
+    public experiencieList: any = [
+      {
+        experience_level: "Basico",
+        id: 1
+      },
+      {
+        experience_level: "Intermedio",
+        id: 2
+      },
+      {
+        experience_level: "Experto",
+        id: 3
+      },
+      {
+        experience_level: "Master",
+        id: 4
+      }
+      
+    ]
+
+    showcity() {
+    
+      this.globalService.getModel("/country/" + this.countryTest.country_id + "/city").then(
+        result => {
+          this.cityList = result;
+        },
+        err => {
+          console.log(err);
+    
+        }
+      );
+    }
+
     selectSoft(event){
-      console.log(this.softwares)
-      localStorage.setItem("soft", this.softwares)
+      localStorage.setItem("soft", JSON.stringify(this.softwares))
     }
     selectSoftware(){
       localStorage.getItem('softwareslogin');
      this.software1= JSON.parse(localStorage.getItem('softwareslogin'))
     }
     selectCity(event){
-      console.log(this.cityTest)
+  
       localStorage.setItem("city", this.cityTest)
     }
     selectCountry(event){
-    localStorage.setItem("country", this.countryTest)
+
+    localStorage.setItem("country", this.countryTest.country_id)
     }
     selectYearsExp(event){
+     
       this.exp_min = event.value.lower;
       this.exp_max = event.value.upper;
       localStorage.setItem("exp_min", this.exp_min);
@@ -96,10 +134,7 @@ export class SidebarComponent implements OnInit {
     }
 
     selectLevelExp(event){
-      this.exp_level_min = event.value.lower;
-      this.exp_level_max = event.value.upper;
-      localStorage.setItem("exp_level_min", this.exp_level_min);
-      localStorage.setItem("exp_level_max", this.exp_level_max);
+      localStorage.setItem("expierenceLevel", this.levelTest )
     }
 
     selectAgeExp(event){
@@ -116,6 +151,7 @@ export class SidebarComponent implements OnInit {
       localStorage.setItem("salary_min", this.salary_min);
       localStorage.setItem("salary_max",  this.salary_max);
     }
+   
 
     getSotware() {
       this.softwares=[];
@@ -168,18 +204,6 @@ export class SidebarComponent implements OnInit {
       this.getCountry();
         this.menuItems = ROUTES.filter(menuItem => menuItem);
 
-       /* this.software1 = [
-            { id: 1, name: ".Net"},
-            { id: 2, name: "Postman" },
-       
-        ];
-        
-        this.selectedSoftware = [{
-            id: 1,
-            name: ".Net"
-        }];*/
-
-      
 
         
     }
