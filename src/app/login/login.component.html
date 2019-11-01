@@ -13,11 +13,24 @@ font-family: 'Roboto', sans-serif;">
     </div>
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Nombre de Usuario" [(ngModel)]="username">
-      <input type="password" id="password"  name="login" placeholder="Contraseña" [(ngModel)]="password" class="input">
-      <input type="button" class="fadeIn fourth" value="Log In" (click)="getLogin()">
+      <form [formGroup]="contacto" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+                <input type="text" formControlName="usuario" class="form-control" [(ngModel)]="username" placeholder="Ingrese Usuario" [ngClass]="{ 'is-invalid': submitted && f.usuario.errors }" />
+                <div *ngIf="submitted && f.usuario.errors" class="invalid-feedback">
+                    <div *ngIf="f.usuario.errors.required">Por favor, ingresa tu Nombre de Usuario</div>
+                </div>
+            </div>   
+            <div class="form-group">
+                <input type="password" formControlName="password" class="form-control input" placeholder="Ingrese contraseña" [(ngModel)]="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Por favor, ingresa tu Contraseña</div>
+                </div>
+            </div>   
+           
+            <div class="form-group">
+                <button [disabled]="loading" class="btn btn-primary" (click)="getLogin()"  >Aceptar</button>
 
+            </div>
 
       <div class="modal-body">
         <div class="box">

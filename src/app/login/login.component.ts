@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from "../Pages/providers/global.service";
 import { ToastrService } from "ngx-toastr";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  contacto: FormGroup;
+  submitted = false;
 
-  constructor(private globalService: GlobalService,private toastr: ToastrService) { 
+  constructor(private globalService: GlobalService,private toastr: ToastrService,private formBuilder: FormBuilder) { 
 
     this.software1 = [];
       this.softwareList = [];
@@ -16,6 +19,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.contacto = this.formBuilder.group({
+      usuario: ['', Validators.required],            
+      password: ['', Validators.required],
+  });
+  
 this.getSotware();
   }
 
@@ -64,4 +72,15 @@ mensaje(){
   this.toastr.error('Usuario no registrado')
 }
 
+get f() { return this.contacto.controls; }
+
+    onSubmit() {
+        this.submitted = true;
+
+        if (this.contacto.invalid) {
+            return;
+        }
+
+       // alert('Usuario Correcto !')
+    }
 }

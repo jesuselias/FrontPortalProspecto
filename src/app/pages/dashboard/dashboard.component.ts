@@ -4,6 +4,8 @@ import { GlobalService } from "../providers/global.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { element } from 'protractor';
 import { observable } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 
 @Component({
@@ -13,7 +15,8 @@ import { observable } from 'rxjs';
 })
 
 export class DashboardComponent implements OnInit{
-
+  contacto: FormGroup;
+  submitted = false;
   pageActual: number = 1;
   public canvas : any;
   public ctx;
@@ -43,20 +46,7 @@ export class DashboardComponent implements OnInit{
   index : any;
   prospect:any;
   FiltersProspects:any;
-
-    ngOnInit(){
-      this.getsoftware();
-      this.getprospects();
-      this.getcountry();
-      this.gettile();
-      this.getcity();
-      this.chartColor = "#FFFFFF";
-
-    } 
-
-   
-
-    constructor(private globalService: GlobalService, private bsModalService: BsModalService) {
+  constructor(private globalService: GlobalService, private bsModalService: BsModalService, private formBuilder: FormBuilder) {
       this.softwareList = [];
       this.software = [];
       this.prospect=[];
@@ -64,7 +54,19 @@ export class DashboardComponent implements OnInit{
       this.softwares= [];
       this.software1 = [];
     }
- 
+    ngOnInit(){
+      this.getsoftware();
+      this.getprospects();
+      this.getcountry();
+      this.gettile();
+      this.getcity();
+      this.chartColor = "#FFFFFF";
+      this.contacto = this.formBuilder.group({
+        usuario: ['', Validators.required],            
+        password: ['', Validators.required],
+    });
+
+    } 
    public experiencieList: any = [
     {
       experience_level: "Basico",
