@@ -39,7 +39,7 @@ export class SidebarComponent implements OnInit {
     public exp: Exp = new Exp(200, 800);
     public lexp: Lexp = new Lexp(200, 800);
     public age: Age = new Age(200, 800);
-    software: any;
+    software1: any;
     selectedSoftware;
     softwareList: any;
     softwares: any;
@@ -57,7 +57,7 @@ export class SidebarComponent implements OnInit {
     salary_min:any;
     salary_max:any;
     constructor(private globalService: GlobalService) {
-      this.software = [];
+      this.software1 = [];
       this.softwareList = [];
       this.softwares=[];
       this.cityTest = [];
@@ -73,12 +73,17 @@ export class SidebarComponent implements OnInit {
       this.salary_max = [];
 
     }
-    selectSoftware(event){
-    localStorage.setItem("soft", this.softwareTest)
+    selectSoft(event){
+      console.log(this.softwares)
+      localStorage.setItem("soft", this.softwares)
+    }
+    selectSoftware(){
+      localStorage.getItem('softwareslogin');
+     this.software1= JSON.parse(localStorage.getItem('softwareslogin'))
     }
     selectCity(event){
       console.log(this.cityTest)
-    localStorage.setItem("city", this.cityTest)
+      localStorage.setItem("city", this.cityTest)
     }
     selectCountry(event){
     localStorage.setItem("country", this.countryTest)
@@ -113,13 +118,17 @@ export class SidebarComponent implements OnInit {
     }
 
     getSotware() {
-      this.globalService.getModel("/Software").then(
+      this.softwares=[];
+
+      this.globalService.getModel("/software").then(
           result => {
             console.log(result);
             this.softwareList = result;
+           
             this.softwareList.map(item=>{
-              this.software.push({ id: item.software_id, name: item.software_name})
+              this.software1.push({ id: item.software_id, name: item.software_name})
             })
+            console.log(this.software1);
           },
           err => {
             console.log(err);
@@ -153,13 +162,13 @@ export class SidebarComponent implements OnInit {
   }
 
     ngOnInit() {
-
+      this.selectSoftware();
       this.getSotware();
       this.getCity();
       this.getCountry();
         this.menuItems = ROUTES.filter(menuItem => menuItem);
 
-       /* this.software = [
+       /* this.software1 = [
             { id: 1, name: ".Net"},
             { id: 2, name: "Postman" },
        

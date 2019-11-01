@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit{
   edit: boolean=false;
   softwares: any;
   software: any;
+  software1:any;
   software_Prospect: any;
   softwareList: any;
   index : any;
@@ -61,7 +62,7 @@ export class DashboardComponent implements OnInit{
       this.prospect=[];
       this.prospectList=[];
       this.softwares= [];
-    
+      this.software1 = [];
     }
  
    public experiencieList: any = [
@@ -161,7 +162,8 @@ export class DashboardComponent implements OnInit{
    // localStorage.getItem('exp_min') -->years min
     //localStorage.getItem('exp_level_min') -->level max
    // localStorage.getItem('exp_level_max') -->level min
-    this.prospect.software_id = localStorage.getItem('soft');
+    console.log('array software',JSON.parse(localStorage.getItem('soft'))) 
+    
     this.prospect.city_id = localStorage.getItem('city');
 
     // console.log('edad_min',localStorage.getItem('age_min'))

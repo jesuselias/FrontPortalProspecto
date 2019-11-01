@@ -8,15 +8,23 @@ import { ToastrService } from "ngx-toastr";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private globalService: GlobalService,private toastr: ToastrService) { }
+  constructor(private globalService: GlobalService,private toastr: ToastrService) { 
+
+    this.software1 = [];
+      this.softwareList = [];
+      this.softwares=[];
+  }
 
   ngOnInit() {
+this.getSotware();
   }
 
   loginList: any;
-  
- password:"";
- username:"";
+  softwareList: any;
+  softwares: any;
+  software1: any;
+  password:"";
+  username:"";
   
   getLogin() {
     console.log(this.username);
@@ -32,6 +40,25 @@ export class LoginComponent implements OnInit {
           console.log(err)
         }
       );
+}
+
+getSotware() {
+  this.softwares=[];
+  this.globalService.getModel("/software").then(
+      result => {
+        console.log(result);
+        this.softwareList = result;
+       
+        this.softwareList.map(item=>{
+          this.software1.push({ id: item.software_id, name: item.software_name})
+        })
+        console.log('software login',this.software1);
+        localStorage.setItem("softwareslogin", JSON.stringify(this.software1));
+      },
+      err => {
+        console.log(err);
+      }
+    );
 }
 mensaje(){
   this.toastr.error('Usuario no registrado')
