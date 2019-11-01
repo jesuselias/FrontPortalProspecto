@@ -31,16 +31,7 @@ export class UserComponent implements OnInit{
             console.log(params);
               // Defaults to 0 if no query param provided.
               this.title=params;
-            });
-
-            this.route
-          .queryParams
-          .subscribe(params => {
-            console.log(params);
-              // Defaults to 0 if no query param provided.
-              this.experiencieList=params;
-            });
-          
+            });         
     }
 
 
@@ -54,6 +45,8 @@ export class UserComponent implements OnInit{
     prospect: any;
     titleList:any;
     cityList:any;
+    //arrayString: string[] = ['1', '2', '3']
+    experiencieList:string[]= ['Basico', 'Intermedio','Experto','Master']
 
     constructor(private globalService: GlobalService, private bsModalService: BsModalService,public  route: ActivatedRoute) {
        this.user=[];
@@ -113,26 +106,17 @@ export class UserComponent implements OnInit{
      }
   }
   
-  public experiencieList: any = [
-    {
-      experience_level: "Basico",
-      id: 1
-    },
-    {
-      experience_level: "Intermedio",
-      id: 2
-    },
-    {
-      experience_level: "Experto",
-      id: 3
-    },
-    {
-      experience_level: "Master",
-      id: 4
-    }
-    
-  ]
+  //public 
   
+  exp(){
+   
+   // let item
+   // console.log(this.prospect.experience_level)
+   // console.log(this.experiencieList)
+    //if (this.prospect.experience_level==2)
+    return this.experiencieList[this.prospect.experience_level-1]
+    ;
+  }
 }
 
 
