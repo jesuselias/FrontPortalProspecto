@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit{
   FiltersProspects:any;
 
     ngOnInit(){
+      //localStorage.clear();
       this.getsoftware();
       this.getprospects();
       this.getcountry();
@@ -158,36 +159,32 @@ export class DashboardComponent implements OnInit{
       );
   }
    prospectfilter() {
- 
-    this.arraysoftware= JSON.parse(localStorage.getItem('soft'));
+    console.log(JSON.parse(localStorage.getItem('soft')))
+    this.arraysoftware= JSON.parse(localStorage.getItem('soft'))==null? []: JSON.parse(localStorage.getItem('soft'));
     let arraysoft=[];
     this.arraysoftware.map(item=>{
       arraysoft.push({'software_id':item.id})
     })  
-    
-   
     this.prospect.city_id = localStorage.getItem('city');
 
      let postprospect = {
-    
-      "prospect_id": this.prospect.prospect_id,
-      "ageMin":localStorage.getItem('age_min'),
-      "ageMax": localStorage.getItem('age_max'),
-      "city_id": this.prospect.city_id,
-      "country_id": localStorage.getItem('country'),
-      "salaryMin": localStorage.getItem('salary_min'),
-      "salaryMax": localStorage.getItem('salary_max'),
-      "expierenceLevel": localStorage.getItem('expierenceLevel'),
-      "yearsExpierenceMin":localStorage.getItem('exp_min'),
-      "yearsExpierenceMax": localStorage.getItem('exp_min'),
+      "prospect_id": null,
+      "ageMin":localStorage.getItem('age_min')=="null"?null:Number(localStorage.getItem('age_min')),
+      "ageMax": localStorage.getItem('age_max')=="null"?null:Number(localStorage.getItem('age_max')),
+      "city_id": this.prospect.city_id=="null"?null:Number(localStorage.getItem('city')),
+      "country_id": localStorage.getItem('country')=="null"?null:localStorage.getItem('country'),
+      "salaryMin": localStorage.getItem('salary_min')=="null"?null:Number(localStorage.getItem('salary_min')),
+      "salaryMax": localStorage.getItem('salary_max')=="null"?null:Number(localStorage.getItem('salary_max')),
+      "expierenceLevel": localStorage.getItem('expierenceLevel')=="null"?null:Number(localStorage.getItem('expierenceLevel')),
+      "yearsExpierenceMin":localStorage.getItem('exp_min')=="null"?null:Number(localStorage.getItem('exp_min')),
+      "yearsExpierenceMax": localStorage.getItem('exp_max')=="null"?null:Number(localStorage.getItem('exp_max')),
       "software": arraysoft
      };
 
-     
- 
+    this.clearLocalstorage();
+     console.log(postprospect);
      this.globalService.addfilter(postprospect, "/prospect/filter").then(
        result => {
-        
         this.prospectList = result;
         console.log(this.prospectList);
        },
@@ -196,8 +193,18 @@ export class DashboardComponent implements OnInit{
          //this.loader.dismiss();
        }
      );
-    
-     this.onClose();
+   }
+   clearLocalstorage(){
+     localStorage.setItem("country", null);
+     localStorage.setItem("city", null);
+     localStorage.setItem("age_min", null);
+     localStorage.setItem("age_max", null);
+     localStorage.setItem("salary_min", null);
+     localStorage.setItem("salary_max", null);
+     localStorage.setItem("expierenceLevel", null);
+     localStorage.setItem("exp_min", null);
+     localStorage.setItem("exp_max", null);
+     localStorage.setItem("soft",null);
    }
   showProspect() {
     this.globalService.getModel("/city/" +  this.city.city_id).then(

@@ -126,6 +126,7 @@ export class SidebarComponent implements OnInit {
     localStorage.setItem("country", this.countryTest.country_id)
     }
     selectYearsExp(event){
+     
       this.exp_min = event.value.lower;
       this.exp_max = event.value.upper;
       localStorage.setItem("exp_min", this.exp_min);
