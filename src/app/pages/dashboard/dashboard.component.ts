@@ -5,6 +5,7 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { element } from 'protractor';
 import { observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -15,6 +16,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 
 export class DashboardComponent implements OnInit{
+
   contacto: FormGroup;
   submitted = false;
   pageActual: number = 1;
@@ -46,14 +48,24 @@ export class DashboardComponent implements OnInit{
   index : any;
   prospect:any;
   FiltersProspects:any;
-  constructor(private globalService: GlobalService, private bsModalService: BsModalService, private formBuilder: FormBuilder) {
-      this.softwareList = [];
+  model: NgbDateStruct;
+  date: {year: number, month: number};
+
+    
+  
+
+  constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
+    private formBuilder: FormBuilder,private calendar: NgbCalendar) {
+    
+    this.softwareList = [];
       this.software = [];
       this.prospect=[];
       this.prospectList=[];
       this.softwares= [];
       this.software1 = [];
+      
     }
+
     ngOnInit(){
       //localStorage.clear();
       this.getsoftware();
@@ -66,7 +78,7 @@ export class DashboardComponent implements OnInit{
         usuario: ['', Validators.required],            
         password: ['', Validators.required],
     });
-
+    this.submitted = false;
     } 
 
    
@@ -120,10 +132,18 @@ export class DashboardComponent implements OnInit{
    
     
     OpenProspectModal(template: TemplateRef<any>, option, index:number) {
+
+
       this.prospect=[];
       this.softwares=[];
+      
      //console.log(item)
       if(option==="save"){
+
+        this.contacto = this.formBuilder.group({
+          prospect_name: ['', Validators.required],            
+          prospect_lastname: ['', Validators.required],
+      });
         this.titleModal='Create prospect';
         this.save=true;
       }else
@@ -383,6 +403,14 @@ getsoftware() {
   }
 
   saveprospect() {
+
+     this.submitted = true;
+
+      if (this.contacto.invalid) {
+          return;
+      } else
+
+     // alert('Usuario Correcto !')
    
    console.log(this.experiencieList);
     let arraysoft=[];
@@ -430,8 +458,19 @@ getsoftware() {
     this.edit=false;
     this.save=false;
     this.bsModalRef.hide();
+    this.submitted = false;
   }
 
+  get f() { return this.contacto.controls; }
 
+  onSubmit() {
+      this.submitted = true;
+
+      if (this.contacto.invalid) {
+          return;
+      }
+
+     // alert('Usuario Correcto !')
+  }
     
 }
