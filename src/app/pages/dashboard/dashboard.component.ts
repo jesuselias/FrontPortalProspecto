@@ -74,10 +74,7 @@ export class DashboardComponent implements OnInit{
       this.gettile();
       this.getcity();
       this.chartColor = "#FFFFFF";
-      this.contacto = this.formBuilder.group({
-        usuario: ['', Validators.required],            
-        password: ['', Validators.required],
-    });
+    
     this.submitted = false;
     } 
 
@@ -143,11 +140,35 @@ export class DashboardComponent implements OnInit{
         this.contacto = this.formBuilder.group({
           prospect_name: ['', Validators.required],            
           prospect_lastname: ['', Validators.required],
+          prospect_birthday: ['', Validators.required],
+          prospect_phonenumber: ['', Validators.required],
+          prospect_address: ['', Validators.required],
+          prospect_salary: ['', Validators.required],
+          prospect_cv: ['', Validators.required],
+          prospect_photo: ['', Validators.required],
+          prospect_link: ['', Validators.required],
+          experience_years: ['', Validators.required],
+
+
       });
         this.titleModal='Create prospect';
         this.save=true;
       }else
       if(option==="edit"){
+        this.contacto = this.formBuilder.group({
+          prospect_name: ['', Validators.required],            
+          prospect_lastname: ['', Validators.required],
+          prospect_birthday: ['', Validators.required],
+          prospect_phonenumber: ['', Validators.required],
+          prospect_address: ['', Validators.required],
+          prospect_salary: ['', Validators.required],
+          prospect_cv: ['', Validators.required],
+          prospect_photo: ['', Validators.required],
+          prospect_link: ['', Validators.required],
+          experience_years: ['', Validators.required],
+
+
+      });
         this.titleModal='Edit prospect';
         this.edit=true;
         this.prospect=this.prospectList[index];
@@ -335,6 +356,7 @@ getsoftware() {
        
         this.softwareList.map(item=>{
           this.software.push({ id: item.software_id, name: item.software_name})
+          
         })
       },
       err => {
