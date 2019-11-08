@@ -26,7 +26,7 @@ export const ROUTES: RouteInfo[] = [
     moduleId: module.id,
     selector: 'sidebar-cmp',
     templateUrl: 'sidebar.component.html',
-    
+    styleUrls: ['./sidebar.component.scss']
 })
 
 

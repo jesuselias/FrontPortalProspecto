@@ -22,7 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { NgxMultiselectModule } from '@ngx-lib/multiselect';
 
-
+import { Ng5SliderModule } from 'ng5-slider';
 
 
 //I keep the new line
@@ -38,7 +38,7 @@ import { NgxMultiselectModule } from '@ngx-lib/multiselect';
     FormsModule, ReactiveFormsModule,NgxMultiselectModule,
     BrowserAnimationsModule,  
     BrowserModule, NgxPaginationModule,
-    HttpClientModule,
+    HttpClientModule,Ng5SliderModule,
     
     RouterModule.forRoot(AppRoutes, {
       useHash: true

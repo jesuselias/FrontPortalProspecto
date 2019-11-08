@@ -16,6 +16,14 @@ export class LoginComponent implements OnInit {
     this.software1 = [];
       this.softwareList = [];
       this.softwares=[];
+      
+    this.country1 = [];
+    this.softwareList = [];
+    this.softwares=[];
+
+    this.country1 = [];
+    this.countrys1 = [];
+    this.countryList1 = [];
   }
 
   ngOnInit() {
@@ -25,12 +33,19 @@ export class LoginComponent implements OnInit {
   });
   
 this.getSotware();
+
+this.getcountry1();
   }
 
   loginList: any;
   softwareList: any;
   softwares: any;
   software1: any;
+
+  country1:any;
+  countrys1:any;
+  countryList1:any;
+
   password:"";
   username:"";
   
@@ -68,6 +83,25 @@ getSotware() {
       }
     );
 }
+
+getcountry1() {
+
+  this.globalService.getModel("/country").then(
+      result => {
+        this.countryList1 = result;
+       
+        this.countryList1.map(item=>{
+          this.country1.push({ id: item.country_id, name: item.country_name})
+          console.log(item.country_id);
+          localStorage.setItem("countryslogin", JSON.stringify(this.country1));
+        })
+      },
+      err => {
+        console.log(err);
+      }
+    );
+}
+
 mensaje(){
   this.toastr.error('Usuario no registrado')
 }

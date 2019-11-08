@@ -24,6 +24,19 @@
               </ngx-multiselect>
              
           </div>
+
+          <div class="form-group row" style="margin-left: 4px;width: 111px;">
+              <label class="col-4 col-form-label" style="color: white;">Pais</label> 
+             
+                <ngx-multiselect 
+                (click)="selectSoft($event)"
+                  name="software_Prospect"
+                  [(ngModel)]="softwares"
+                  [options]="software1"
+                 >
+                </ngx-multiselect>
+               
+            </div>
                    
            
               <div class="form-group">
@@ -31,8 +44,10 @@
                   <div class="input-group">
                 
                       <select (click)="selectCountry($event)" class="form-control" [(ngModel)]="countryTest.country_id"  (ngModelChange)="showcity()" >
-                          <option *ngFor="let country of countryList; let i = index" [ngValue]="countryList[i].country_id">
-                             {{countryList[i].country_name}}
+                         
+                        <option *ngFor="let country of countryList; let i = index" [ngValue]="countryList[i].country_id">
+                            
+                            {{countryList[i].country_name}}
                            </option>
                           </select>
                   </div>
@@ -57,17 +72,18 @@
             <div class="d-flex justify-content-center my-4">
               <span class="font-weight-bold purple-text mr-2 mt-1">0</span>
               <form class="range-field w-75">
-              <igx-slider (onValueChange)="selectYearsExp($event)"  [type]="sliderType.RANGE" [minValue]="0" [maxValue]="50" ></igx-slider>
+              <igx-slider (onValueChange)="selectYearsExp($event)"  [type]="sliderType.RANGE" [minValue]="0" [maxValue]="20" ></igx-slider>
             </form>
-            <span class="font-weight-bold indigo-text ml-2 mt-1">50</span>
+            <span class="font-weight-bold indigo-text ml-2 mt-1">20</span>
             </div>
-            
+         
 
           <div class="form-group">
             <label class="text-white">Nivel de Experiencia</label>
             <div class="input-group">
           
               <select (click)="selectLevelExp($event)" name="experience_level" class="form-control"  [(ngModel)]="levelTest">
+                  <option value="">---Please select---</option>
                 <option  *ngFor="let item of experiencieList; let i = index" [ngValue]="item.id">
                    {{experiencieList[i].experience_level}}
                  </option>
@@ -79,7 +95,7 @@
             <div class="d-flex justify-content-center my-4">
               <span class="font-weight-bold purple-text mr-2 mt-1">0</span>
               <form class="range-field w-75">
-            <igx-slider (onValueChange)="selectAgeExp($event)" [type]="sliderType.RANGE" [minValue]="0" [maxValue]="100" ></igx-slider>
+            <igx-slider class="sliders" (onValueChange)="selectAgeExp($event)" [type]="sliderType.RANGE" [minValue]="0" [maxValue]="100" ></igx-slider>
           </form>
           <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
           </div>

@@ -6,17 +6,28 @@ import { element } from 'protractor';
 import { observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-
-
+import { SliderType } from "igniteui-angular";
+import { Options } from 'ng5-slider';
 
 @Component({
     selector: 'dashboard-cmp',
     moduleId: module.id,
     templateUrl: 'dashboard.component.html'
+    
 })
 
 export class DashboardComponent implements OnInit{
 
+  value: number = 100;
+  options: Options = {
+    floor: 0,
+    ceil: 200
+  };
+  public sliderType = SliderType;
+  public priceRange: PriceRange = new PriceRange(200, 800);
+  public exp: Exp = new Exp(200, 800);
+  public lexp: Lexp = new Lexp(200, 800);
+  public age: Age = new Age(200, 800);
   contacto: FormGroup;
   submitted = false;
   pageActual: number = 1;
@@ -41,8 +52,14 @@ export class DashboardComponent implements OnInit{
   save: boolean=false;
   edit: boolean=false;
   softwares: any;
+  softwares1: any;
+  software1: any;
+  country1:any;
+  countrys1:any;
+  countryList1:any;
+  softwareList1: any;
+  cityTest: any;
   software: any;
-  software1:any;
   software_Prospect: any;
   softwareList: any;
   index : any;
@@ -58,17 +75,27 @@ export class DashboardComponent implements OnInit{
     private formBuilder: FormBuilder,private calendar: NgbCalendar) {
     
     this.softwareList = [];
+    this.softwareList1 = [];
       this.software = [];
       this.prospect=[];
       this.prospectList=[];
       this.softwares= [];
+      this.softwares1=[];
       this.software1 = [];
+      this.country1 = [];
+      this.countrys1 = [];
+      this.countryList1 = [];
+      this.cityTest = [];
       
     }
 
     ngOnInit(){
       //localStorage.clear();
+      this.selectCountry()
+      this.selectSoftware();
       this.getsoftware();
+      this.getsoftware1();
+      this.getcountry1();
       this.getprospects();
       this.getcountry();
       this.gettile();
@@ -126,7 +153,26 @@ export class DashboardComponent implements OnInit{
            return item.title_name;
        }
     }
-   
+
+    selectSoftware(){
+      localStorage.getItem('softwareslogin');
+     this.software1= JSON.parse(localStorage.getItem('softwareslogin'))
+    }
+    selectSoft(event){
+      localStorage.setItem("soft", JSON.stringify(this.softwares))
+    }
+
+    selectCountry(){
+      localStorage.getItem('countryslogin');
+     this.country1= JSON.parse(localStorage.getItem('countryslogin'))
+    }
+
+    selectCity(event){
+  
+      localStorage.setItem("city", this.cityTest)
+    }
+
+    
     
     OpenProspectModal(template: TemplateRef<any>, option, index:number) {
 
@@ -273,7 +319,7 @@ export class DashboardComponent implements OnInit{
         }
       );
     }
-
+    
     showcity() {
       this.globalService.getModel("/country/" + this.prospect.country_id + "/city").then(
         result => {
@@ -346,6 +392,40 @@ gettile() {
         }
       );
 }
+
+getsoftware1() {
+  this.globalService.getModel("/software").then(
+      result => {
+        this.softwareList1 = result;
+       
+        this.softwareList1.map(item=>{
+          this.software1.push({ id: item.software_id, name: item.software_name})
+          
+        })
+      },
+      err => {
+        console.log(err);
+      }
+    );
+}
+
+getcountry1() {
+
+  this.globalService.getModel("/country").then(
+      result => {
+        this.countryList1 = result;
+       
+        this.countryList1.map(item=>{
+          this.country1.push({ id: item.country_id, name: item.country_name})
+          console.log(item.country_id);
+        })
+      },
+      err => {
+        console.log(err);
+      }
+    );
+}
+
 
  
 
@@ -501,4 +581,40 @@ getsoftware() {
      // alert('Usuario Correcto !')
   }
     
+}
+
+class PriceRange {
+  constructor(
+    public lower: number,
+    public upper: number,
+  ) {
+  }
+
+}
+
+class Exp {
+  constructor(
+    public lower: number,
+    public upper: number,
+  ) {
+  }
+
+}
+
+class Lexp {
+  constructor(
+    public lower: number,
+    public upper: number,
+  ) {
+  }
+
+}
+
+class Age {
+  constructor(
+    public lower: number,
+    public upper: number,
+  ) {
+  }
+
 }

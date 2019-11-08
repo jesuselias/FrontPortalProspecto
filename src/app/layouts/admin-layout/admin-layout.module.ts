@@ -22,6 +22,12 @@ import { TitleComponent } from '../../pages/title/title.component';
 import {AssignmentComponent} from '../../pages/assignment/assignment.component';
 import { NgxMultiselectModule } from '@ngx-lib/multiselect';
 import {NgxPaginationModule} from 'ngx-pagination'; 
+import { 
+	IgxInputGroupModule,
+	IgxSliderModule
+ } from "igniteui-angular";
+
+ import { Ng5SliderModule } from 'ng5-slider';
 
 @NgModule({
   imports: [
@@ -32,7 +38,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NgbModule,
     ModalModule.forRoot(),
     NgxMultiselectModule,
-    NgbModalModule,
+    NgbModalModule,IgxInputGroupModule,
+    IgxSliderModule,Ng5SliderModule
   ],
   declarations: [
     DashboardComponent,
@@ -46,6 +53,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     SoftwareComponent,
     TitleComponent,
     AssignmentComponent,
+    
    
   ],
   

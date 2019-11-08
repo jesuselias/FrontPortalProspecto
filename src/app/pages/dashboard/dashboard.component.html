@@ -1,5 +1,73 @@
 <div class="row">
-  <div class="col-md-12">
+  
+            
+          
+          <div class="col-md-3 " >
+              <div class="card" style="align-content: center;background-color: #6c757d;">
+                  <div class="logo">
+                      <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+                  
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                      </a>
+                      <a href="" class="simple-text logo-normal">
+                        Filtros
+                      </a>
+                    </div>
+
+                  <div class="form-group row" style="margin-left: 4px;width: 200px;">
+                  <label class="text-white"  style="color:black;" >Nivel de Experiencia</label>
+                  <div class="input-group">
+                
+                    <select (click)="selectLevelExp($event)" name="experience_level" class="form-control"  [(ngModel)]="levelTest">
+                        <option value="">---Please select---</option>
+                      <option  *ngFor="let item of experiencieList; let i = index" [ngValue]="item.id">
+                         {{experiencieList[i].experience_level}}
+                       </option>
+                      </select>
+                  </div>
+                </div>
+
+                <div class="form-group row" style="margin-left: 4px;width: 111px;">
+                    <label  style="color:black;">Software</label> 
+                   
+                      <ngx-multiselect 
+                        name="software_Prospect"
+                        [(ngModel)]="softwares1"
+                        [options]="software1"
+                       >
+                      </ngx-multiselect>
+                     
+                  </div>
+                  
+                  <div class="form-group row" style="margin-left: 4px;width: 111px;">
+                      <label class="col-4 col-form-label" style="color:black;">Pais</label> 
+                     
+                        <ngx-multiselect 
+                          name="software_Prospect"
+                          [(ngModel)]="countrys1"
+                          [options]="country1"
+                         >
+                        </ngx-multiselect>
+                       
+                    </div>
+                    <label class="col-4 col-form-label">Ciudad*</label> 
+                    <div class="form-group row">
+                  
+                       
+                        <div *ngIf="countrys1.length < 2" class="col-8">
+                        <select class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" [ngModelOptions]="{standalone: true}">
+                          <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
+                             {{cityList[i].city_name}}
+                           </option>
+                          </select>                                    
+                       </div>
+                    </div>
+
+                    <ng5-slider [(value)]="value" [options]="options"></ng5-slider>
+
+          </div>
+        </div>
+          <div class="col-md-9">
     
       <div class="card-header">
         <h4 class="card-title align-center">Prospecto</h4>
@@ -132,7 +200,7 @@
               </div>
 
                  <div class="form-group row">
-                  <label class="col-4 col-form-label">Salario*</label> 
+                  <label class="col-4 col-form-label">Salario($)*</label> 
                   <div class="col-8">
                   <input type="text" formControlName="prospect_salary" class="form-control" [(ngModel)]="prospect.prospect_salary" [ngClass]="{ 'is-invalid': submitted && f.prospect_salary.errors }" />
                   <div *ngIf="submitted && f.prospect_salary.errors" class="invalid-feedback">
