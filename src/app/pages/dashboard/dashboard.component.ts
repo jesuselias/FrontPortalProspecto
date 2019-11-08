@@ -406,6 +406,9 @@ getsoftware() {
       'software_prospect': arraysoft,
       'experience_years': this.prospect.experience_years,
       'experience_level': this.prospect.experience_level,
+      'email': this.prospect.email,
+      'commentary': this.prospect.commentary,
+      'referral_name': this.prospect.referral_name,
       
     };
    
@@ -459,6 +462,9 @@ getsoftware() {
       'software_prospect': arraysoft,
       'experience_years': this.prospect.experience_years,
       'experience_level': this.prospect.experience_level,
+      'email': this.prospect.email,
+      'commentary': this.prospect.commentary,
+      'referral_name': this.prospect.referral_name,
 
      
     };
