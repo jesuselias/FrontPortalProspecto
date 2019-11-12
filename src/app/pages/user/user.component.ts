@@ -15,9 +15,11 @@ import { GlobalService } from "../providers/global.service";
 export class UserComponent implements OnInit{
     ngOnInit(){
         //this.getUsers();
+        this.initialValues();
         this.gettile();
         this.getcity();
         this.getsoftware();
+        
         this.route
         .queryParams
         .subscribe(params => {
@@ -25,26 +27,23 @@ export class UserComponent implements OnInit{
             // Defaults to 0 if no query param provided.
             this.prospect=params;
           });
-
-          this.route
-          .queryParams
-          .subscribe(params => {
-            console.log(params);
-              // Defaults to 0 if no query param provided.
-              this.title=params;
-            });     
-
-            this.route
-            .queryParams
-            .subscribe(params => {
-              console.log(params);
-                // Defaults to 0 if no query param provided.
-                this.software=params;
-              });
           }
 
-    software: any;
-    softwareList: any;
+             
+public initialValues(){
+  let loged= JSON.stringify(localStorage.getItem("loged"));
+  //localStorage.clear();
+  console.log(loged);
+
+  if(loged!="true"){
+    return location.href='#';
+  }
+}
+   
+    software_Prospect:any;
+    software:any;
+    softwares: any;
+    softwareList:any
     title : any;
     UserList: any;
     bsModalRef: BsModalRef;
@@ -60,6 +59,7 @@ export class UserComponent implements OnInit{
     constructor(private globalService: GlobalService, private bsModalService: BsModalService,
       public  route: ActivatedRoute) {
        this.user=[];
+       
        
     }
    
@@ -121,11 +121,11 @@ export class UserComponent implements OnInit{
   }
   checkTitle(id) {
     let item;
-    console.log(this.titleList)
+    //console.log(this.titleList)
      for(item of this.titleList)
      {
 
-     console.log(item)
+    // console.log(item)
       if(item.title_id==id)
          return item.title_name;
      }
@@ -139,7 +139,9 @@ export class UserComponent implements OnInit{
      console.log(item)
       if(item.software_id==id)
          return item.software_name;
-     }
+     
+      }
+
   }
   exp(){
     return this.experiencieList[this.prospect.experience_level-1]

@@ -18,14 +18,14 @@ import { Options } from 'ng5-slider';
 
 export class DashboardComponent implements OnInit{
   
-  minValue: number = 1;
+  minValue: number = 0;
   maxValue: number = 20;
   options: Options = {
     floor: 0,
     ceil: 20
   };
 
-  minValue2: number = 1;
+  minValue2: number = 0;
   maxValue2: number = 100;
   options2: Options = {
     floor: 0,
@@ -34,8 +34,8 @@ export class DashboardComponent implements OnInit{
 
 
 
-  minValue3: number = 100;
-  maxValue3: number = 400;
+  minValue3: number = 0;
+  maxValue3: number = 1000;
   options3: Options = {
     floor: 0,
     ceil: 2000,
@@ -49,6 +49,9 @@ export class DashboardComponent implements OnInit{
   // public exp: Exp = new Exp(200, 800);
   // public lexp: Lexp = new Lexp(200, 800);
   // public age: Age = new Age(200, 800);
+  yearsExpierenceMin:any;
+  yearsExpierenceMax:any;
+
   contacto: FormGroup;
   submitted = false;
   pageActual: number = 1;
@@ -62,6 +65,7 @@ export class DashboardComponent implements OnInit{
   request: any;
   prospectList: any;
   country:any;
+  countrys:any;
   countryList :any;
   city:any;
   cityList:any;
@@ -88,8 +92,22 @@ export class DashboardComponent implements OnInit{
   FiltersProspects:any;
   model: NgbDateStruct;
   date: {year: number, month: number};
+  levelTest: any;
+  postprospect = {
+      
+    "ageMin": null,
+    "ageMax": null,
+    "city_id": null,
+    "country_list": [],
+    'experience_years': null,
+    "salaryMin": null,
+    "salaryMax": null,
+    "expierenceLevel": null,
+    "yearsExpierenceMin": null,
+    "yearsExpierenceMax": null,
+    "software":[]
 
-    
+   };  
   
 
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
@@ -107,6 +125,8 @@ export class DashboardComponent implements OnInit{
       this.countrys1 = [];
       this.countryList1 = [];
       this.cityTest = [];
+      this.yearsExpierenceMin=[];
+      this.yearsExpierenceMax=[];
       
     }
 
@@ -270,38 +290,168 @@ export class DashboardComponent implements OnInit{
         }
       );
   }
-   prospectfilter() {
+   prospectexp(event) {
    // console.log(JSON.parse(localStorage.getItem('soft')))
-   let arraysoft=[];
-   this.softwares.map(item=>{
-  //   console.log(item);
-     arraysoft.push({'software_id':item.id})
+    console.log(event)
+    this.postprospect.expierenceLevel=event
+    this.filterApp(this.postprospect);
+    let arraysoft=[];
+    let arraycountry=[];
+  //   this.softwares.map(item=>{
+  //  //   console.log(item);
+  //     arraysoft.push({'software_id':null})
+ 
+     
+      // })
+
+
+     
+   }
+
+   prospectyear(event) {
+    // console.log(JSON.parse(localStorage.getItem('soft')))
+     console.log(event)
+     this.postprospect.yearsExpierenceMin=event.value;
+     this.postprospect.yearsExpierenceMax=event.highValue;
+     this.filterApp(this.postprospect);
+     let arraysoft=[];
+     let arraycountry=[];
+   //   this.softwares.map(item=>{
+   //  //   console.log(item);
+   //     arraysoft.push({'software_id':null})
+  
+      
+       // })
+ 
+ 
+      
+    }
+
+    prospectage(event) {
+      // console.log(JSON.parse(localStorage.getItem('soft')))
+       console.log(event)
+       this.postprospect.ageMin=event.value;
+       this.postprospect.ageMax=event.highValue;
+       this.filterApp(this.postprospect);
+       let arraysoft=[];
+       let arraycountry=[];
+     //   this.softwares.map(item=>{
+     //  //   console.log(item);
+     //     arraysoft.push({'software_id':null})
+    
+        
+         // })
+   
+   
+        
+      }
+
+      prospectsalary(event) {
+        // console.log(JSON.parse(localStorage.getItem('soft')))
+         console.log(event)
+         this.postprospect.salaryMin=event.value;
+         this.postprospect.salaryMax=event.highValue;
+         this.filterApp(this.postprospect);
+         let arraysoft=[];
+         let arraycountry=[];
+       //   this.softwares.map(item=>{
+       //  //   console.log(item);
+       //     arraysoft.push({'software_id':null})
+      
+          
+           // })
+     
+     
+          
+        }
+
+   prospectcity(event) {
+    // console.log(JSON.parse(localStorage.getItem('soft')))
+     console.log(event)
+     this.postprospect.city_id=event
+     this.filterApp(this.postprospect);
+     let arraysoft=[];
+     let arraycountry=[];
+   //   this.softwares.map(item=>{
+   //  //   console.log(item);
+   //     arraysoft.push({'software_id':null})
+  
+      
+       // })
+ 
+ 
+      
+    }
 
     
-     })
+    prospectcountry(event) {
+      // console.log(JSON.parse(localStorage.getItem('soft')))
+       console.log(event)
+       let arraycountry=[];
+       let country=event;
+       country.map(item=>{
+      //   console.log(item);
+      arraycountry.push(item.id)
+        //console.log( this.softwares1)
+      
+         })
+  
+         console.log(arraycountry)
+       this.postprospect.country_list=arraycountry
+       this.filterApp(this.postprospect);
+       
+     //   this.softwares.map(item=>{
+     //  //   console.log(item);
+     //     arraysoft.push({'software_id':null})
+    
+        
+         // })
+   
+   
+        
+      }
 
-    this.prospect.city_id = localStorage.getItem('city');
 
-     let postprospect = {
-      // "prospect_id": null,
-      // "ageMin":this.prospect.ageMin,
-      // "ageMax":this.prospect.ageMax,
-      // "city_id": this.prospect.city_id=="null"?null:Number(localStorage.getItem('city')),
-      // "country_id": localStorage.getItem('country')=="null"?null:localStorage.getItem('country'),
-      // "salaryMin": localStorage.getItem('salary_min')=="null"?null:Number(localStorage.getItem('salary_min')),
-      // "salaryMax": localStorage.getItem('salary_max')=="null"?null:Number(localStorage.getItem('salary_max')),
-      // "expierenceLevel": localStorage.getItem('expierenceLevel')=="null"?null:Number(localStorage.getItem('expierenceLevel')),
-      // "yearsExpierenceMin":localStorage.getItem('exp_min')=="null"?null:Number(localStorage.getItem('exp_min')),
-      // "yearsExpierenceMax": localStorage.getItem('exp_max')=="null"?null:Number(localStorage.getItem('exp_max')),
-      "software": arraysoft
-     };
+    prospectsoft(event) {
+      // console.log(JSON.parse(localStorage.getItem('soft')))
+       console.log(event)
+       let arraysoft=[];
+       let soft=event;
+       soft.map(item=>{
+      //   console.log(item);
+         arraysoft.push({'software_id':item.id})
+        //console.log( this.softwares1)
+        
+         })
+  
+         console.log(arraysoft)
+       this.postprospect.software=arraysoft
+       this.filterApp(this.postprospect);
+       
+       let arraycountry=[];
+     //   this.softwares.map(item=>{
+     //  //   console.log(item);
+     //     arraysoft.push({'software_id':null})
+    
+        
+         // })
+   
+   
+        
+      }
+  
 
+//age_min=null,ageMax=null,city_id=null,country_list=null,experience_years=null, 
+//salaryMin=null,salaryMax=null,yearsExpierenceMin=null,yearsExpierenceMax=null,arraycountry=[],arraysoft=[]
+
+   filterApp(postprospect){
+    console.log(postprospect);
     this.clearLocalstorage();
     //  console.log(postprospect);
      this.globalService.addfilter(postprospect, "/prospect/filter").then(
        result => {
         this.prospectList = result;
-        console.log(this.prospectList);
+        console.log(result);
        },
        err => {
          console.log(err);
@@ -309,6 +459,8 @@ export class DashboardComponent implements OnInit{
        }
      );
    }
+
+
    clearLocalstorage(){
      localStorage.setItem("country", null);
      localStorage.setItem("city", null);

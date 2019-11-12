@@ -13,6 +13,7 @@ import { GlobalService } from "../providers/global.service";
 
 export class TitleComponent implements OnInit{
   ngOnInit(){
+    this.initialValues();
       this.getTitle();
   }
 
@@ -49,7 +50,15 @@ export class TitleComponent implements OnInit{
     this.bsModalRef = this.bsModalService.show(template);
     
   }
-
+  public initialValues(){
+    let logged= localStorage.getItem("logged");
+    //localStorage.clear();
+    console.log(logged);
+  
+    if(logged!="true"){
+      return location.href='#';
+    }
+  }
   getTitle() {
       this.globalService.getModel("/title").then(
           result => {
