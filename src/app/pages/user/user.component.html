@@ -75,9 +75,8 @@
                   </div>
                   <div class="form-group row">
                       <div class="col-4 col-form-label">Software Asociado*</div> 
-                      <div class="col-8">
-
-                        {{checkSoftware(1)}}
+                      <div class="col-8" *ngFor="let item of softwareList;let i = index">
+                       {{item}}
                       </div>
                     </div>
                   <div class="form-group row">
@@ -116,6 +115,19 @@
                         {{exp()}}
                     </div>
                   </div>
+                  <div class="form-group row">
+                    <div class="col-4 col-form-label">Email*</div> 
+                    <div class="col-8">
+                      {{prospect.email}}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-4 col-form-label">Comentarios*</div> 
+                    <div class="col-8">
+                      {{prospect.commentary}}
+                    </div>
+                  </div>
+              
               </form>
                       </div>
                   </div>

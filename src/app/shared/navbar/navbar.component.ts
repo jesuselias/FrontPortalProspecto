@@ -50,6 +50,14 @@ export class NavbarComponent implements OnInit{
           this.sidebarClose();
        });
     }
+   
+    public salir(){
+      let logged= localStorage.getItem("logged");
+      if(logged=="true"){
+        return localStorage.clear();
+        
+      }
+    }
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());
       if(titlee.charAt(0) === '#'){

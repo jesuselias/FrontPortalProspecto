@@ -39,9 +39,7 @@ export class TitleComponent implements OnInit{
     if(option==="edit"){
       this.titleModal='Edit Title';
       this.edit=true;
-      console.log(this.titleList[index])
       this.title=this.titleList[index];
-      console.log(this.title);
     }else
     if(option==='delete'){
       this.title=this.titleList[index];
@@ -52,9 +50,6 @@ export class TitleComponent implements OnInit{
   }
   public initialValues(){
     let logged= localStorage.getItem("logged");
-    //localStorage.clear();
-    console.log(logged);
-  
     if(logged!="true"){
       return location.href='#';
     }
@@ -62,28 +57,20 @@ export class TitleComponent implements OnInit{
   getTitle() {
       this.globalService.getModel("/title").then(
           result => {
-            console.log(result);
             this.titleList = result;
           },
           err => {
             console.log(err);
-            //this.loader.dismiss();
           }
         );
   }
-  
-  
-
   deleteTitle() {
     this.globalService.removeModel(this.title.title_id,"/title").then(
       result => {
-        console.log(result);
         this.getTitle();
       },
       err => {
         console.log(err);
-        
-        //this.loader.dismiss();
       }
     );
     
@@ -91,8 +78,6 @@ export class TitleComponent implements OnInit{
   }
 
   editTitle() {
-    console.log(this.title)
-    
     let postTitle = {
       'title_id': this.title.title_id,
       'title_name': this.title.title_name,
@@ -101,19 +86,14 @@ export class TitleComponent implements OnInit{
 
     this.globalService.updateModel(this.title.id,postTitle, "/title").then(
       result => {
-        console.log(result);
         this.getTitle();
       },
       err => {
         console.log(err);
-        //this.loader.dismiss();
       }
     );
-   
     this.onClose()
   }
-
-
   saveTitle() {
     console.log(this.title)
     
@@ -125,12 +105,10 @@ export class TitleComponent implements OnInit{
 
     this.globalService.addModel(postTitle, "/title").then(
       result => {
-        console.log(result);
         this.getTitle();
       },
       err => {
         console.log(err);
-        //this.loader.dismiss();
       }
     );
    

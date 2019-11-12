@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.clear();
     this.contacto = this.formBuilder.group({
       usuario: ['', Validators.required],            
       password: ['', Validators.required],
@@ -51,10 +52,10 @@ this.getcountry1();
   username:"";
   
   getLogin() {
-    console.log(this.username);
+    //console.log(this.username);
     this.globalService.getUser("/users/"+this.username+"/"+this.password).then(
         result => {
-          console.log(result);
+        //  console.log(result);
           if (result===0)
           {
             localStorage.setItem("logged","true");
