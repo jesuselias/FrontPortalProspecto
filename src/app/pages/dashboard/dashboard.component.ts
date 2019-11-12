@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { SliderType } from "igniteui-angular";
 import { Options } from 'ng5-slider';
+import { LoginComponent} from 'app/login/login.component'
 
 @Component({
     selector: 'dashboard-cmp',
@@ -73,9 +74,10 @@ export class DashboardComponent implements OnInit{
 
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
     private formBuilder: FormBuilder,private calendar: NgbCalendar) {
-    
-    this.softwareList = [];
-    this.softwareList1 = [];
+      this.initialValues();
+
+      this.softwareList = [];
+      this.softwareList1 = [];
       this.software = [];
       this.prospect=[];
       this.prospectList=[];
@@ -90,22 +92,35 @@ export class DashboardComponent implements OnInit{
     }
 
     ngOnInit(){
-      //localStorage.clear();
-      this.selectCountry()
-      this.selectSoftware();
-      this.getsoftware();
-      this.getsoftware1();
-      this.getcountry1();
-      this.getprospects();
-      this.getcountry();
-      this.gettile();
-      this.getcity();
-      this.chartColor = "#FFFFFF";
+
     
-    this.submitted = false;
+        this.selectCountry()
+        this.selectSoftware();
+        this.getsoftware();
+        this.getsoftware1();
+        this.getcountry1();
+        this.getprospects();
+        this.getcountry();
+        this.gettile();
+        this.getcity();
+        this.chartColor = "#FFFFFF";
+      
+      this.submitted = false;
+      
+    
     } 
 
    
+public initialValues(){
+  let logged= localStorage.getItem("logged");
+  //localStorage.clear();
+  console.log(logged);
+
+  if(logged!="true"){
+    return location.href='#';
+  }
+}
+
 
    public experiencieList: any = [
     {

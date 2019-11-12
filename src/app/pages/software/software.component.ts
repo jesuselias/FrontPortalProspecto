@@ -14,6 +14,7 @@ import { GlobalService } from "../providers/global.service";
 
 export class SoftwareComponent implements OnInit{
     ngOnInit(){
+      this.initialValues();
         this.getSoftwares();
     }
 
@@ -49,6 +50,16 @@ export class SoftwareComponent implements OnInit{
       }
       this.bsModalRef = this.bsModalService.show(template);
       
+    }
+
+    public initialValues(){
+      let logged= localStorage.getItem("logged");
+      //localStorage.clear();
+      console.log(logged);
+    
+      if(logged!="true"){
+        return location.href='#';
+      }
     }
 
     getSoftwares() {
