@@ -17,17 +17,38 @@ import { Options } from 'ng5-slider';
 })
 
 export class DashboardComponent implements OnInit{
-
-  value: number = 100;
+  
+  minValue: number = 1;
+  maxValue: number = 20;
   options: Options = {
     floor: 0,
-    ceil: 200
+    ceil: 20
   };
-  public sliderType = SliderType;
-  public priceRange: PriceRange = new PriceRange(200, 800);
-  public exp: Exp = new Exp(200, 800);
-  public lexp: Lexp = new Lexp(200, 800);
-  public age: Age = new Age(200, 800);
+
+  minValue2: number = 1;
+  maxValue2: number = 100;
+  options2: Options = {
+    floor: 0,
+    ceil: 100
+  };
+
+
+
+  minValue3: number = 100;
+  maxValue3: number = 400;
+  options3: Options = {
+    floor: 0,
+    ceil: 2000,
+    translate: (value: number): string => {
+      return '$' + value;
+    }
+  };
+  
+  // public sliderType = SliderType;
+  // public priceRange: PriceRange = new PriceRange(200, 800);
+  // public exp: Exp = new Exp(200, 800);
+  // public lexp: Lexp = new Lexp(200, 800);
+  // public age: Age = new Age(200, 800);
   contacto: FormGroup;
   submitted = false;
   pageActual: number = 1;
@@ -72,7 +93,7 @@ export class DashboardComponent implements OnInit{
   
 
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
-    private formBuilder: FormBuilder,private calendar: NgbCalendar) {
+    private formBuilder: FormBuilder) {
     
     this.softwareList = [];
     this.softwareList1 = [];
@@ -95,7 +116,7 @@ export class DashboardComponent implements OnInit{
       this.selectSoftware();
       this.getsoftware();
       this.getsoftware1();
-      this.getcountry1();
+      
       this.getprospects();
       this.getcountry();
       this.gettile();
@@ -227,7 +248,7 @@ export class DashboardComponent implements OnInit{
              name: this.checkSoftware(item.software_id),
             ticked: true,
             });
-           console.log(this.checkSoftware(6))
+          //  console.log(this.checkSoftware(6))
         })
       }else
       if(option==='delete'){
@@ -250,30 +271,33 @@ export class DashboardComponent implements OnInit{
       );
   }
    prospectfilter() {
-    console.log(JSON.parse(localStorage.getItem('soft')))
-    this.arraysoftware= JSON.parse(localStorage.getItem('soft'))==null? []: JSON.parse(localStorage.getItem('soft'));
-    let arraysoft=[];
-    this.arraysoftware.map(item=>{
-      arraysoft.push({'software_id':item.id})
-    })  
+   // console.log(JSON.parse(localStorage.getItem('soft')))
+   let arraysoft=[];
+   this.softwares.map(item=>{
+  //   console.log(item);
+     arraysoft.push({'software_id':item.id})
+
+    
+     })
+
     this.prospect.city_id = localStorage.getItem('city');
 
      let postprospect = {
-      "prospect_id": null,
-      "ageMin":localStorage.getItem('age_min')=="null"?null:Number(localStorage.getItem('age_min')),
-      "ageMax": localStorage.getItem('age_max')=="null"?null:Number(localStorage.getItem('age_max')),
-      "city_id": this.prospect.city_id=="null"?null:Number(localStorage.getItem('city')),
-      "country_id": localStorage.getItem('country')=="null"?null:localStorage.getItem('country'),
-      "salaryMin": localStorage.getItem('salary_min')=="null"?null:Number(localStorage.getItem('salary_min')),
-      "salaryMax": localStorage.getItem('salary_max')=="null"?null:Number(localStorage.getItem('salary_max')),
-      "expierenceLevel": localStorage.getItem('expierenceLevel')=="null"?null:Number(localStorage.getItem('expierenceLevel')),
-      "yearsExpierenceMin":localStorage.getItem('exp_min')=="null"?null:Number(localStorage.getItem('exp_min')),
-      "yearsExpierenceMax": localStorage.getItem('exp_max')=="null"?null:Number(localStorage.getItem('exp_max')),
+      // "prospect_id": null,
+      // "ageMin":this.prospect.ageMin,
+      // "ageMax":this.prospect.ageMax,
+      // "city_id": this.prospect.city_id=="null"?null:Number(localStorage.getItem('city')),
+      // "country_id": localStorage.getItem('country')=="null"?null:localStorage.getItem('country'),
+      // "salaryMin": localStorage.getItem('salary_min')=="null"?null:Number(localStorage.getItem('salary_min')),
+      // "salaryMax": localStorage.getItem('salary_max')=="null"?null:Number(localStorage.getItem('salary_max')),
+      // "expierenceLevel": localStorage.getItem('expierenceLevel')=="null"?null:Number(localStorage.getItem('expierenceLevel')),
+      // "yearsExpierenceMin":localStorage.getItem('exp_min')=="null"?null:Number(localStorage.getItem('exp_min')),
+      // "yearsExpierenceMax": localStorage.getItem('exp_max')=="null"?null:Number(localStorage.getItem('exp_max')),
       "software": arraysoft
      };
 
     this.clearLocalstorage();
-     console.log(postprospect);
+    //  console.log(postprospect);
      this.globalService.addfilter(postprospect, "/prospect/filter").then(
        result => {
         this.prospectList = result;
@@ -417,7 +441,7 @@ getcountry1() {
        
         this.countryList1.map(item=>{
           this.country1.push({ id: item.country_id, name: item.country_name})
-          console.log(item.country_id);
+          // console.log(item.country_id);
         })
       },
       err => {
@@ -511,13 +535,13 @@ getsoftware() {
 
      this.submitted = true;
 
-      if (this.contacto.invalid) {
-          return;
-      } else
+      // if (this.contacto.invalid) {
+      //     return;
+      // } else
 
      // alert('Usuario Correcto !')
    
-   console.log(this.experiencieList);
+  //  console.log(this.experiencieList);
     let arraysoft=[];
     this.softwares.map(item=>{
       arraysoft.push({'software_id':item.id})
