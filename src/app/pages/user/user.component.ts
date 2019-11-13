@@ -17,17 +17,16 @@ export class UserComponent implements OnInit{
         this.initialValues();
         this.gettile();
         this.getcity();
-        
+      //this.getsoftwareProspect();
         this.route
         .queryParams
         .subscribe(params => {
           console.log((params));
             this.prospect=params;
-            this.getsoftwareProspect(this.prospect.prospect_id)
+            this.getsoftwareProspect(this.prospect.prospect_id);
+   
           });
 
-
-          
           }
           public initialValues(){
             let logged= localStorage.getItem("logged");
@@ -83,10 +82,11 @@ export class UserComponent implements OnInit{
       );
 }
  getsoftwareProspect(prospect_id) {
-    console.log(prospect_id)
-
-    this.globalService.getModel("/api/prospect/"+ prospect_id+"/software").then(
+   //console.log(prospect_id)
+  // let prospect_id;
+    this.globalService.getModel("/prospect/"+ prospect_id +"/software").then(
         result => {
+          console.log(result);
           this.softwareList = result;
         },
         err => {

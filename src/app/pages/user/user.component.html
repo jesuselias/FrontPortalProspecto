@@ -81,14 +81,18 @@
                   </div>
                   <div class="form-group row">
                       <div class="col-4 col-form-label">Software Asociado*</div> 
-                      <div class="col-8" *ngFor="let item of softwareList;let i = index">
-                       {{item}}
+                      <div class="col-6"  style=" border: 1px solid rgba(141, 140, 140, 0.185)">
+                        <table>
+                        <tr *ngFor="let item of softwareList;let i = index">
+                        <td>{{item.software_name}}</td>
+                      </tr>
+                    </table>
                       </div>
                     </div>
                   <div class="form-group row">
                     <div class="col-4 col-form-label">Salario*:</div> 
                     <div class="col-8">
-                      {{prospect.prospect_salary}}
+                      {{prospect.prospect_salary}} $
                     </div>
                   </div>
                   <div class="form-group row">
@@ -121,13 +125,7 @@
                         {{exp()}}
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <div class="col-4 col-form-label">Referencia*</div> 
-                    <div class="col-8">
-                      {{prospect.referral_name}}
-                    </div>
-                  </div>
-                  <div class="form-group row">
+                    <div class="form-group row">
                     <div class="col-4 col-form-label">Comentario*</div> 
                     <div class="col-8">
                       {{prospect.commentary}}
