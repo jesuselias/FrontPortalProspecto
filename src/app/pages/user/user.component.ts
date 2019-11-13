@@ -14,35 +14,29 @@ import { GlobalService } from "../providers/global.service";
 
 export class UserComponent implements OnInit{
     ngOnInit(){
-        //this.getUsers();
         this.initialValues();
         this.gettile();
         this.getcity();
-        this.getsoftware();
         
         this.route
         .queryParams
         .subscribe(params => {
-          console.log(params);
-            // Defaults to 0 if no query param provided.
+          console.log((params));
             this.prospect=params;
+            this.getsoftwareProspect(this.prospect.prospect_id)
           });
+
+
+          
           }
-
-             
-public initialValues(){
-  let loged= JSON.stringify(localStorage.getItem("loged"));
-  //localStorage.clear();
-  console.log(loged);
-
-  if(loged!="true"){
-    return location.href='#';
-  }
-}
-   
-    software_Prospect:any;
-    software:any;
-    softwares: any;
+          public initialValues(){
+            let logged= localStorage.getItem("logged");
+            console.log(logged);
+          
+            if(logged!="true"){
+              return location.href='#';
+            }
+          }
     softwareList:any
     title : any;
     UserList: any;
@@ -68,12 +62,10 @@ public initialValues(){
       this.globalService.getModel("/title").then(
         
           result => {
-           // console.log(result);
             this.titleList = result;
           },
           err => {
             console.log(err);
-            //this.loader.dismiss();
           }
         );
   }
@@ -83,65 +75,50 @@ public initialValues(){
     this.globalService.getModel("/city").then(
       
         result => {
-          //console.log(result);
           this.cityList = result;
         },
         err => {
           console.log(err);
-          //this.loader.dismiss();
         }
       );
 }
-  getsoftware() {
-    this.globalService.getModel("/software").then(
+ getsoftwareProspect(prospect_id) {
+    console.log(prospect_id)
+
+    this.globalService.getModel("/api/prospect/"+ prospect_id+"/software").then(
         result => {
           this.softwareList = result;
-        
-          this.softwareList.map(item=>{
-            this.software.push({ id: item.software_id, name: item.software_name})
-            console.log(this.software);
-          })
         },
         err => {
           console.log(err);
         }
       );
   }
-
   checkCity(id) {
     let item;
-    //console.log(this.cityList)
      for(item of this.cityList)
      {
 
-     //console.log(item)
       if(item.city_id==id)
          return item.city_name;
      }
   }
   checkTitle(id) {
     let item;
-    //console.log(this.titleList)
      for(item of this.titleList)
      {
-
-    // console.log(item)
       if(item.title_id==id)
          return item.title_name;
      }
   }
   checkSoftware(id) {
     let item;
-    console.log(this.softwareList)
      for(item of this.softwareList)
      {
-
-     console.log(item)
       if(item.software_id==id)
          return item.software_name;
-     
       }
-
+      console.log(item.software_id)
   }
   exp(){
     return this.experiencieList[this.prospect.experience_level-1]

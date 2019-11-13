@@ -113,6 +113,7 @@ export class DashboardComponent implements OnInit{
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
     private formBuilder: FormBuilder) {
     
+      this.initialValues();
     this.softwareList = [];
     this.softwareList1 = [];
       this.software = [];
@@ -128,6 +129,16 @@ export class DashboardComponent implements OnInit{
       this.yearsExpierenceMin=[];
       this.yearsExpierenceMax=[];
       
+    }
+
+    public initialValues(){
+      let logged= localStorage.getItem("logged");
+      //localStorage.clear();
+      console.log(logged);
+    
+      if(logged!="true"){
+        return location.href='#';
+      }
     }
 
     ngOnInit(){

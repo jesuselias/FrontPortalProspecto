@@ -40,9 +40,7 @@ export class SoftwareComponent implements OnInit{
       if(option==="edit"){
         this.titleModal='Edit Software';
         this.edit=true;
-        console.log(this.softwareList[index])
         this.software=this.softwareList[index];
-        console.log(this.software);
       }else
       if(option==='delete'){
         this.software=this.softwareList[index];
@@ -54,9 +52,6 @@ export class SoftwareComponent implements OnInit{
 
     public initialValues(){
       let logged= localStorage.getItem("logged");
-      //localStorage.clear();
-      console.log(logged);
-    
       if(logged!="true"){
         return location.href='#';
       }
@@ -65,18 +60,13 @@ export class SoftwareComponent implements OnInit{
     getSoftwares() {
         this.globalService.getModel("/Software").then(
             result => {
-              console.log(result);
               this.softwareList = result;
             },
             err => {
               console.log(err);
-              //this.loader.dismiss();
             }
           );
     }
-    
-    
-  
     deleteSoftware() {
       this.globalService.removeModel(this.software.software_id,"/Software").then(
         result => {
@@ -85,8 +75,6 @@ export class SoftwareComponent implements OnInit{
         },
         err => {
           console.log(err);
-          
-          //this.loader.dismiss();
         }
       );
       
@@ -109,7 +97,6 @@ export class SoftwareComponent implements OnInit{
         },
         err => {
           console.log(err);
-          //this.loader.dismiss();
         }
       );
      
@@ -133,7 +120,6 @@ export class SoftwareComponent implements OnInit{
         },
         err => {
           console.log(err);
-          //this.loader.dismiss();
         }
       );
      
