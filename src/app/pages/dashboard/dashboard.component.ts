@@ -2,11 +2,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { GlobalService } from "../providers/global.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { element } from 'protractor';
-import { observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-import { SliderType } from "igniteui-angular";
+import { NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { Options } from 'ng5-slider';
 
 @Component({
@@ -35,7 +32,7 @@ export class DashboardComponent implements OnInit{
 
 
   minValue3: number = 0;
-  maxValue3: number = 1000;
+  maxValue3: number = 2000;
   options3: Options = {
     floor: 0,
     ceil: 2000,
@@ -43,18 +40,6 @@ export class DashboardComponent implements OnInit{
       return '$' + value;
     }
   };
-  
-  // public sliderType = SliderType;
-  // public priceRange: PriceRange = new PriceRange(200, 800);
-  // public exp: Exp = new Exp(200, 800);
-  // public lexp: Lexp = new Lexp(200, 800);
-  // public age: Age = new Age(200, 800);
-  yearsExpierenceMin:any;
-  yearsExpierenceMax:any;
-
-  contacto: FormGroup;
-  submitted = false;
-  pageActual: number = 1;
   public canvas : any;
   public ctx;
   public chartColor;
@@ -62,6 +47,12 @@ export class DashboardComponent implements OnInit{
   public chartHours;
   public isCollapsed = true;
   public labels:any;
+
+  yearsExpierenceMin:any;
+  yearsExpierenceMax:any;
+  contacto: FormGroup;
+  submitted = false;
+  pageActual: number = 1;
   request: any;
   prospectList: any;
   country:any;
@@ -109,13 +100,12 @@ export class DashboardComponent implements OnInit{
 
    };  
   
-
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
     private formBuilder: FormBuilder) {
     
       this.initialValues();
-    this.softwareList = [];
-    this.softwareList1 = [];
+      this.softwareList = [];
+      this.softwareList1 = [];
       this.software = [];
       this.prospect=[];
       this.prospectList=[];
@@ -146,18 +136,14 @@ export class DashboardComponent implements OnInit{
       this.selectCountry()
       this.selectSoftware();
       this.getsoftware();
-      this.getsoftware1();
-      
+      this.getsoftware1(); 
       this.getprospects();
       this.getcountry();
       this.gettile();
       this.getcity();
-      this.chartColor = "#FFFFFF";
-    
-    this.submitted = false;
-    } 
+      this.submitted = false;
 
-   
+    } 
 
    public experiencieList: any = [
     {
@@ -213,21 +199,15 @@ export class DashboardComponent implements OnInit{
     selectSoft(event){
       localStorage.setItem("soft", JSON.stringify(this.softwares))
     }
-
     selectCountry(){
       localStorage.getItem('countryslogin');
      this.country1= JSON.parse(localStorage.getItem('countryslogin'))
     }
-
     selectCity(event){
-  
       localStorage.setItem("city", this.cityTest)
     }
-
-    
-    
+     
     OpenProspectModal(template: TemplateRef<any>, option, index:number) {
-
 
       this.prospect=[];
       this.softwares=[];
@@ -519,6 +499,19 @@ export class DashboardComponent implements OnInit{
       );
     }
 
+    showcity2(event:any) {
+      if(event.length <= 1){
+      this.globalService.getModel("/country/" + event[0].id + "/city").then(
+        result => { 
+          this.cityList = result;
+        },
+        err => {
+          console.log(err);
+         
+        }
+      );
+    }
+  }
     getprospects() {
     
       this.globalService.getModel("/prospect").then(

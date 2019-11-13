@@ -3,20 +3,20 @@
             
           
           <div class="col-md-3 " >
-              <div class="card" style="align-content: center;background-color: #999da0;">
-                  <div class="logo">
-                      <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-                  
-                        <i  style="color: black;"class="fa fa-filter" aria-hidden="true"></i>
-                      </a>
-                      <a style="color: black;" href="" class="simple-text logo-normal" >
+              <div  class="card" style="align-content: center;background-color: #999da0;">
+                <div  class="card-body">
+                    <div class="col-md-7 ">
+                  <div  class="row">                  
+                        <i  style="color: black;"class="fa fa-filter" aria-hidden="true"></i>         
+                      <h6 style="color: black;" href="" class="simple-text logo-normal" >
                         Filtros
-                      </a>
+                      </h6>
                     </div>
-
-                  <div class="form-group row" style="margin-left: 4px;width: 200px;">
+                  </div>  
+                    <hr>
+                    <div class="input-group" class="col-8">
                   <label style="color: black;" >Nivel de Experiencia</label>
-                  <div class="input-group">
+                 
                 
                     <select (ngModelChange)="prospectexp($event)"  name="experience_level" class="form-control"  [(ngModel)]="levelTest">
                         <option value="">---Please select---</option>
@@ -25,9 +25,9 @@
                        </option>
                       </select>
                   </div>
-                </div>
+                
 
-                <div class="form-group row" style="margin-left: 4px;width: 111px;">
+                <div class="input-group"  class="col-8">
                     <label  style="color: black;">Software</label> 
                    
                       <ngx-multiselect 
@@ -40,22 +40,21 @@
                      
                   </div>
                   
-                  <div class="form-group row" style="margin-left: 4px;width: 111px;">
+                  <div class="input-group" class="col-4">
                       <label style="color: black;">Pais</label> 
-                     
                         <ngx-multiselect 
                         (ngModelChange)="prospectcountry($event)"
+                        (ngModelChange)="showcity2($event)"
                           [(ngModel)]="countrys1"
                           [options]="country1"
                          >
                         </ngx-multiselect>
                        
                     </div>
-                    <label class="col-4 col-form-label" style="color: black;">Ciudad*</label> 
-                    <div class="form-group row">
-                  
+                    <div class="input-group" class="col-8">
+                    <label  style="color: black;">Ciudad*</label>                
                        
-                        <div *ngIf="countrys1.length < 2" class="col-8">
+                        <div *ngIf="countrys1.length < 2" >
                         <select (ngModelChange)="prospectcity($event)"   class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" [ngModelOptions]="{standalone: true}">
                           <option value="">---Please select---</option>
                           <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
@@ -67,7 +66,7 @@
 
                     
 
-                    <div class="form-group row" style="margin-left: 4px;width: 200px;">
+                    <div class="input-group" class="col-10">
             
                       <label style="color: black;">Años de Experiencia</label>
                       <ng5-slider  (userChangeEnd)="prospectyear($event)" [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
@@ -75,24 +74,24 @@
 
                    
 
-          <div class="form-group row" style="margin-left: 4px;width: 200px;">
+                   <div class="input-group" class="col-10">
             <label style="color: black;">Edad</label>
           <ng5-slider (userChangeEnd)="prospectage($event)" [(value)]="minValue2" [(highValue)]="maxValue2" [options]="options2"></ng5-slider>
           </div>
 
-          <div class="form-group row" style="margin-left: 4px;width: 200px;">
+          <div class="input-group" class="col-10">
             <label style="color: black;">Salario</label>
           <ng5-slider (userChangeEnd)=" prospectsalary($event)" [(value)]="minValue3" [(highValue)]="maxValue3" [options]="options3"></ng5-slider>
           </div>
 
           </div>
         </div>
+      </div>
           <div class="col-md-9">
     
       <div class="card-header">
         <h4 class="card-title align-center">Prospecto</h4>
       </div>
-      <button  class="btn btn-primary btn-xs" (click)="prospectfilter()">Buscar por Filtro</button>
        <span  (click)="OpenProspectModal(template,'save',index)" class="btn btn-primary btn-xs">Agregar nuevo Prospecto</span>
        
         <br /><br />
@@ -108,7 +107,7 @@
               <th>Eliminar</th>
             </thead>
             <tbody>
-              <tr *ngFor="let item of prospectList| paginate: {itemsPerPage: 5, currentPage: pageActual};let i = index">
+              <tr *ngFor="let item of prospectList| paginate: {itemsPerPage: 10, currentPage: pageActual};let i = index">
                 <td>{{item.prospect_name}}</td>
                 <td>{{item.prospect_lastname}}</td>
                 <td>{{checkTitle(item.title_id)}}</td>
