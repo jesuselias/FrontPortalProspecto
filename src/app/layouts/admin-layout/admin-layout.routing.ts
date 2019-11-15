@@ -9,11 +9,13 @@ import { MapsComponent } from '../../pages/maps/maps.component';
 import { NotificationsComponent } from '../../pages/notifications/notifications.component';
 import { UpgradeComponent } from '../../pages/upgrade/upgrade.component';
 import { SoftwareComponent } from '../../pages/software/software.component';
+import { RoleComponent } from '../../pages/role/role.component';
 import { TitleComponent } from '../../pages/title/title.component';
 import { UsuarioComponent } from '../../pages/usuario/usuario.component';
 
 
 import { AssignmentComponent } from '../../pages/assignment/assignment.component';
+
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
     { path: 'user', component: UserComponent },
@@ -24,6 +26,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications', component: NotificationsComponent },
     { path: 'upgrade', component: UpgradeComponent },
     { path: 'software', component: SoftwareComponent },
+    { path: 'role', component: RoleComponent },
     { path: 'title', component: TitleComponent },
     { path: 'assignment', component: AssignmentComponent },
     { path: 'usuario', component: UsuarioComponent },

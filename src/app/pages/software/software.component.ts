@@ -37,7 +37,9 @@ export class SoftwareComponent implements OnInit{
     edit: boolean=false;
     
 
-    OpenSoftwareModal(template: TemplateRef<any>, option, index:number) {
+    OpenSoftwareModal(template: TemplateRef<any>, option, item) {
+      console.log(item);
+      console.log("algo")
       this.software=[]
      
       if(option==="save"){
@@ -53,10 +55,15 @@ export class SoftwareComponent implements OnInit{
       if(option==="edit"){
         this.titleModal='Edit Software';
         this.edit=true;
-        this.software=this.softwareList[index];
+        this.software=this.softwareList.filter(data=>data.software_id==item.software_id);
+        this.software=this.software[0]
+        console.log(this.software);
+         
       }else
       if(option==='delete'){
-        this.software=this.softwareList[index];
+        //this.software=this.softwareList;
+        this.software=this.softwareList.filter(data=>data.software_id==item.software_id);
+        this.software=this.software[0]
 
       }
       this.bsModalRef = this.bsModalService.show(template);
@@ -69,6 +76,21 @@ export class SoftwareComponent implements OnInit{
         return location.href='#';
       }
     }
+
+    checkSoftwareid(id) 
+    {
+       let item;
+      // console.log(this.softwareList)
+        for(item of this.softwareList)
+        {
+
+      //  console.log(item)
+         if(item.software_id==id)
+            return item.software_id;
+        }
+
+    }
+   
 
     getSoftwares() {
         this.globalService.getModel("/Software").then(

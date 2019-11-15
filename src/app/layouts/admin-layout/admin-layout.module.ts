@@ -17,6 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import {SoftwareComponent} from '../../pages/software/software.component';
+import {RoleComponent} from '../../pages/role/role.component';
 import { TitleComponent } from '../../pages/title/title.component';
 import { UsuarioComponent } from '../../pages/usuario/usuario.component';
 
@@ -52,6 +53,7 @@ import {
     MapsComponent,
     NotificationsComponent,
     SoftwareComponent,
+    RoleComponent,
     TitleComponent,
     AssignmentComponent,
     UsuarioComponent,

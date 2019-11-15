@@ -122,6 +122,7 @@ export class UsuarioComponent implements OnInit{
     this.onClose()
   }
   saveUsers() {
+    
     let postUsers = {
       'user_name': this.user.user_name,
       'user_password': this.user.user_password,
@@ -145,17 +146,6 @@ export class UsuarioComponent implements OnInit{
     this.edit=false;
     this.save=false;
     this.bsModalRef.hide();
-  }
-  get f() { return this.contacto.controls; }
-
-  onSubmit() {
-      this.submitted = true;
-
-      if (this.contacto.invalid) {
-          return;
-      }
-
-     // alert('Usuario Correcto !')
   }
   
 }

@@ -30,7 +30,7 @@ export class TitleComponent implements OnInit{
      this.titleList=[];
   }
 
-  OpenTitleModal(template: TemplateRef<any>, option, index:number) {
+  OpenTitleModal(template: TemplateRef<any>, option, item) {
     this.title=[]
     if(option==="save"){
       this.titleModal='Create Title';
@@ -39,10 +39,15 @@ export class TitleComponent implements OnInit{
     if(option==="edit"){
       this.titleModal='Edit Title';
       this.edit=true;
-      this.title=this.titleList[index];
+     // this.title=this.titleList[index];
+     this.title=this.titleList.filter(data=>data.title_id==item.title_id);
+        this.title=this.title[0]
+        console.log(this.title);
     }else
     if(option==='delete'){
-      this.title=this.titleList[index];
+      this.title=this.titleList.filter(data=>data.title_id==item.title_id);
+        this.title=this.title[0]
+        console.log(this.title);
 
     }
     this.bsModalRef = this.bsModalService.show(template);

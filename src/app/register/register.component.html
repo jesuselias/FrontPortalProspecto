@@ -23,7 +23,7 @@ font-family: 'Roboto', sans-serif;">
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario"  [(ngModel)]="users.user_name">
       <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña"  [(ngModel)]="users.user_password">
       
-      <div  class="text-center">
+      <div  class="text-center ">
         <select class="form-control" name="role_id"  [(ngModel)]="users.role_id" [ngModelOptions]="{standalone: true}">
           <option   *ngFor="let item of roleList; let i = index" [ngValue]="item.role_id" >
              {{roleList[i].role_name}}
