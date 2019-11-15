@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalService } from "../Pages/providers/global.service";
+import { GlobalService} from "../Pages/providers/global.service";
 import { ToastrService } from "ngx-toastr";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { first } from 'rxjs/operators';
+
+
 
 @Component({
   selector: 'app-login',

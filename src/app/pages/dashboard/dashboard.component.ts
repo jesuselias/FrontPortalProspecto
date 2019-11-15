@@ -30,7 +30,6 @@ export class DashboardComponent implements OnInit{
   };
 
 
-
   minValue3: number = 0;
   maxValue3: number = 2000;
   options3: Options = {
@@ -40,6 +39,7 @@ export class DashboardComponent implements OnInit{
       return '$' + value;
     }
   };
+
   public canvas : any;
   public ctx;
   public chartColor;
@@ -61,6 +61,7 @@ export class DashboardComponent implements OnInit{
   city:any;
   cityList:any;
   titleList: any;
+  titleList1: any;
   title: any;
   bsModalRef: BsModalRef;
   arraysoftware: any;
@@ -97,7 +98,6 @@ export class DashboardComponent implements OnInit{
     "yearsExpierenceMin": null,
     "yearsExpierenceMax": null,
     "software":[]
-
    };  
   
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
@@ -123,8 +123,6 @@ export class DashboardComponent implements OnInit{
 
     public initialValues(){
       let logged= localStorage.getItem("logged");
-      //localStorage.clear();
-      console.log(logged);
     
       if(logged!="true"){
         return location.href='#';
@@ -132,7 +130,7 @@ export class DashboardComponent implements OnInit{
     }
 
     ngOnInit(){
-      //localStorage.clear();
+
       this.selectCountry()
       this.selectSoftware();
       this.getsoftware();
@@ -207,12 +205,12 @@ export class DashboardComponent implements OnInit{
       localStorage.setItem("city", this.cityTest)
     }
      
-    OpenProspectModal(template: TemplateRef<any>, option, index:number) {
+    OpenProspectModal(template: TemplateRef<any>, option, item) {
 
       this.prospect=[];
       this.softwares=[];
       
-     //console.log(item)
+
       if(option==="save"){
 
         this.contacto = this.formBuilder.group({
@@ -249,21 +247,26 @@ export class DashboardComponent implements OnInit{
       });
         this.titleModal='Edit prospect';
         this.edit=true;
-        this.prospect=this.prospectList[index];
-         
-        //console.log(this.prospect.software_Prospect);
+        //this.prospect=this.prospectList[index];
+        this.prospect=this.prospectList.filter(data=>data.prospect_id==item.prospect_id);
+        this.prospect=this.prospect[0]
+        console.log(this.prospect);
+        console.log(this.prospect.software_Prospect);
         this.prospect.software_Prospect.map(item=>{
+
             this.softwares.push({
             disabled: undefined,
             id: item.software_id,
              name: this.checkSoftware(item.software_id),
             ticked: true,
             });
-          //  console.log(this.checkSoftware(6))
+
         })
       }else
       if(option==='delete'){
-        this.prospect=this.prospectList[index];
+       // this.prospect=this.prospectList[index];
+       this.prospect=this.prospectList.filter(data=>data.prospect_id==item.prospect_id);
+        this.prospect=this.prospect[0]
 
       }
       this.bsModalRef = this.bsModalService.show(template);
@@ -281,78 +284,48 @@ export class DashboardComponent implements OnInit{
         }
       );
   }
+
    prospectexp(event) {
-   // console.log(JSON.parse(localStorage.getItem('soft')))
+
     console.log(event)
     this.postprospect.expierenceLevel=event
     this.filterApp(this.postprospect);
-    let arraysoft=[];
-    let arraycountry=[];
-  //   this.softwares.map(item=>{
-  //  //   console.log(item);
-  //     arraysoft.push({'software_id':null})
- 
-     
-      // })
 
-
-     
    }
 
    prospectyear(event) {
-    // console.log(JSON.parse(localStorage.getItem('soft')))
+
      console.log(event)
      this.postprospect.yearsExpierenceMin=event.value;
      this.postprospect.yearsExpierenceMax=event.highValue;
      this.filterApp(this.postprospect);
      let arraysoft=[];
      let arraycountry=[];
-   //   this.softwares.map(item=>{
-   //  //   console.log(item);
-   //     arraysoft.push({'software_id':null})
-  
-      
-       // })
- 
- 
+
       
     }
 
     prospectage(event) {
-      // console.log(JSON.parse(localStorage.getItem('soft')))
+
        console.log(event)
        this.postprospect.ageMin=event.value;
        this.postprospect.ageMax=event.highValue;
        this.filterApp(this.postprospect);
        let arraysoft=[];
        let arraycountry=[];
-     //   this.softwares.map(item=>{
-     //  //   console.log(item);
-     //     arraysoft.push({'software_id':null})
-    
-        
-         // })
+ 
    
-   
-        
       }
 
       prospectsalary(event) {
-        // console.log(JSON.parse(localStorage.getItem('soft')))
+    
          console.log(event)
          this.postprospect.salaryMin=event.value;
          this.postprospect.salaryMax=event.highValue;
          this.filterApp(this.postprospect);
          let arraysoft=[];
          let arraycountry=[];
-       //   this.softwares.map(item=>{
-       //  //   console.log(item);
-       //     arraysoft.push({'software_id':null})
-      
-          
-           // })
-     
-     
+    
           
         }
 
@@ -360,44 +333,22 @@ export class DashboardComponent implements OnInit{
     // console.log(JSON.parse(localStorage.getItem('soft')))
      console.log(event)
      this.postprospect.city_id=event
-     this.filterApp(this.postprospect);
-     let arraysoft=[];
-     let arraycountry=[];
-   //   this.softwares.map(item=>{
-   //  //   console.log(item);
-   //     arraysoft.push({'software_id':null})
-  
-      
-       // })
- 
- 
+     this.filterApp(this.postprospect); 
       
     }
 
     
     prospectcountry(event) {
-      // console.log(JSON.parse(localStorage.getItem('soft')))
-       console.log(event)
        let arraycountry=[];
        let country=event;
        country.map(item=>{
-      //   console.log(item);
+
       arraycountry.push(item.id)
-        //console.log( this.softwares1)
       
          })
   
-         console.log(arraycountry)
        this.postprospect.country_list=arraycountry
        this.filterApp(this.postprospect);
-       
-     //   this.softwares.map(item=>{
-     //  //   console.log(item);
-     //     arraysoft.push({'software_id':null})
-    
-        
-         // })
-   
    
         
       }
@@ -405,7 +356,6 @@ export class DashboardComponent implements OnInit{
 
     prospectsoft(event) {
       // console.log(JSON.parse(localStorage.getItem('soft')))
-       console.log(event)
        let arraysoft=[];
        let soft=event;
        soft.map(item=>{
@@ -414,35 +364,19 @@ export class DashboardComponent implements OnInit{
         //console.log( this.softwares1)
         
          })
-  
-         console.log(arraysoft)
        this.postprospect.software=arraysoft
        this.filterApp(this.postprospect);
-       
-       let arraycountry=[];
-     //   this.softwares.map(item=>{
-     //  //   console.log(item);
-     //     arraysoft.push({'software_id':null})
-    
         
-         // })
-   
    
         
       }
   
-
-//age_min=null,ageMax=null,city_id=null,country_list=null,experience_years=null, 
-//salaryMin=null,salaryMax=null,yearsExpierenceMin=null,yearsExpierenceMax=null,arraycountry=[],arraysoft=[]
-
    filterApp(postprospect){
-    console.log(postprospect);
     this.clearLocalstorage();
     //  console.log(postprospect);
      this.globalService.addfilter(postprospect, "/prospect/filter").then(
        result => {
         this.prospectList = result;
-        console.log(result);
        },
        err => {
          console.log(err);
@@ -556,6 +490,21 @@ getcountry() {
     );
 }
 
+gettile1() {
+    
+  this.globalService.getModel("/title").then(
+    
+      result => {
+ 
+        this.titleList1 = result;
+      },
+      err => {
+        console.log(err);
+      
+      }
+    );
+}
+
 
 
 gettile() {
@@ -645,7 +594,7 @@ getsoftware() {
     let arraysoft=[];
     this.softwares.map(item=>{
    //   console.log(item);
-      arraysoft.push({'software_id':item.id})
+      arraysoft.push({'software_id':item.id,'software_name':item.name})
 
      
       })
@@ -672,7 +621,7 @@ getsoftware() {
       
     };
    
-
+console.log(postprospect)
     this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect").then(
       result => {
     //    console.log(result);
@@ -691,13 +640,13 @@ getsoftware() {
 
      this.submitted = true;
 
-      // if (this.contacto.invalid) {
-      //     return;
-      // } else
+       if (this.contacto.invalid) {
+           return;
+       } else
 
-     // alert('Usuario Correcto !')
+     alert('Usuario Correcto !')
    
-  //  console.log(this.experiencieList);
+    console.log(this.experiencieList);
     let arraysoft=[];
     this.softwares.map(item=>{
       arraysoft.push({'software_id':item.id})
@@ -712,15 +661,16 @@ getsoftware() {
       'prospect_lastname': this.prospect.prospect_lastname,
       'prospect_birthday': this.prospect.prospect_birthday,
       'city_id': this.prospect.city_id,
+      'country_id': this.prospect.country_id,
       'prospect_address': this.prospect.prospect_address,
       'prospect_phonenumber': this.prospect.prospect_phonenumber,
       'prospect_cv':  this.prospect.prospect_cv,
       'prospect_photo':  this.prospect.prospect_photo,
       'prospect_link': this.prospect.prospect_link,
-      'prospect_salary': this.prospect.prospect_salary,
+      'prospect_salary': Number(this.prospect.prospect_salary),
       'title_id': this.prospect.title_id,
       'software_prospect': arraysoft,
-      'experience_years': this.prospect.experience_years,
+      'experience_years': Number(this.prospect.experience_years),
       'experience_level': this.prospect.experience_level,
       'email': this.prospect.email,
       'commentary': this.prospect.commentary,
@@ -728,6 +678,7 @@ getsoftware() {
 
      
     };
+    console.log(postprospect)
     this.globalService.addModel(postprospect, "/prospect").then(
       result => {
   //      console.log(result);
@@ -761,40 +712,4 @@ getsoftware() {
      // alert('Usuario Correcto !')
   }
     
-}
-
-class PriceRange {
-  constructor(
-    public lower: number,
-    public upper: number,
-  ) {
-  }
-
-}
-
-class Exp {
-  constructor(
-    public lower: number,
-    public upper: number,
-  ) {
-  }
-
-}
-
-class Lexp {
-  constructor(
-    public lower: number,
-    public upper: number,
-  ) {
-  }
-
-}
-
-class Age {
-  constructor(
-    public lower: number,
-    public upper: number,
-  ) {
-  }
-
 }

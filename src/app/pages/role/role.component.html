@@ -1,31 +1,29 @@
 <div class="container">
 <div class="row">
     <div class="col-md-12">
-       
-         
       
         <div class="card-header">
           <h4 class="card-title"></h4>
         </div>
       
-          <span  (click)="OpenSoftwareModal(template,'save', index)" class="btn btn-primary btn-xs">Agregar Nuevo Software</span>
+          <span  (click)="OpenroleModal(template,'save', index)" class="btn btn-primary btn-xs">Agregar Nuevo role</span>
           <br /><br />
           <div class="table-responsive">
             <table id="mytable" class="table table-bordred table-striped">
               <thead>
-                <th>Software Id</th>
-                <th>Nombre de Software</th>
+                <th>role Id</th>
+                <th>Nombre de role</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
               </thead>
               <tbody>
-                <tr *ngFor="let item of softwareList | paginate: {itemsPerPage: 5, currentPage: pageActual};let i = index">
-                  <td>{{item.software_id}}</td>
-                  <td>{{item.software_name}}</td>
+                <tr *ngFor="let item of roleList | paginate: {itemsPerPage: 5, currentPage: pageActual};let i = index">
+                  <td>{{item.role_id}}</td>
+                  <td>{{item.role_name}}</td>
                   
-                  <td><span class="btn btn-primary btn-xs" (click)="OpenSoftwareModal(template,'edit',i)">
+                  <td><span class="btn btn-primary btn-xs" (click)="OpenroleModal(template,'edit',item)">
                       <span class="nc-icon nc-ruler-pencil"></span></span></td>
-                  <td><span class="btn btn-danger btn-xs" (click)="OpenSoftwareModal(confirm,'delete', i)">
+                  <td><span class="btn btn-danger btn-xs" (click)="OpenroleModal(confirm,'delete', item)">
                       <span class="nc-icon nc-simple-remove"></span></span></td>
                 </tr>
               </tbody>
@@ -42,28 +40,40 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label class="col-sm-2 control-label">Nombre de Software</label>
+            <label class="col-sm-5s control-label">Nombre de role</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control"  [(ngModel)]="software.software_name"/>
+              <input type="text" class="form-control"  [(ngModel)]="role.role_name"/>
             </div>
           </div>
+
+          <div class="form-group">
+            <label class="col-4 col-form-label">Funciones*</label> 
+            <div class="col-8">
+              <ngx-multiselect
+              [ngModelOptions]="{standalone: true}"
+              
+              name="functions"
+                [(ngModel)]="functiones"
+                [options]="function"
+                ngDefaultControl>
+              </ngx-multiselect>
+              </div>
+        </div>
           
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
-          <div *ngIf="save"><button (click)="saveSoftware()" type="submit" class="btn btn-primary">Guardar</button></div>
-          <div *ngIf="edit"><button (click)="editSoftware()" type="submit" class="btn btn-primary">Editar</button></div>
+          <div *ngIf="save"><button (click)="saverole()" type="submit" class="btn btn-primary">Guardar</button></div>
+          <div *ngIf="edit"><button (click)="editrole()" type="submit" class="btn btn-primary">Editar</button></div>
         </div>
     
     </ng-template>
     <ng-template #confirm>
       <div class="modal-body text-center">
         <p>Estas seguro de Eliminar?</p>
-        <button type="button" class="btn btn-default" (click)="deleteSoftware()" >Si</button>
+        <button type="button" class="btn btn-default" (click)="deleterole()" >Si</button>
         <button type="button" class="btn btn-primary" (click)="onClose()" >No</button>
       </div>
     </ng-template>
   </div>
-</div>
-
   

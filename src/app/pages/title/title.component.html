@@ -1,3 +1,4 @@
+<div class="container">
 <div class="row">
     <div class="col-md-12">
       
@@ -20,9 +21,9 @@
                   <td>{{item.title_id}}</td>
                   <td>{{item.title_name}}</td>
                   
-                  <td><span class="btn btn-primary btn-xs" (click)="OpenTitleModal(template,'edit',i)">
+                  <td><span class="btn btn-primary btn-xs" (click)="OpenTitleModal(template,'edit',item)">
                       <span class="nc-icon nc-ruler-pencil"></span></span></td>
-                  <td><span class="btn btn-danger btn-xs" (click)="OpenTitleModal(confirm,'delete', i)">
+                  <td><span class="btn btn-danger btn-xs" (click)="OpenTitleModal(confirm,'delete', item)">
                       <span class="nc-icon nc-simple-remove"></span></span></td>
                 </tr>
               </tbody>

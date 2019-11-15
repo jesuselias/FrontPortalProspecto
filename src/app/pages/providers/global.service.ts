@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { ToastrService } from "ngx-toastr";
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const httpOptionsDefault = {
     headers: new HttpHeaders({
@@ -25,10 +26,17 @@ export class GlobalService {
     Model: any = {};
     tipo: String;
 
+    // private currentUserSubject: BehaviorSubject<User>;
+    // public currentUser: Observable<User>;
+
     constructor(public http: HttpClient, private toastr: ToastrService) {
         this.apiBaseUrl = 'http://cutmbpnwaprd01.azurewebsites.net/api'; //endpoint local
+        // this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+        // this.currentUser = this.currentUserSubject.asObservable();
        
     }
+
+    
 
     getHeaderClear() {
         const httpOptions = {
