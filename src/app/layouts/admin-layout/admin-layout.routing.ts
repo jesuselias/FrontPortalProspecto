@@ -10,6 +10,8 @@ import { NotificationsComponent } from '../../pages/notifications/notifications.
 import { UpgradeComponent } from '../../pages/upgrade/upgrade.component';
 import { SoftwareComponent } from '../../pages/software/software.component';
 import { TitleComponent } from '../../pages/title/title.component';
+import { UsuarioComponent } from '../../pages/usuario/usuario.component';
+
 
 import { AssignmentComponent } from '../../pages/assignment/assignment.component';
 export const AdminLayoutRoutes: Routes = [
@@ -24,4 +26,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'software', component: SoftwareComponent },
     { path: 'title', component: TitleComponent },
     { path: 'assignment', component: AssignmentComponent },
+    { path: 'usuario', component: UsuarioComponent },
 ];

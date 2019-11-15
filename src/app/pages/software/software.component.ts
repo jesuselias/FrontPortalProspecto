@@ -1,6 +1,7 @@
 import { Component, OnInit,TemplateRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { GlobalService } from "../providers/global.service";
@@ -13,7 +14,15 @@ import { GlobalService } from "../providers/global.service";
 })
 
 export class SoftwareComponent implements OnInit{
-    ngOnInit(){
+  contacto: FormGroup;
+  submitted = false;
+  
+  constructor(private globalService: GlobalService, private bsModalService: BsModalService,private formBuilder: FormBuilder) {
+    this.software=[];
+    
+ }
+  ngOnInit(){
+    
       this.initialValues();
         this.getSoftwares();
     }
@@ -26,14 +35,18 @@ export class SoftwareComponent implements OnInit{
     titleModal: string="";
     save: boolean=false;
     edit: boolean=false;
-    constructor(private globalService: GlobalService, private bsModalService: BsModalService) {
-       this.software=[];
-       
-    }
+    
 
     OpenSoftwareModal(template: TemplateRef<any>, option, index:number) {
       this.software=[]
+     
       if(option==="save"){
+        
+        this.contacto = this.formBuilder.group({
+          software_name: ['', Validators.required], 
+                
+        });  
+        
         this.titleModal='Create Software';
         this.save=true;
       }else
@@ -105,12 +118,14 @@ export class SoftwareComponent implements OnInit{
 
 
     saveSoftware() {
-      console.log(this.software)
-      
+      //console.log(this.software)
+      this.submitted = true;
+
+      if (this.contacto.invalid) {
+          return;
+      }
       let postSoftware = {
         'software_name': this.software.software_name,
-        
-       
       };
   
       this.globalService.addModel(postSoftware, "/Software").then(
@@ -131,6 +146,15 @@ export class SoftwareComponent implements OnInit{
       this.save=false;
       this.bsModalRef.hide();
     }
-  
-    
+    get f() { return this.contacto.controls; }
+
+    onSubmit() {
+      this.submitted = true;
+
+      if (this.contacto.invalid) {
+          return;
+      }
+
+      
+  }
 }

@@ -37,18 +37,24 @@
          
           <h4 class="modal-title" id="add-modal-label">{{titleModal}}</h4>
         </div>
+        <form [formGroup]="contacto" (ngSubmit)="onSubmit()">
         <div class="modal-body">
           <div class="form-group">
             <label class="col-sm-2 control-label">Nombre de Software</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control"  [(ngModel)]="software.software_name"/>
+              <input type="text" class="form-control" formControlName="software_name" [(ngModel)]="software.software_name" [ngClass]="{ 'is-invalid': submitted && f.software_name.errors }" />
+              <div *ngIf="submitted && f.software_name.errors" class="invalid-feedback">
+                <div *ngIf="f.software_name.errors.required">Por favor, ingrese nombre de Software</div>
+            </div>
             </div>
           </div>
           
         </div>
+      </form>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
-          <div *ngIf="save"><button (click)="saveSoftware()" type="submit" class="btn btn-primary">Guardar</button></div>
+        
+          <div *ngIf="save"><button (click)="saveSoftware()" class="btn btn-primary">Guardar</button></div>
           <div *ngIf="edit"><button (click)="editSoftware()" type="submit" class="btn btn-primary">Editar</button></div>
         </div>
     

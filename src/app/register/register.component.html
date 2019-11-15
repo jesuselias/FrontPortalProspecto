@@ -20,10 +20,18 @@ font-family: 'Roboto', sans-serif;">
 
     <!-- Login Form -->
     <form class="text-center">
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Email">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Repeat password">
-      <input type="submit" class="fadeIn fourth" value="Create Account">
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario"  [(ngModel)]="users.user_name">
+      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña"  [(ngModel)]="users.user_password">
+      
+      <div  class="text-center">
+        <select class="form-control" name="role_id"  [(ngModel)]="users.role_id" [ngModelOptions]="{standalone: true}">
+          <option   *ngFor="let item of roleList; let i = index" [ngValue]="item.role_id" >
+             {{roleList[i].role_name}}
+           </option>
+          </select>                                    
+       </div>  
+       <br>
+      <input type="submit" (click)='saveUsers()' class="fadeIn fourth" value="Registrar">
 
 
       <div class="modal-body">

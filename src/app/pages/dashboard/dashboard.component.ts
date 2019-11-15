@@ -689,14 +689,11 @@ getsoftware() {
 
   saveprospect() {
 
-     this.submitted = true;
+    this.submitted = true;
 
-      // if (this.contacto.invalid) {
-      //     return;
-      // } else
-
-     // alert('Usuario Correcto !')
-   
+    if (this.contacto.invalid) {
+        return;
+    }
   //  console.log(this.experiencieList);
     let arraysoft=[];
     this.softwares.map(item=>{
