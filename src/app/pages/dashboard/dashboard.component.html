@@ -27,14 +27,15 @@
                   </div>
                 
 
-                <div class="input-group"  class="col-8">
+                <div class="input-group"  class="col-8" *ngIf="software.length">
                     <label  style="color: black;">Software</label> 
                    
                       <ngx-multiselect 
-                        name="software_Prospect"
+                        
                         (ngModelChange)="prospectsoft($event)"
                         [(ngModel)]="softwares1"
-                        [options]="software1"
+                        [options]="software"
+                        ngDefaultControl
                        >
                       </ngx-multiselect>
                      

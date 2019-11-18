@@ -23,9 +23,9 @@
                   <td>{{item.software_id}}</td>
                   <td>{{item.software_name}}</td>
                   
-                  <td><span class="btn btn-primary btn-xs" (click)="OpenSoftwareModal(template,'edit',i)">
+                  <td><span class="btn btn-primary btn-xs" (click)="OpenSoftwareModal(template,'edit',item)">
                       <span class="nc-icon nc-ruler-pencil"></span></span></td>
-                  <td><span class="btn btn-danger btn-xs" (click)="OpenSoftwareModal(confirm,'delete', i)">
+                  <td><span class="btn btn-danger btn-xs" (click)="OpenSoftwareModal(confirm,'delete', item)">
                       <span class="nc-icon nc-simple-remove"></span></span></td>
                 </tr>
               </tbody>
@@ -43,7 +43,7 @@
         <form [formGroup]="contacto" (ngSubmit)="onSubmit()">
         <div class="modal-body">
           <div class="form-group">
-            <label class="col-sm-2 control-label">Nombre de Software</label>
+            <label class="col-sm-7 control-label">Nombre del Software</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" formControlName="software_name" [(ngModel)]="software.software_name" [ngClass]="{ 'is-invalid': submitted && f.software_name.errors }" />
               <div *ngIf="submitted && f.software_name.errors" class="invalid-feedback">

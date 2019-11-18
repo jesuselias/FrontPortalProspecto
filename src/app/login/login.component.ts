@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
     this.software1 = [];
     this.softwareList = [];
     this.softwares=[];
+
+    this.funcciones = [];
       
     this.country1 = [];
     this.softwareList = [];
@@ -43,6 +45,8 @@ export class LoginComponent implements OnInit {
 this.getSotware();
 
 this.getcountry1();
+
+this.getcity();
   }
 
   loginList: any;
@@ -50,32 +54,103 @@ this.getcountry1();
   softwares: any;
   software1: any;
 
+  funcciones:any;
+
   country1:any;
   countrys1:any;
   countryList1:any;
 
-  password:"";
-  username:"";
-  
-  getLogin() {
-    //console.log(this.username);
-    this.globalService.getUser("/users/"+this.username+"/"+this.password).then(
-        result => {
-        //  console.log(result);
-          if (result===0)
-          {
-            localStorage.setItem("logged","true");
-            return location.href='#/dashboard';
+  city: any;
+  cityList:any;
 
-          }else
-            localStorage.setItem("logged","false");
+  password:any;
+  username:any;
+
+  getcity() {
+    
+    this.globalService.getModel("/city").then(
+      
+        result => {
+          this.cityList = result;
+          localStorage.setItem("citylogin", JSON.stringify(this.cityList));
+          console.log(this.cityList)
         },
         err => {
-          localStorage.setItem("logged","false");
-          console.log(err)
+          console.log(err);
+     
         }
       );
 }
+  postLogin() {
+   // this.mensaje()
+    let postLogin = {
+      'user_name': this.username,
+      'user_password': this.password,
+    };
+
+    this.globalService.addLogin(postLogin, "/users/authenticate").then(
+      (result) => {
+
+
+       
+        this.funcciones=result;
+
+        
+        if (result!=null)
+        {
+          localStorage.setItem("logged","true");
+          localStorage.setItem("funcioneslogin", JSON.stringify(this.funcciones.functions));
+          return location.href='#/dashboard';
+
+        }else
+          localStorage.setItem("logged","false");
+      },
+      err => {
+        localStorage.setItem("logged","false");
+        console.log(err)
+      }
+    );
+      //this.onClose();
+  }
+
+  
+//   getLogin() {
+//     //console.log(this.username);
+    
+//     // let postLogin = {
+//     //   'user_name': this.username,
+//     //   'user_password': this.password,
+//     // };
+//     // console.log(postLogin)
+//     // this.globalService.addModel(postLogin, "/users/authenticate").then(
+//     //   result => {
+//     //     console.log(result);
+//     //     this.getLogin();
+//     //   },
+//     //   err => {
+//     //     console.log(err);
+//     //   }
+//     // );
+//     //   //this.onClose();
+
+
+//     this.globalService.getUser("/users/"+this.username+"/"+this.password).then(
+//         result => {
+//         //  console.log(result);
+//           if (result===0)
+//           {
+//             localStorage.setItem("logged","true");
+//             return location.href='#/dashboard';
+
+//           }else
+//             localStorage.setItem("logged","false");
+//         },
+//         err => {
+//           localStorage.setItem("logged","false");
+//           console.log(err)
+//         }
+//       );
+// }
 
 getSotware() {
   this.softwares=[];

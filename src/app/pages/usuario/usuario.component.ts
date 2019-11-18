@@ -72,16 +72,16 @@ export class UsuarioComponent implements OnInit{
           }
         );
   }
-  getRole(){
-  this.globalService.getModel("/role").then(
-    result => {
-      this.roleList = result;
-    },
-    err => {
-      console.log(err);
-    }
-  );
-  }
+  getRole() {
+    this.globalService.getModel("/role").then(
+        result => {
+          this.roleList = result;
+        },
+        err => {
+          console.log(err);
+        }
+      );
+}
   checkRole(id) {
     let item;
      for(item of this.roleList)
@@ -121,11 +121,15 @@ export class UsuarioComponent implements OnInit{
     );
     this.onClose()
   }
+
+
+  
   saveUsers() {
     
     let postUsers = {
       'user_name': this.user.user_name,
       'user_password': this.user.user_password,
+      'role_id': this.user.role_id,
     };
 
     this.globalService.addModel(postUsers, "/users").then(

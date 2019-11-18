@@ -69,15 +69,16 @@ export class DashboardComponent implements OnInit{
   save: boolean=false;
   edit: boolean=false;
   softwares: any;
-  softwares1: any;
+ // softwares1: any;
   software1: any;
   country1:any;
   countrys1:any;
   countryList1:any;
-  softwareList1: any;
+ // softwareList1: any;
   cityTest: any;
   software: any;
   software_Prospect: any;
+  software_filtros:any;
   softwareList: any;
   index : any;
   prospect:any;
@@ -105,12 +106,12 @@ export class DashboardComponent implements OnInit{
     
       this.initialValues();
       this.softwareList = [];
-      this.softwareList1 = [];
+      //this.softwareList1 = [];
       this.software = [];
       this.prospect=[];
       this.prospectList=[];
       this.softwares= [];
-      this.softwares1=[];
+     // this.softwares1=[];
       this.software1 = [];
       this.country1 = [];
       this.countrys1 = [];
@@ -133,12 +134,13 @@ export class DashboardComponent implements OnInit{
 
       this.selectCountry()
       this.selectSoftware();
+      this.selectCity();
       this.getsoftware();
-      this.getsoftware1(); 
+    //  this.getsoftware1(); 
       this.getprospects();
       this.getcountry();
       this.gettile();
-      this.getcity();
+    //  this.getcity();
       this.submitted = false;
 
     } 
@@ -201,8 +203,13 @@ export class DashboardComponent implements OnInit{
       localStorage.getItem('countryslogin');
      this.country1= JSON.parse(localStorage.getItem('countryslogin'))
     }
-    selectCity(event){
-      localStorage.setItem("city", this.cityTest)
+    selectCit(event){
+      localStorage.setItem("citylogin", this.cityList)
+    }
+
+    selectCity(){
+      localStorage.getItem('citylogin');
+     this.cityList= JSON.parse(localStorage.getItem('citylogin'))
     }
      
     OpenProspectModal(template: TemplateRef<any>, option, item) {
@@ -522,21 +529,21 @@ gettile() {
       );
 }
 
-getsoftware1() {
-  this.globalService.getModel("/software").then(
-      result => {
-        this.softwareList1 = result;
+// getsoftware1() {
+//   this.globalService.getModel("/software").then(
+//       result => {
+//         this.softwareList1 = result;
        
-        this.softwareList1.map(item=>{
-          this.software1.push({ id: item.software_id, name: item.software_name})
+//         this.softwareList1.map(item=>{
+//           this.software1.push({ id: item.software_id, name: item.software_name})
           
-        })
-      },
-      err => {
-        console.log(err);
-      }
-    );
-}
+//         })
+//       },
+//       err => {
+//         console.log(err);
+//       }
+//     );
+// }
 
 getcountry1() {
 
@@ -594,7 +601,7 @@ getsoftware() {
     let arraysoft=[];
     this.softwares.map(item=>{
    //   console.log(item);
-      arraysoft.push({'software_id':item.id,'software_name':item.name})
+      arraysoft.push({'software_id':item.id})
 
      
       })
@@ -618,6 +625,7 @@ getsoftware() {
       'email': this.prospect.email,
       'commentary': this.prospect.commentary,
       'referral_name': this.prospect.referral_name,
+      'prospect_status':""
       
     };
    

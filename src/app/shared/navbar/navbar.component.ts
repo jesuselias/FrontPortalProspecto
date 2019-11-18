@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { Location} from '@angular/common';
+import { GlobalService } from "app/pages/providers/global.service";
 
 
 export interface RouteInfo {
@@ -34,13 +35,16 @@ export class NavbarComponent implements OnInit{
     private toggleButton;
     private sidebarVisible: boolean;
 
+    navbar:any;
+
     public isCollapsed = true;
     @ViewChild("navbar-cmp", {static: false}) button;
 
-    constructor(location:Location, private renderer : Renderer, private element : ElementRef, private router: Router) {
+    constructor(private globalService: GlobalService,location:Location, private renderer : Renderer, private element : ElementRef, private router: Router,public  route: ActivatedRoute) {
         this.location = location;
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
+        this.navbar=[];
     }
 
     ngOnInit(){
@@ -48,9 +52,28 @@ export class NavbarComponent implements OnInit{
         var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         this.router.events.subscribe((event) => {
-          this.sidebarClose();
+        this.sidebarClose();
        });
+
+       this.selectfunicones();
+
+      //  this.route
+      //  .queryParams
+      //  .subscribe(params => {
+      //    console.log((params));
+      //      this.navbar=params;
+
+      //    });
     }
+
+    selectfunicones(){
+      //localStorage.getItem('funcioneslogin');
+     this.navbar= JSON.parse(localStorage.getItem('funcioneslogin'))
+     //this.navbar.push({});
+     console.log(this.navbar)
+    }
+
+
    
     public salir(){
       let logged= localStorage.getItem("logged");

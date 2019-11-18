@@ -54,6 +54,12 @@ export class SoftwareComponent implements OnInit{
       }else
       if(option==="edit"){
         this.titleModal='Edit Software';
+
+          
+        this.contacto = this.formBuilder.group({
+          software_name: ['', Validators.required], 
+                
+        });  
         this.edit=true;
         this.software=this.softwareList.filter(data=>data.software_id==item.software_id);
         this.software=this.software[0]

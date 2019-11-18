@@ -115,6 +115,20 @@ export class GlobalService {
         })
     }
 
+    addLogin(model, tipo: String, httpOptions = httpOptionsDefault) {
+
+        return new Promise(resolve => {
+            this.http.post(this.apiBaseUrl + "" + tipo, model, httpOptions).subscribe((data: any) => {
+               // console.log(data);
+                this.showNotification('bottom', 'right', 2, "Bienvenido al Sistema");
+
+
+
+                resolve(data);
+            },)
+        })
+    }
+
     addfilter(model, tipo: String, httpOptions = httpOptionsDefault) {
 
         return new Promise(resolve => {
