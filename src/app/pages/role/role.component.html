@@ -38,11 +38,15 @@
          
           <h4 class="modal-title" id="add-modal-label">{{titleModal}}</h4>
         </div>
+        <form [formGroup]="contacto" (ngSubmit)="onSubmit()">
         <div class="modal-body">
           <div class="form-group">
             <label class="col-sm-7s control-label">Role</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control"  [(ngModel)]="role.role_name"/>
+              <input type="text" class="form-control" formControlName="role_name"  [(ngModel)]="role.role_name" [ngClass]="{ 'is-invalid': submitted && f.role_name.errors }" />
+              <div *ngIf="submitted && f.role_name.errors" class="invalid-feedback">
+                  <div *ngIf="f.role_name.errors.required">Por favor, ingrese nombre de Software</div>
+              </div>
             </div>
           </div>
 
@@ -61,6 +65,7 @@
         </div>
           
         </div>
+        </form>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
           <div *ngIf="save"><button (click)="saverole()" type="submit" class="btn btn-primary">Guardar</button></div>

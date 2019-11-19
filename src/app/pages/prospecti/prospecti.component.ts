@@ -3,25 +3,17 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { GlobalService } from "../providers/global.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { Options } from 'ng5-slider';
 
-import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import * as moment from 'moment';
-
-
 @Component({
-    selector: 'dashboard-cmp',
+    selector: 'prospecti-cmp',
     moduleId: module.id,
-    templateUrl: 'dashboard.component.html'
+    templateUrl: 'prospecti.component.html'
     
 })
 
-export class DashboardComponent implements OnInit {
-
-
-  selectedFilef: File
-
-  selectedFilec: File
+export class ProspectiComponent implements OnInit{
   
   minValue: number = 0;
   maxValue: number = 20;
@@ -56,7 +48,7 @@ export class DashboardComponent implements OnInit {
   public isCollapsed = true;
   public labels:any;
 
-  currDate = new Date();
+  valuedate: any;
 
   yearsExpierenceMin:any;
   yearsExpierenceMax:any;
@@ -109,11 +101,7 @@ export class DashboardComponent implements OnInit {
     "yearsExpierenceMin": null,
     "yearsExpierenceMax": null,
     "software":[]
-   }; 
-   
-   prospect_birthday:any;
-
-   
+   };  
   
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
     private formBuilder: FormBuilder) {
@@ -245,9 +233,6 @@ export class DashboardComponent implements OnInit {
           prospect_photo: ['', Validators.required],
           prospect_link: ['', Validators.required],
           experience_years: ['', Validators.required],
-          email: ['', Validators.required],
-          commentary: ['', Validators.required],
-          referral_name: ['', Validators.required]
 
 
       });
@@ -266,9 +251,6 @@ export class DashboardComponent implements OnInit {
           prospect_photo: ['', Validators.required],
           prospect_link: ['', Validators.required],
           experience_years: ['', Validators.required],
-          email: ['', Validators.required],
-          commentary: ['', Validators.required],
-          referral_name: ['', Validators.required]
 
 
       });
@@ -475,7 +457,7 @@ export class DashboardComponent implements OnInit {
   }
     getprospects() {
     
-      this.globalService.getModel("/prospect").then(
+      this.globalService.getModel("/prospect/inactive").then(
         
           result => {
             this.prospectList = result;
@@ -617,8 +599,7 @@ getsoftware() {
     this.onClose()
   }
 
-  deletelbprospect() {
-   
+  reactivarprospect() {
     
     let postprospect = {
       'prospect_id': this.prospect.prospect_id,
@@ -627,7 +608,7 @@ getsoftware() {
     };
    
 console.log(postprospect)
-    this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect/baja").then(
+    this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect/alta").then(
       result => {
     //    console.log(result);
         this.getprospects();
@@ -669,7 +650,8 @@ console.log(postprospect)
       'experience_level': this.prospect.experience_level,
       'email': this.prospect.email,
       'commentary': this.prospect.commentary,
-      'referral_name': this.prospect.referral_name
+      'referral_name': this.prospect.referral_name,
+      'prospect_status':""
       
     };
    
@@ -688,32 +670,7 @@ console.log(postprospect)
     this.onClose()
   }
 
-  ValidateDate(Fecha){
-    var momentB = moment(this.currDate,"DD/MM/YYYY");
-    console.log(Fecha);
-    console.log(momentB.isAfter(Fecha));
-
-  }
-
-
-  
-    onFileChanged(event) {
-     
-      this.selectedFilef = event.target.files[0]
-    }
-  
- 
-
-    onFileChangec(event) {
-    
-      this.selectedFilec = event.target.files[0]
-    }
-  
-  
-
-
   saveprospect() {
-
 
     this.submitted = true;
 

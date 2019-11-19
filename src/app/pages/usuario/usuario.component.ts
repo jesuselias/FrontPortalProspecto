@@ -32,25 +32,41 @@ export class UsuarioComponent implements OnInit{
   userModal: string="";
   save: boolean=false;
   edit: boolean=false;
+  titleModal: string="";
   constructor(private globalService: GlobalService, private bsModalService: BsModalService,private formBuilder: FormBuilder) {
      this.user=[];
      this.usersList=[];
      this.roleList=[];
   }
 
-  OpenUsersModal(template: TemplateRef<any>, option, index:number) {
+  OpenUsersModal(template: TemplateRef<any>, option, item) {
+    console.log(item);
     this.user=[]
     if(option==="save"){
       this.userModal='Crear Usuario';
+      this.contacto = this.formBuilder.group({
+        user_name: ['', Validators.required], 
+        user_password: ['', Validators.required]      
+      });  
       this.save=true;
     }else
     if(option==="edit"){
       this.userModal='Editar Usuario';
+
+      this.contacto = this.formBuilder.group({
+        user_name: ['', Validators.required],
+        user_password: ['', Validators.required]   
+              
+      }); 
       this.edit=true;
-      this.user=this.usersList[index];
+      this.user=this.usersList.filter(data=>data.user_name==item.user_name);
+      this.user=this.user[0]
+      console.log(this.user);
+      //this.user=this.usersList[index];
     }else
     if(option==='delete'){
-      this.user=this.usersList[index];
+      this.user=this.usersList.filter(data=>data.user_name==item.user_name);
+      this.user=this.user[0]
 
     }
     this.bsModalRef = this.bsModalService.show(template);
@@ -105,13 +121,39 @@ export class UsuarioComponent implements OnInit{
     this.onClose()
   }
 
-  editUsers() {
+  deletelbUsers() {
     let postUsers = {
       'user_password':this.user.user_password,
       
     };
 
-    this.globalService.updateModel(this.user.id,postUsers,"/users").then(
+    this.globalService.updateModel(this.user.id,postUsers,"/prospect/baja").then(
+      result => {
+        this.getUsers();
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    this.onClose()
+  }
+
+  editUsers() {
+
+    this.submitted = true;
+
+    if (this.contacto.invalid) {
+        return;
+    }
+
+    let postUsers = {
+      'user_name': this.user.user_name,
+      'user_password': this.user.user_password,
+      'role_id': this.user.role_id,
+      
+    };
+
+    this.globalService.updateModel(this.user.user_name,postUsers,"/users").then(
       result => {
         this.getUsers();
       },
@@ -125,6 +167,12 @@ export class UsuarioComponent implements OnInit{
 
   
   saveUsers() {
+
+    this.submitted = true;
+
+    if (this.contacto.invalid) {
+        return;
+    }
     
     let postUsers = {
       'user_name': this.user.user_name,
@@ -150,6 +198,19 @@ export class UsuarioComponent implements OnInit{
     this.edit=false;
     this.save=false;
     this.bsModalRef.hide();
+    this.submitted = false;
   }
+
+  get f() { return this.contacto.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.contacto.invalid) {
+        return;
+    }
+
+    
+}
   
 }

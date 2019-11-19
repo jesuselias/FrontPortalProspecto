@@ -20,6 +20,8 @@ import {SoftwareComponent} from '../../pages/software/software.component';
 import {RoleComponent} from '../../pages/role/role.component';
 import { TitleComponent } from '../../pages/title/title.component';
 import { UsuarioComponent } from '../../pages/usuario/usuario.component';
+import { ProspectiComponent } from '../../pages/prospecti/prospecti.component';
+
 
 import {AssignmentComponent} from '../../pages/assignment/assignment.component';
 import { NgxMultiselectModule } from '@ngx-lib/multiselect';
@@ -45,6 +47,7 @@ import {
   ],
   declarations: [
     DashboardComponent,
+    ProspectiComponent,
     UserComponent,
     TableComponent,
     UpgradeComponent,

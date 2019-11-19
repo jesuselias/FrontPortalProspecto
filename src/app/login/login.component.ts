@@ -3,12 +3,6 @@ import { GlobalService} from "../Pages/providers/global.service";
 import { ToastrService } from "ngx-toastr";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Router, ActivatedRoute } from '@angular/router';
-
-import { first } from 'rxjs/operators';
-
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -42,7 +36,7 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
   });
   
-this.getSotware();
+//this.getSotware();
 
 this.getcountry1();
 
@@ -73,7 +67,6 @@ this.getcity();
         result => {
           this.cityList = result;
           localStorage.setItem("citylogin", JSON.stringify(this.cityList));
-          console.log(this.cityList)
         },
         err => {
           console.log(err);
@@ -82,7 +75,6 @@ this.getcity();
       );
 }
   postLogin() {
-   // this.mensaje()
     let postLogin = {
       'user_name': this.username,
       'user_password': this.password,
@@ -91,11 +83,8 @@ this.getcity();
     this.globalService.addLogin(postLogin, "/users/authenticate").then(
       (result) => {
 
-
-       
         this.funcciones=result;
 
-        
         if (result!=null)
         {
           localStorage.setItem("logged","true");
@@ -152,24 +141,24 @@ this.getcity();
 //       );
 // }
 
-getSotware() {
-  this.softwares=[];
-  this.globalService.getModel("/software").then(
-      result => {
-      //  console.log(result);
-        this.softwareList = result;
+// getSotware() {
+//   this.softwares=[];
+//   this.globalService.getModel("/software").then(
+//       result => {
+//       //  console.log(result);
+//         this.softwareList = result;
        
-        this.softwareList.map(item=>{
-          this.software1.push({ id: item.software_id, name: item.software_name})
-        })
-      //  console.log('software login',this.software1);
-        localStorage.setItem("softwareslogin", JSON.stringify(this.software1));
-      },
-      err => {
-        console.log(err);
-      }
-    );
-}
+//         this.softwareList.map(item=>{
+//           this.software1.push({ id: item.software_id, name: item.software_name})
+//         })
+//       //  console.log('software login',this.software1);
+//         localStorage.setItem("softwareslogin", JSON.stringify(this.software1));
+//       },
+//       err => {
+//         console.log(err);
+//       }
+//     );
+// }
 
 getcountry1() {
 

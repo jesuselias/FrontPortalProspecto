@@ -21,7 +21,7 @@ export class UserComponent implements OnInit{
         this.route
         .queryParams
         .subscribe(params => {
-          console.log((params));
+         // console.log((params));
             this.prospect=params;
             this.getsoftwareProspect(this.prospect.prospect_id);
    
@@ -30,7 +30,7 @@ export class UserComponent implements OnInit{
           }
           public initialValues(){
             let logged= localStorage.getItem("logged");
-            console.log(logged);
+           // console.log(logged);
           
             if(logged!="true"){
               return location.href='#';
@@ -86,7 +86,7 @@ export class UserComponent implements OnInit{
   // let prospect_id;
     this.globalService.getModel("/prospect/"+ prospect_id +"/software").then(
         result => {
-          console.log(result);
+         // console.log(result);
           this.softwareList = result;
         },
         err => {

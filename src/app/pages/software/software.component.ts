@@ -43,7 +43,7 @@ export class SoftwareComponent implements OnInit{
       this.software=[]
      
       if(option==="save"){
-        
+        this.titleModal='Crear Software';
         this.contacto = this.formBuilder.group({
           software_name: ['', Validators.required], 
                 
@@ -173,6 +173,7 @@ export class SoftwareComponent implements OnInit{
       this.edit=false;
       this.save=false;
       this.bsModalRef.hide();
+      this.submitted = false;
     }
     get f() { return this.contacto.controls; }
 

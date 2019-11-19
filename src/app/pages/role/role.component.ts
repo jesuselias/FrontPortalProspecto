@@ -5,6 +5,8 @@ import { BehaviorSubject } from "rxjs";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { GlobalService } from "../providers/global.service";
 
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 
 @Component({
@@ -21,6 +23,9 @@ export class RoleComponent implements OnInit{
         this.getfunction();
     }
 
+    contacto: FormGroup;
+    submitted = false;
+
     index:any;
     pageActual: number = 1;
     roleList: any;
@@ -36,7 +41,7 @@ export class RoleComponent implements OnInit{
     save: boolean=false;
     edit: boolean=false;
 
-    constructor(private globalService: GlobalService, private bsModalService: BsModalService) {
+    constructor(private globalService: GlobalService, private bsModalService: BsModalService,private formBuilder: FormBuilder) {
        this.role=[];
        this.function= [];
        this.functiones= [];
@@ -65,6 +70,11 @@ export class RoleComponent implements OnInit{
       this.role=[]
       if(option==="save"){
         this.titleModal='Create role';
+
+        this.contacto = this.formBuilder.group({
+          role_name: ['', Validators.required], 
+                
+        }); 
         this.save=true;
       }else
       if(option==="edit"){
@@ -132,7 +142,7 @@ export class RoleComponent implements OnInit{
     this.globalService.getModel("/function").then(
         result => {
           this.functionList = result;
-          console.log(this.functionList)
+       
           this.functionList.map(item=>{
             this.function.push({ id: item.function_id, name: item.function_name})
             
@@ -143,9 +153,6 @@ export class RoleComponent implements OnInit{
         }
       );
   }
-
-  
-   
 
     getroles() {
         this.globalService.getModel("/role").then(
@@ -175,7 +182,7 @@ export class RoleComponent implements OnInit{
       console.log(this.role)
 
       let arrayfun=[];
-      this.function.map(item=>{
+      this.functiones.map(item=>{
      //   console.log(item);
         arrayfun.push({'function_id':item.id})
   
@@ -206,8 +213,14 @@ export class RoleComponent implements OnInit{
     saverole() {
       console.log(this.role)
 
+      this.submitted = true;
+
+      if (this.contacto.invalid) {
+        return;
+    }
+
       let arrayfun=[];
-      this.function.map(item=>{
+      this.functiones.map(item=>{
      //   console.log(item);
         arrayfun.push({'function_id':item.id})
   
@@ -237,7 +250,20 @@ export class RoleComponent implements OnInit{
       this.edit=false;
       this.save=false;
       this.bsModalRef.hide();
+      this.submitted = false;
     }
+
+    get f() { return this.contacto.controls; }
+
+    onSubmit() {
+      this.submitted = true;
+
+      if (this.contacto.invalid) {
+          return;
+      }
+
+      
+  }
   
     
 }

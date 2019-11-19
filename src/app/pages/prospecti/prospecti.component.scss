@@ -1,0 +1,3 @@
+$my-slider-theme: igx-slider-theme($thumb-on-color: black, $track-on-color: yellow);
+// Pass the theme to the igx-slider component mixin
+@include igx-slider($my-slider-theme);

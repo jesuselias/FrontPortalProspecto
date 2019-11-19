@@ -1,99 +1,10 @@
-<div class="row">
-  
-            
-          
-          <div class="col-md-3 " >
-              <div  class="card" style="align-content: center;background-color: #999da0;">
-                <div  class="card-body">
-                    <div class="col-md-7 ">
-                  <div  class="row">                  
-                        <i  style="color: black;"class="fa fa-filter" aria-hidden="true"></i>         
-                      <h6 style="color: black;" href="" class="simple-text logo-normal" >
-                        Filtros
-                      </h6>
-                    </div>
-                  </div>  
-                    <hr>
-                    <div class="input-group" class="col-11">
-                  <label style="color: black;" >Nivel de Experiencia</label>
-                 
-                
-                    <select (ngModelChange)="prospectexp($event)"  name="experience_level" class="form-control"  [(ngModel)]="levelTest">
-                        <option value="">---Seleccionar todos---</option>
-                      <option  *ngFor="let item of experiencieList; let i = index" [ngValue]="item.id">
-                         {{experiencieList[i].experience_level}}
-                       </option>
-                      </select>
-                  </div>
-                
-
-                <div class="input-group"  class="col-8" *ngIf="software.length">
-                    <label  style="color: black;">Software</label> 
-                   
-                      <ngx-multiselect 
-                        
-                        (ngModelChange)="prospectsoft($event)"
-                        [(ngModel)]="softwares1"
-                        [options]="software"
-                        ngDefaultControl
-                       >
-                      </ngx-multiselect>
-                     
-                  </div>
-                  
-                  <div class="input-group" class="col-4">
-                      <label style="color: black;">Pais</label> 
-                        <ngx-multiselect 
-                        (ngModelChange)="prospectcountry($event)"
-                        (ngModelChange)="showcity2($event)"
-                          [(ngModel)]="countrys1"
-                          [options]="country1"
-                         >
-                        </ngx-multiselect>
-                       
-                    </div>
-                    <div class="input-group" class="col-11">
-                    <label  style="color: black;">Ciudad*</label>                
-                       
-                        <div *ngIf="countrys1.length < 2" >
-                        <select (ngModelChange)="prospectcity($event)"   class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" [ngModelOptions]="{standalone: true}">
-                          <option value="">---Seleccionar Todo---</option>
-                          <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
-                             {{cityList[i].city_name}}
-                           </option>
-                          </select>                                    
-                       </div>
-                    </div>
-
-                    
-
-                    <div class="input-group" class="col-10">
-            
-                      <label style="color: black;">Años de Experiencia</label>
-                      <ng5-slider  (userChangeEnd)="prospectyear($event)" [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
-                   </div>
-
-                   
-
-                   <div class="input-group" class="col-10">
-            <label style="color: black;">Edad</label>
-          <ng5-slider (userChangeEnd)="prospectage($event)" [(value)]="minValue2" [(highValue)]="maxValue2" [options]="options2"></ng5-slider>
-          </div>
-
-          <div class="input-group" class="col-10">
-            <label style="color: black;">Salario</label>
-          <ng5-slider (userChangeEnd)=" prospectsalary($event)" [(value)]="minValue3" [(highValue)]="maxValue3" [options]="options3"></ng5-slider>
-          </div>
-
-          </div>
-        </div>
-      </div>
-          <div class="col-md-9">
+<div class="container" >
+  <div class="row">
+    <div class="col-md-12">
     
       <div class="card-header">
-        <h4 class="card-title align-center">Prospecto</h4>
+        <h4 class="card-title align-center">Prospecto Inactivo</h4>
       </div>
-       <span  (click)="OpenProspectModal(template,'save',index)" class="btn btn-primary btn-xs">Agregar nuevo Prospecto</span>
        
         <br /><br />
         <div class="table-responsive">
@@ -103,22 +14,17 @@
               <th>Apellido</th>
               <th>Title</th>
               <th>Salario</th>
-              <th>Detalles</th>
-              <th>Editar</th>
+              <th>Reactivar</th>
               <th>Eliminar</th>
             </thead>
             <tbody>
-              <tr *ngFor="let item of prospectList| paginate: {itemsPerPage: 6, currentPage: pageActual};let i = index">
+              <tr *ngFor="let item of prospectList| paginate: {itemsPerPage: 10, currentPage: pageActual};let i = index">
                 <td>{{item.prospect_name}}</td>
                 <td>{{item.prospect_lastname}}</td>
                 <td>{{checkTitle(item.title_id)}}</td>
                 <td>{{item.prospect_salary}}</td>
                 
-               
-              
-                <td><span (click)="getsoftwareProspect(item.prospect_id)" class="btn btn-primary btn-xs" [routerLink]="['/user']" [queryParams]="item">
-                    <span class="nc-icon nc-tap-01"></span></span></td>
-                    <td><span class="btn btn-primary btn-xs" (click)="OpenProspectModal(template,'edit',item)">
+                    <td><span class="btn btn-primary btn-xs" (click)="OpenProspectModal(confirm2,'delete',item)">
                       <span class="nc-icon nc-ruler-pencil"></span></span></td> 
                 <td><span class="btn btn-danger btn-xs" (click)="OpenProspectModal(confirm,'delete',item)">
                     <span class="nc-icon nc-simple-remove"></span></span></td>
@@ -160,22 +66,12 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label">Fecha de Nacimiento*</label> 
                 <div class="col-8">
-                  <input type="date" #Fecha formControlName="prospect_birthday"class="form-control" [(ngModel)]="prospect.prospect_birthday" id="txtvalor"  placeholder="Fecha" (change)="ValidateDate(Fecha.value)" />
+                <input type="text" formControlName="prospect_birthday" class="form-control" [(ngModel)]="prospect.prospect_birthday" [ngClass]="{ 'is-invalid': submitted && f.prospect_birthday.errors }" />
                 <div *ngIf="submitted && f.prospect_birthday.errors" class="invalid-feedback">
                   <div *ngIf="f.prospect_birthday.errors.required">Por favor, ingrese fecha de Nacimiento</div>
                 </div>
                 </div>
              </div>
-
-             <!-- <div class="form-group">
-              <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd"
-                       name="dp" [(ngModel)]="prospect.prospect_birthday" ngbDatepicker #d="ngbDatepicker">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-                </div>
-              </div>
-            </div> -->
                   
              <div class="form-group row">
                 <label class="col-4 col-form-label">Numero de Telefono*</label> 
@@ -247,10 +143,15 @@
                 </div>
                 </div>
              </div>
-         
-
-         
-
+             <div class="form-group row">
+              <label class="col-4 col-form-label">Foto*</label> 
+              <div class="col-8">
+              <input type="text" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" />
+              <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
+                <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
+              </div>
+              </div>
+           </div>
            <div class="form-group row">
             <label class="col-4 col-form-label">Fuente*</label> 
             <div class="col-8">
@@ -285,66 +186,24 @@
                 <div class="form-group row">
                   <label class="col-4 col-form-label">email*</label> 
                   <div class="col-8">
-                  <input type="text" class="form-control" formControlName="email"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-                  [(ngModel)]="prospect.email"/>
-                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                      <div *ngIf="f.email.errors.required">Por favor, ingrese email</div>
-                    </div>
+                  <input type="text" class="form-control" 
+                  [(ngModel)]="prospect.email" [ngModelOptions]="{standalone: true}" />
                   </div>
               </div>
               <div class="form-group row">
                 <label class="col-4 col-form-label">comentario*</label> 
                 <div class="col-8">
-                <input type="text" class="form-control" formControlName="commentary"  [ngClass]="{ 'is-invalid': submitted && f.commentary.errors }"
-                [(ngModel)]="prospect.commentary"  />
-                <div *ngIf="submitted && f.commentary.errors" class="invalid-feedback">
-                    <div *ngIf="f.commentary.errors.required">Por favor, ingrese comentario</div>
-                  </div>
+                <input type="text" class="form-control" 
+                [(ngModel)]="prospect.commentary" [ngModelOptions]="{standalone: true}" />
                 </div>
             </div>
             <div class="form-group row">
               <label class="col-4 col-form-label">Referido por:*</label> 
               <div class="col-8">
-              <input type="text" class="form-control" formControlName="referral_name"  [ngClass]="{ 'is-invalid': submitted && f.referral_name.errors }"
-              [(ngModel)]="prospect.referral_name" />
-              <div *ngIf="submitted && f.referral_name.errors" class="invalid-feedback">
-                  <div *ngIf="f.referral_name.errors.required">Por favor, ingrese Referencia</div>
-                </div>
+              <input type="text" class="form-control" 
+              [(ngModel)]="prospect.referral_name" [ngModelOptions]="{standalone: true}" />
               </div>
           </div>
-
-          
-          <!-- <div class="form-group row">
-              <label class="col-4 col-form-label">CV*</label> 
-              <div class="col-8">
-
-                  <input
-           style="display: none"
-           type="file" (change)="onFileChanged($event)" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }"
-           #fileInput>
-         <button (click)="fileInput.click()">Seleccione Foto</button>
-               <input type="text" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" />
-              <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
-                <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
-              </div>
-              </div>
-           </div> -->
-
-          <div class="form-group row">
-              <label class="col-4 col-form-label">Foto*</label> 
-              <div class="col-8">
-
-                  <input
-           style="display: none"
-           type="file" (change)="onFileChanged($event)" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }"
-           #fileInput>
-         <button (click)="fileInput.click()">Seleccione Foto</button>
-              <!-- <input type="text" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" /> -->
-              <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
-                <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
-              </div>
-              </div>
-           </div>
 
 
 
@@ -379,11 +238,19 @@
       </div>
   
   </ng-template>
-  <ng-template #confirm>
+  <ng-template #confirm2>
     <div class="modal-body text-center">
-      <p>Eliminar logica,Desea inavilitar al Prospecto?</p>
-      <button type="button" class="btn btn-default" (click)="deletelbprospect()" >Si</button>
+      <p>Deseas reactivar al Prospecto?</p>
+      <button type="button" class="btn btn-default" (click)="reactivarprospect()" >Si</button>
       <button type="button" class="btn btn-primary" (click)="onClose()" >No</button>
     </div>
   </ng-template>
+  <ng-template #confirm>
+    <div class="modal-body text-center">
+      <p>Esta seguro que desea Eliminar al Prospecto Permanentemente?</p>
+      <button type="button" class="btn btn-default" (click)="deleteprospect()" >Si</button>
+      <button type="button" class="btn btn-primary" (click)="onClose()" >No</button>
+    </div>
+  </ng-template>
+</div>
 </div>

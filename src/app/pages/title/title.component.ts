@@ -1,6 +1,7 @@
 import { Component, OnInit,TemplateRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { GlobalService } from "../providers/global.service";
@@ -12,6 +13,10 @@ import { GlobalService } from "../providers/global.service";
 })
 
 export class TitleComponent implements OnInit{
+  
+  contacto: FormGroup;
+  submitted = false;
+
   ngOnInit(){
     this.initialValues();
       this.getTitle();
@@ -25,7 +30,7 @@ export class TitleComponent implements OnInit{
   titleModal: string="";
   save: boolean=false;
   edit: boolean=false;
-  constructor(private globalService: GlobalService, private bsModalService: BsModalService) {
+  constructor(private globalService: GlobalService, private bsModalService: BsModalService,private formBuilder: FormBuilder) {
      this.title=[];
      this.titleList=[];
   }
@@ -33,11 +38,23 @@ export class TitleComponent implements OnInit{
   OpenTitleModal(template: TemplateRef<any>, option, item) {
     this.title=[]
     if(option==="save"){
-      this.titleModal='Create Title';
+      this.titleModal='Crear Titulo';
+
+      this.contacto = this.formBuilder.group({
+        title_name: ['', Validators.required], 
+              
+      }); 
+
       this.save=true;
     }else
     if(option==="edit"){
       this.titleModal='Edit Title';
+
+      this.contacto = this.formBuilder.group({
+        title_name: ['', Validators.required], 
+              
+      }); 
+      
       this.edit=true;
      // this.title=this.titleList[index];
      this.title=this.titleList.filter(data=>data.title_id==item.title_id);
@@ -101,6 +118,12 @@ export class TitleComponent implements OnInit{
   }
   saveTitle() {
     console.log(this.title)
+
+    this.submitted = true;
+
+    if (this.contacto.invalid) {
+        return;
+    }
     
     let postTitle = {
       'title_name': this.title.title_name,
@@ -124,7 +147,20 @@ export class TitleComponent implements OnInit{
     this.edit=false;
     this.save=false;
     this.bsModalRef.hide();
+    this.submitted = false;
   }
+
+  get f() { return this.contacto.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.contacto.invalid) {
+        return;
+    }
+
+    
+}
 
   
 }

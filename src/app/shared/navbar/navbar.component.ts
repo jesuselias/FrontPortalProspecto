@@ -57,20 +57,13 @@ export class NavbarComponent implements OnInit{
 
        this.selectfunicones();
 
-      //  this.route
-      //  .queryParams
-      //  .subscribe(params => {
-      //    console.log((params));
-      //      this.navbar=params;
-
-      //    });
     }
 
     selectfunicones(){
       //localStorage.getItem('funcioneslogin');
      this.navbar= JSON.parse(localStorage.getItem('funcioneslogin'))
      //this.navbar.push({});
-     console.log(this.navbar)
+     //console.log(this.navbar)
     }
 
 
