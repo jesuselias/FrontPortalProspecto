@@ -240,12 +240,12 @@ export class DashboardComponent implements OnInit {
           prospect_birthday: ['', Validators.required],
           prospect_phonenumber: ['', Validators.required],
           prospect_address: ['', Validators.required],
-          prospect_salary: ['', Validators.required],
-          prospect_cv: ['', Validators.required],
-          prospect_photo: ['https://', Validators.required],
+          prospect_salary: ['', [Validators.required,Validators.pattern('[0-9]+')]],
+          prospect_cv: ['',[Validators.required,Validators.pattern('https?://.+')]],
+          prospect_photo: ['', [Validators.required,Validators.pattern('https?://.+')]],
           prospect_link: ['', Validators.required],
-          experience_years: ['', Validators.required],
-          email: ['', Validators.required],
+          experience_years: ['', [Validators.required,Validators.pattern('[0-9]+')]],
+          email: ['', [Validators.required,Validators.email]],
           commentary: ['', Validators.required],
           referral_name: ['', Validators.required]
 

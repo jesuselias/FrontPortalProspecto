@@ -27,19 +27,20 @@
                   </div>
                 
 
-                <div class="input-group"  class="col-8" *ngIf="software.length">
-                    <label  style="color: black;">Software</label> 
-                   
-                      <ngx-multiselect 
-                        
-                        (ngModelChange)="prospectsoft($event)"
-                        [(ngModel)]="softwares1"
-                        [options]="software"
-                        ngDefaultControl
-                       >
-                      </ngx-multiselect>
+                  <div class="input-group"  class="col-8" *ngIf="software.length">
+                      <label  style="color: black;">Software</label> 
                      
-                  </div>
+                        <ngx-multiselect 
+                          
+                          (ngModelChange)="prospectsoft($event)"
+                          [(ngModel)]="softwares1"
+                          [options]="software"
+                          theme="bootstrap" 
+                          ngDefaultControl
+                         >
+                        </ngx-multiselect>
+                       
+                    </div>
                   
                   <div class="input-group" class="col-4">
                       <label style="color: black;">Pais</label> 
@@ -48,6 +49,7 @@
                         (ngModelChange)="showcity2($event)"
                           [(ngModel)]="countrys1"
                           [options]="country1"
+                          theme="bootstrap" 
                          >
                         </ngx-multiselect>
                        
@@ -235,6 +237,7 @@
                   <input placeholder="Ingrese el salario en Numero" type="text" formControlName="prospect_salary" class="form-control" [(ngModel)]="prospect.prospect_salary" [ngClass]="{ 'is-invalid': submitted && f.prospect_salary.errors }" />
                   <div *ngIf="submitted && f.prospect_salary.errors" class="invalid-feedback">
                     <div *ngIf="f.prospect_salary.errors.required">Por favor, ingrese Salario</div>
+                    <div *ngIf="f.prospect_salary.errors.pattern">Por favor, ingrese solo numero</div>
                   </div>
                   </div>
                </div>
@@ -244,6 +247,7 @@
                 <input type="text" formControlName="prospect_cv" class="form-control" [(ngModel)]="prospect.prospect_cv" [ngClass]="{ 'is-invalid': submitted && f.prospect_cv.errors }" />
                 <div *ngIf="submitted && f.prospect_cv.errors" class="invalid-feedback">
                   <div *ngIf="f.prospect_cv.errors.required">Por favor, ingrese cv</div>
+                  <div *ngIf="f.prospect_cv.errors.pattern">Por favor, ingrese una direccion url correcta</div>
                 </div>
                 </div>
              </div>
@@ -265,7 +269,8 @@
               <div class="col-8">
               <input placeholder="Ingrese el Año en Numero" formControlName="experience_years" class="form-control" [(ngModel)]="prospect.experience_years" [ngClass]="{ 'is-invalid': submitted && f.experience_years.errors }" />
               <div *ngIf="submitted && f.experience_years.errors" class="invalid-feedback">
-                <div *ngIf="f.experience_years.errors.required">Por favor, ingrese foto</div>
+                <div *ngIf="f.experience_years.errors.required">Por favor, ingrese Años</div>
+                <div *ngIf="f.experience_years.errors.pattern">Por favor, ingrese solo numero</div>
               </div>
               </div>
           </div>
@@ -336,6 +341,7 @@
             <input type="text" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" />
             <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
               <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
+              <div *ngIf="f.prospect_photo.errors.pattern">Por favor, ingrese una direccion url correcta</div>
             </div>
             </div>
          </div>
@@ -367,6 +373,7 @@
                     name="software_Prospect"
                     [(ngModel)]="softwares"
                     [options]="software"
+                    theme="bootstrap"
                     ngDefaultControl>
                   </ngx-multiselect>
                   </div>
