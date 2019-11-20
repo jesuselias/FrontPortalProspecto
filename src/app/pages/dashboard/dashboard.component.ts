@@ -242,7 +242,7 @@ export class DashboardComponent implements OnInit {
           prospect_address: ['', Validators.required],
           prospect_salary: ['', Validators.required],
           prospect_cv: ['', Validators.required],
-          prospect_photo: ['', Validators.required],
+          prospect_photo: ['https://', Validators.required],
           prospect_link: ['', Validators.required],
           experience_years: ['', Validators.required],
           email: ['', Validators.required],

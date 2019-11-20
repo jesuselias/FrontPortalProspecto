@@ -21,10 +21,11 @@ export class UserComponent implements OnInit{
         this.route
         .queryParams
         .subscribe(params => {
-         // console.log((params));
+          console.log((params));
             this.prospect=params;
             this.getsoftwareProspect(this.prospect.prospect_id);
-   
+            console.log(this.prospect)
+          console.log(this.prospect.prospect_photo);
           });
 
           }
@@ -52,7 +53,7 @@ export class UserComponent implements OnInit{
     constructor(private globalService: GlobalService, private bsModalService: BsModalService,
       public  route: ActivatedRoute) {
        this.user=[];
-       
+       this.prospect=[];
        
     }
    
