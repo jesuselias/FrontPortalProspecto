@@ -278,11 +278,15 @@
                 <div class="form-group row">
                   <label class="col-4 col-form-label">Nivel de Experiencia*</label> 
                   <div  class="col-8">
-                    <select name="experience_level" class="form-control"  [(ngModel)]="prospect.experience_level" [ngModelOptions]="{standalone: true}" >
-                      <option  *ngFor="let item of experiencieList; let i = index" [ngValue]="item.id">
+                    <select name="experience_level" class="form-control"  [(ngModel)]="prospect.experience_level" required  formControlName="experience_level" [ngClass]="{ 'is-invalid': submitted && f.experience_level.errors }" >
+                      <option  *ngFor="let item of experiencieList; let i = index" [ngValue]="item.id" >
                          {{experiencieList[i].experience_level}}
                        </option>
-                      </select>                                    
+                      </select>
+                      <div *ngIf="submitted && f.experience_level.errors" class="invalid-feedback">
+                        <div *ngIf="f.experience_level.errors.required">Por favor, seleccione nivel de experiencia</div>
+                       
+                      </div>                                    
                    </div>
                 </div> 
 
@@ -369,7 +373,7 @@
                 <div class="col-8">
                   <ngx-multiselect
                   [ngModelOptions]="{standalone: true}"
-                  
+                    
                     name="software_Prospect"
                     [(ngModel)]="softwares"
                     [options]="software"
