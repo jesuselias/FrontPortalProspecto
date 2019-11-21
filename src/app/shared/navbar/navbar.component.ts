@@ -71,9 +71,11 @@ export class NavbarComponent implements OnInit{
     public salir(){
       let logged= localStorage.getItem("logged");
       if(logged=="true"){
-        return localStorage.clear();
-        
+        return location.href='#';
+
       }
+      return localStorage.clear();
+
     }
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());
