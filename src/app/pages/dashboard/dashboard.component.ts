@@ -248,6 +248,9 @@ export class DashboardComponent implements OnInit {
           email: ['', [Validators.required,Validators.email]],
           commentary: ['', Validators.required],
           referral_name: ['', Validators.required],
+          title_id: ['', Validators.required],
+          country_id: ['', Validators.required],
+          city_id: ['', Validators.required],
           experience_level:['', Validators.required]
           
 
@@ -270,6 +273,10 @@ export class DashboardComponent implements OnInit {
           experience_years: ['', Validators.required],
           email: ['', Validators.required],
           commentary: ['', Validators.required],
+          title_id: ['', Validators.required],
+          experience_level:['', Validators.required],
+          country_id: ['', Validators.required],
+          city_id: ['', Validators.required],
           referral_name: ['', Validators.required]
 
 

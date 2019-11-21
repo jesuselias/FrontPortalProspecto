@@ -1,7 +1,4 @@
 <div class="row">
-  
-            
-          
           <div class="col-md-3 " >
               <div  class="card" style="align-content: center;background-color: #999da0;">
                 <div  class="card-body">
@@ -146,7 +143,7 @@
                 <div class="col-8">
                 <input placeholder="Ingrese el Nombre" type="text" formControlName="prospect_name" class="form-control" [(ngModel)]="prospect.prospect_name" [ngClass]="{ 'is-invalid': submitted && f.prospect_name.errors }" />
                 <div *ngIf="submitted && f.prospect_name.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_name.errors.required">Por favor, ingresa el Apellido del Prospecto</div>
+                  <div *ngIf="f.prospect_name.errors.required">Por favor, ingresa Nombre del Prospecto</div>
                 </div>
                 </div>
              </div>   
@@ -162,7 +159,9 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label">Fecha de Nacimiento*</label> 
                 <div class="col-8">
-                  <input type="date" #Fecha formControlName="prospect_birthday"class="form-control" [(ngModel)]="prospect.prospect_birthday" id="txtvalor"  placeholder="Fecha" (change)="ValidateDate(Fecha.value)" />
+                  <input type="date" #Fecha formControlName="prospect_birthday"class="form-control"
+                   [(ngModel)]="prospect.prospect_birthday" id="txtvalor"  placeholder="Fecha" (change)="ValidateDate(Fecha.value)" 
+                   required [ngClass]="{ 'is-invalid': submitted && f.prospect_birthday.errors }" />
                 <div *ngIf="submitted && f.prospect_birthday.errors" class="invalid-feedback">
                   <div *ngIf="f.prospect_birthday.errors.required">Por favor, ingrese fecha de Nacimiento</div>
                 </div>
@@ -201,33 +200,41 @@
              <div class="form-group row">
                   <label class="col-4 col-form-label">Titulo*</label> 
                   <div  class="col-8">
-                    <select name="title_id" class="form-control"  [(ngModel)]="prospect.title_id" (ngModelChange)="prospect.title_id" [ngModelOptions]="{standalone: true}">
+                    <select name="title_id" class="form-control"  [(ngModel)]="prospect.title_id" required  formControlName="title_id" [ngClass]="{ 'is-invalid': submitted && f.title_id.errors }"  >
                       <option *ngFor="let item of titleList; let i = index" [ngValue]="item.title_id">
                          {{titleList[i].title_name}}
                        </option>
-                      </select>                                    
+                      </select>  
+                      <div *ngIf="submitted && f.title_id.errors" class="invalid-feedback">
+                        <div *ngIf="f.title_id.errors.required">Por favor, seleccione un Titulo</div>
+                       
+                      </div>                                  
                    </div>
                 </div>
                  <div class="form-group row">
                     <label class="col-4 col-form-label">Pais*</label> 
                     <div  class="col-8">
-                    <select class="form-control" name="country_id"  [(ngModel)]="prospect.country_id" (ngModelChange)="showcity()"[ngModelOptions]="{standalone: true}">
+                    <select class="form-control" name="country_id"  [(ngModel)]="prospect.country_id" (ngModelChange)="showcity()" required  formControlName="country_id" [ngClass]="{ 'is-invalid': submitted && f.country_id.errors }" >
                       <option   *ngFor="let item of countryList; let i = index" [ngValue]="item.country_id" >
                          {{countryList[i].country_name}}
                        </option>
-                      </select>                                    
+                      </select>  
+                      <div *ngIf="submitted && f.country_id.errors" class="invalid-feedback">
+                        <div *ngIf="f.country_id.errors.required">Por favor, seleccione un Pais</div>
+                      </div>                                  
                    </div>
                 </div>
-
                 <div class="form-group row">
-                  
                   <label class="col-4 col-form-label">Ciudad*</label> 
                   <div *ngIf="prospect.country_id" class="col-8">
-                  <select class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" [ngModelOptions]="{standalone: true}">
+                  <select class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" required  formControlName="city_id" [ngClass]="{ 'is-invalid': submitted && f.city_id.errors }">
                     <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
                        {{cityList[i].city_name}}
                      </option>
-                    </select>                                    
+                    </select>   
+                    <div *ngIf="submitted && f.city_id.errors" class="invalid-feedback">
+                      <div *ngIf="f.city_id.errors.required">Por favor, seleccione una Ciudad</div>
+                    </div>                                  
                  </div>
               </div>
 
@@ -252,9 +259,6 @@
                 </div>
              </div>
          
-
-         
-
            <div class="form-group row">
             <label class="col-4 col-form-label">Fuente*</label> 
             <div class="col-8">
@@ -269,7 +273,7 @@
               <div class="col-8">
               <input placeholder="Ingrese el Año en Numero" formControlName="experience_years" class="form-control" [(ngModel)]="prospect.experience_years" [ngClass]="{ 'is-invalid': submitted && f.experience_years.errors }" />
               <div *ngIf="submitted && f.experience_years.errors" class="invalid-feedback">
-                <div *ngIf="f.experience_years.errors.required">Por favor, ingrese Años</div>
+                <div *ngIf="f.experience_years.errors.required">Por favor, ingrese Años de Experiencia</div>
                 <div *ngIf="f.experience_years.errors.pattern">Por favor, ingrese solo numero</div>
               </div>
               </div>
@@ -289,8 +293,6 @@
                       </div>                                    
                    </div>
                 </div> 
-
-
                 <div class="form-group row">
                   <label class="col-4 col-form-label">email*</label> 
                   <div class="col-8">
@@ -373,7 +375,6 @@
                 <div class="col-8">
                   <ngx-multiselect
                   [ngModelOptions]="{standalone: true}"
-                    
                     name="software_Prospect"
                     [(ngModel)]="softwares"
                     [options]="software"
