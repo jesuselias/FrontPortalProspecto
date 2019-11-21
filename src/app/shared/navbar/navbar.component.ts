@@ -3,6 +3,8 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { Location} from '@angular/common';
 import { GlobalService } from "app/pages/providers/global.service";
 
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 export interface RouteInfo {
   path: string;
@@ -40,7 +42,7 @@ export class NavbarComponent implements OnInit{
     public isCollapsed = true;
     @ViewChild("navbar-cmp", {static: false}) button;
 
-    constructor(private globalService: GlobalService,location:Location, private renderer : Renderer, private element : ElementRef, private router: Router,public  route: ActivatedRoute) {
+    constructor(private globalService: GlobalService,location:Location, private renderer : Renderer, private element : ElementRef, private router: Router,public  route: ActivatedRoute,private spinner: NgxSpinnerService) {
         this.location = location;
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
@@ -70,12 +72,13 @@ export class NavbarComponent implements OnInit{
    
     public salir(){
       let logged= localStorage.getItem("logged");
+      this.spinner.show();
       if(logged=="true"){
         return location.href='#';
 
       }
       return localStorage.clear();
-
+      
     }
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());

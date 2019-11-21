@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   });
 
 
-  
+  this.spinner.hide();
 //this.getSotware();
 
 this.getcountry1();
@@ -81,10 +81,10 @@ this.getcity();
   postLogin() {
     this.spinner.show();
  
-   
+  
       /** spinner ends after 5 seconds */
      
-   
+  
     let postLogin = {
       'user_name': this.username,
       'user_password': this.password,
@@ -94,27 +94,23 @@ this.getcity();
       (result) => {
 
         this.funcciones=result;
-        this.spinner.hide();
+
         if (result!=null)
         {
           localStorage.setItem("logged","true");
           localStorage.setItem("funcioneslogin", JSON.stringify(this.funcciones.functions));
           return location.href='#/dashboard';
-          
 
-        }
-        
-        else
+        }else
           localStorage.setItem("logged","false");
       },
       err => {
         localStorage.setItem("logged","false");
         console.log(err)
-        this.spinner.hide();
       }
     );
       //this.onClose();
-   
+
   }
 
   

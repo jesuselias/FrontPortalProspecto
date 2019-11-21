@@ -159,12 +159,9 @@ export class DashboardComponent implements OnInit {
     //  this.getcity();
       this.submitted = false;
 
-      this.spinner.show();
+     
  
-      setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-      }, 15000);
+      this.spinner.hide();
 
     } 
 
