@@ -46,7 +46,9 @@ export class UsuarioComponent implements OnInit{
       this.userModal='Crear Usuario';
       this.contacto = this.formBuilder.group({
         user_name: ['', Validators.required], 
-        user_password: ['', Validators.required]      
+        user_password: ['', Validators.required],
+        role_id: ['', Validators.required]   
+      
       });  
       this.save=true;
     }else
@@ -55,7 +57,8 @@ export class UsuarioComponent implements OnInit{
 
       this.contacto = this.formBuilder.group({
         user_name: ['', Validators.required],
-        user_password: ['', Validators.required]   
+        user_password: ['', Validators.required],
+        role_id: ['', Validators.required]   
               
       }); 
       this.edit=true;

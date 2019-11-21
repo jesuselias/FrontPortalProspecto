@@ -48,7 +48,7 @@
             <div class="col-sm-10">
               <input type="text" class="form-control"  [(ngModel)]="user.user_name"  formControlName="user_name" [ngClass]="{ 'is-invalid': submitted && f.user_name.errors }"/>
               <div *ngIf="submitted && f.user_name.errors" class="invalid-feedback">
-                  <div *ngIf="f.user_name.errors.required">Por favor, ingrese foto</div>
+                  <div *ngIf="f.user_name.errors.required">Por favor, ingrese Nombre</div>
                 </div>
             </div>
           </div>
@@ -57,17 +57,21 @@
           <div class="col-sm-10">
               <input type="password" class="form-control"  [(ngModel)]="user.user_password" formControlName="user_password" [ngClass]="{ 'is-invalid': submitted && f.user_password.errors }"/>
               <div *ngIf="submitted && f.user_password.errors" class="invalid-feedback">
-                  <div *ngIf="f.user_password.errors.required">Por favor, ingrese foto</div>
+                  <div *ngIf="f.user_password.errors.required">Por favor, ingrese Contraseña</div>
                 </div>
             </div>
           </div>
           <div class="input-group" class="col-11">
-              <label style="color: black;" >Roles</label>
-              <select class="form-control" name="role_id"  [(ngModel)]="user.role_id" [ngModelOptions]="{standalone: true}">
+              <label style="color: black;" >Rol</label>
+              <select class="form-control" name="role_id"  [(ngModel)]="user.role_id" required  formControlName="role_id" [ngClass]="{ 'is-invalid': submitted && f.role_id.errors }"  >
                 <option   *ngFor="let item of roleList; let i = index" [ngValue]="item.role_id" >
                    {{roleList[i].role_name}}
                  </option>
-                </select>                                    
+                </select>
+                <div *ngIf="submitted && f.role_id.errors" class="invalid-feedback">
+                  <div *ngIf="f.role_id.errors.required">Por favor, seleccione un Rol</div>
+                 
+                </div>                                     
              </div>  
             
        
