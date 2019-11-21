@@ -33,6 +33,8 @@ import {
 
  import { Ng5SliderModule } from 'ng5-slider';
 
+ import { NgxSpinnerModule } from "ngx-spinner";
+
 @NgModule({
   imports: [
     CommonModule,NgxPaginationModule,
@@ -43,7 +45,7 @@ import {
     ModalModule.forRoot(),
     NgxMultiselectModule,
     NgbModalModule,IgxInputGroupModule,
-    IgxSliderModule,Ng5SliderModule
+    IgxSliderModule,Ng5SliderModule,NgxSpinnerModule
   ],
   declarations: [
     DashboardComponent,

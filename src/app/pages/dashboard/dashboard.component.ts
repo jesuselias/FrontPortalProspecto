@@ -8,6 +8,8 @@ import { Options } from 'ng5-slider';
 import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 @Component({
     selector: 'dashboard-cmp',
@@ -116,7 +118,7 @@ export class DashboardComponent implements OnInit {
    
   
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,private spinner: NgxSpinnerService) {
     
       this.initialValues();
       this.softwareList = [];
@@ -156,6 +158,13 @@ export class DashboardComponent implements OnInit {
       this.gettile();
     //  this.getcity();
       this.submitted = false;
+
+      this.spinner.show();
+ 
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+      }, 15000);
 
     } 
 

@@ -3,6 +3,8 @@ import { GlobalService} from "../Pages/providers/global.service";
 import { ToastrService } from "ngx-toastr";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { NgxSpinnerService } from "ngx-spinner";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +14,7 @@ export class LoginComponent implements OnInit {
   contacto: FormGroup;
   submitted = false;
 
-  constructor(private globalService: GlobalService,private toastr: ToastrService,private formBuilder: FormBuilder) { 
+  constructor(private globalService: GlobalService,private toastr: ToastrService,private formBuilder: FormBuilder,private spinner: NgxSpinnerService) { 
 
     this.software1 = [];
     this.softwareList = [];
@@ -35,6 +37,8 @@ export class LoginComponent implements OnInit {
       usuario: ['', Validators.required],            
       password: ['', Validators.required],
   });
+
+
   
 //this.getSotware();
 
@@ -75,6 +79,12 @@ this.getcity();
       );
 }
   postLogin() {
+    this.spinner.show();
+ 
+   
+      /** spinner ends after 5 seconds */
+     
+   
     let postLogin = {
       'user_name': this.username,
       'user_password': this.password,
@@ -84,22 +94,27 @@ this.getcity();
       (result) => {
 
         this.funcciones=result;
-
+        this.spinner.hide();
         if (result!=null)
         {
           localStorage.setItem("logged","true");
           localStorage.setItem("funcioneslogin", JSON.stringify(this.funcciones.functions));
           return location.href='#/dashboard';
+          
 
-        }else
+        }
+        
+        else
           localStorage.setItem("logged","false");
       },
       err => {
         localStorage.setItem("logged","false");
         console.log(err)
+        this.spinner.hide();
       }
     );
       //this.onClose();
+   
   }
 
   

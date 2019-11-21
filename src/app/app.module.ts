@@ -24,6 +24,8 @@ import { NgxMultiselectModule } from '@ngx-lib/multiselect';
 
 import { Ng5SliderModule } from 'ng5-slider';
 
+import { NgxSpinnerModule } from "ngx-spinner";
+
 
 //I keep the new line
 @NgModule({
@@ -39,7 +41,7 @@ import { Ng5SliderModule } from 'ng5-slider';
     BrowserAnimationsModule,  
     BrowserModule, NgxPaginationModule,
     HttpClientModule,Ng5SliderModule,
-    
+    NgxSpinnerModule,
     RouterModule.forRoot(AppRoutes, {
       useHash: true
     }),
