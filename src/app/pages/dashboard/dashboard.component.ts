@@ -247,7 +247,9 @@ export class DashboardComponent implements OnInit {
           experience_years: ['', [Validators.required,Validators.pattern('[0-9]+')]],
           email: ['', [Validators.required,Validators.email]],
           commentary: ['', Validators.required],
-          referral_name: ['', Validators.required]
+          referral_name: ['', Validators.required],
+          experience_level:['', Validators.required]
+          
 
 
       });
