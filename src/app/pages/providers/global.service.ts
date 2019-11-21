@@ -121,11 +121,13 @@ export class GlobalService {
             this.http.post(this.apiBaseUrl + "" + tipo, model, httpOptions).subscribe((data: any) => {
                // console.log(data);
                 this.showNotification('bottom', 'right', 2, "Bienvenido al Sistema");
-
-
-
                 resolve(data);
-            },)
+            }, err => {
+                console.log(err);
+                return this.toastr.error('No existe Usuario o Contraseña Invalida')
+
+             } )
+
         })
     }
 
