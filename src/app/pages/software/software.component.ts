@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { GlobalService } from "../providers/global.service";
 
+import { NgxSpinnerService } from "ngx-spinner";
+
 @Component({
     selector: 'software-cmp',
     moduleId: module.id,
@@ -17,7 +19,7 @@ export class SoftwareComponent implements OnInit{
   contacto: FormGroup;
   submitted = false;
   
-  constructor(private globalService: GlobalService, private bsModalService: BsModalService,private formBuilder: FormBuilder) {
+  constructor(private globalService: GlobalService, private bsModalService: BsModalService,private formBuilder: FormBuilder,private spinner: NgxSpinnerService) {
     this.software=[];
     
  }
@@ -25,6 +27,7 @@ export class SoftwareComponent implements OnInit{
     
       this.initialValues();
         this.getSoftwares();
+        this.spinner.hide();
     }
 
     index:any;

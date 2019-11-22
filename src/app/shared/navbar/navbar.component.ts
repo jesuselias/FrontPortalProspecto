@@ -14,7 +14,7 @@ export interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-
+  
   { path: '/dashboard',          title: 'Dashboard',      icon:'nc-single-02',  class: '' },
   { path: '/user',          title: 'User',      icon:'nc-single-02',  class: '' },
   { path: '/software',         title: 'Software',        icon:'nc-tile-56',    class: '' },
@@ -50,12 +50,14 @@ export class NavbarComponent implements OnInit{
     }
 
     ngOnInit(){
+      this.spinner.hide();
         this.listTitles = ROUTES.filter(listTitle => listTitle);
         var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         this.router.events.subscribe((event) => {
         this.sidebarClose();
        });
+       
 
        this.selectfunicones();
 

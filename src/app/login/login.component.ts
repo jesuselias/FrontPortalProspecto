@@ -103,9 +103,12 @@ this.getcity();
 
         }else
           localStorage.setItem("logged","false");
+          
       },
       err => {
+        
         localStorage.setItem("logged","false");
+        
         console.log(err)
       }
     );

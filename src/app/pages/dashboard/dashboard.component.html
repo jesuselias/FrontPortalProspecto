@@ -162,6 +162,7 @@
                   <input type="date" #Fecha formControlName="prospect_birthday"class="form-control"
                    [(ngModel)]="prospect.prospect_birthday" id="txtvalor"  placeholder="Fecha" (change)="ValidateDate(Fecha.value)" 
                    required [ngClass]="{ 'is-invalid': submitted && f.prospect_birthday.errors }" />
+                   <div style="color: #dc3545; font-size: 9;" *ngIf="ValidateDate(Fecha.value)" >El usuario debe ser mayor de edad</div>
                 <div *ngIf="submitted && f.prospect_birthday.errors" class="invalid-feedback">
                   <div *ngIf="f.prospect_birthday.errors.required">Por favor, ingrese fecha de Nacimiento</div>
                 </div>
@@ -370,7 +371,7 @@
 
 
 
-               <div class="form-group row">
+               <div class="form-group row" *ngIf="software.length">
                 <label class="col-4 col-form-label">Software*</label> 
                 <div class="col-8">
                   <ngx-multiselect
@@ -381,6 +382,7 @@
                     theme="bootstrap"
                     ngDefaultControl>
                   </ngx-multiselect>
+                  <div style="color: #dc3545; font-size: 9;" *ngIf="submitted && !softwares[0]">Por favor, ingrese software</div>
                   </div>
             </div>
                 <!-- <div class="form-group row">

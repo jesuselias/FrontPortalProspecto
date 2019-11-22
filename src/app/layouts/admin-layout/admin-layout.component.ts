@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-admin-layout',
@@ -8,5 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminLayoutComponent implements OnInit {
 
-  ngOnInit() { }
+  constructor(private spinner: NgxSpinnerService) {}
+
+  ngOnInit() {
+    this.spinner.hide();
+   }
 }

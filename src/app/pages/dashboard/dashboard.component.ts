@@ -705,9 +705,16 @@ console.log(postprospect)
 
   ValidateDate(Fecha){
     var momentB = moment(this.currDate,"DD/MM/YYYY");
-    console.log(Fecha);
-    console.log(momentB.isAfter(Fecha));
 
+    
+  
+    if(Fecha > "2001-01-01"){
+      console.log(Fecha);
+      return true;
+   
+
+   }else
+   return false;
   }
 
 

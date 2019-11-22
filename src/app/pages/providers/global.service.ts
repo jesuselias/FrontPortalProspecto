@@ -4,6 +4,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { ToastrService } from "ngx-toastr";
 import { BehaviorSubject, Observable } from 'rxjs';
 
+import { NgxSpinnerService } from "ngx-spinner";
+
 const httpOptionsDefault = {
     headers: new HttpHeaders({
 
@@ -29,7 +31,7 @@ export class GlobalService {
     // private currentUserSubject: BehaviorSubject<User>;
     // public currentUser: Observable<User>;
 
-    constructor(public http: HttpClient, private toastr: ToastrService) {
+    constructor(public http: HttpClient, private toastr: ToastrService,private spinner: NgxSpinnerService) {
         this.apiBaseUrl = 'http://cutmbpnwaprd01.azurewebsites.net/api'; //endpoint local
         // this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         // this.currentUser = this.currentUserSubject.asObservable();
@@ -123,9 +125,10 @@ export class GlobalService {
                 this.showNotification('bottom', 'right', 2, "Bienvenido al Sistema");
                 resolve(data);
             }, err => {
+                this.spinner.hide();
                 console.log(err);
                 return this.toastr.error('No existe Usuario o Contraseña Invalida')
-
+                
              } )
 
         })
