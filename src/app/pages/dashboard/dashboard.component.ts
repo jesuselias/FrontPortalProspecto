@@ -706,10 +706,11 @@ console.log(postprospect)
   ValidateDate(Fecha){
     var momentB = moment(this.currDate,"DD/MM/YYYY");
 
-    
+    var _years = moment().diff(Fecha, 'years');
+   
   
-    if(Fecha > "2001-01-01"){
-      console.log(Fecha);
+    if(_years < 18 ){
+      console.log(_years);
       return true;
    
 
