@@ -25,6 +25,8 @@ import { NgxMultiselectModule } from '@ngx-lib/multiselect';
 import { Ng5SliderModule } from 'ng5-slider';
 
 import { NgxSpinnerModule } from "ngx-spinner";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 //I keep the new line
@@ -49,7 +51,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     NavbarModule,
     ToastrModule.forRoot(),
     FooterModule,
-    FixedPluginModule
+    FixedPluginModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
 
   bootstrap: [AppComponent],

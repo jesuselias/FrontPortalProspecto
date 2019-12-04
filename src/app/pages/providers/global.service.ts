@@ -32,7 +32,7 @@ export class GlobalService {
     // public currentUser: Observable<User>;
 
     constructor(public http: HttpClient, private toastr: ToastrService,private spinner: NgxSpinnerService) {
-        this.apiBaseUrl = 'http://cutmbpnwaprd01.azurewebsites.net/api'; //endpoint local
+        this.apiBaseUrl = 'https://consultorestmapi.azurewebsites.net/api'; //endpoint local
         // this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         // this.currentUser = this.currentUserSubject.asObservable();
        
