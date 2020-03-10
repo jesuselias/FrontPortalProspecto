@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
 
     this.globalService.addModel(postUsers, "/users").then(
       result => {
-        console.log(result);
+        //console.log(result);
         //this.getUsers();
       },
       err => {

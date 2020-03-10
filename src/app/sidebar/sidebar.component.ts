@@ -138,7 +138,7 @@ export class SidebarComponent implements OnInit {
     }
 
     selectAgeExp(event){
-      console.log(this.age_min)
+     //console.log(this.age_min)
       this.age_min = event.value.lower;
       this.age_max = event.value.upper;
       localStorage.setItem("age_min", this.age_min);
@@ -158,7 +158,7 @@ export class SidebarComponent implements OnInit {
 
       this.globalService.getModel("/software").then(
           result => {
-            console.log(result);
+            //console.log(result);
             this.softwareList = result;
            
             this.softwareList.map(item=>{
@@ -175,7 +175,7 @@ export class SidebarComponent implements OnInit {
   getCountry() {
     this.globalService.getModel("/Country").then(
         result => {
-          console.log(result);
+          //console.log(result);
           this.countryList = result;
       
         },
@@ -187,7 +187,7 @@ export class SidebarComponent implements OnInit {
   getCity() {
   this.globalService.getModel("/City").then(
       result => {
-        console.log(result);
+        //console.log(result);
         this.cityList = result;
     
       },

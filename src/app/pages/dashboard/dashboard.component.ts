@@ -292,8 +292,8 @@ export class DashboardComponent implements OnInit {
         //this.prospect=this.prospectList[index];
         this.prospect=this.prospectList.filter(data=>data.prospect_id==item.prospect_id);
         this.prospect=this.prospect[0]
-        console.log(this.prospect);
-        console.log(this.prospect.software_Prospect);
+        /*console.log(this.prospect);
+        console.log(this.prospect.software_Prospect);*/
         this.prospect.software_Prospect.map(item=>{
 
             this.softwares.push({
@@ -329,7 +329,7 @@ export class DashboardComponent implements OnInit {
 
    prospectexp(event) {
 
-    console.log(event)
+    //console.log(event)
     this.postprospect.expierenceLevel=event
     this.filterApp(this.postprospect);
 
@@ -337,7 +337,7 @@ export class DashboardComponent implements OnInit {
 
    prospectyear(event) {
 
-     console.log(event)
+     //console.log(event)
      this.postprospect.yearsExpierenceMin=event.value;
      this.postprospect.yearsExpierenceMax=event.highValue;
      this.filterApp(this.postprospect);
@@ -349,7 +349,7 @@ export class DashboardComponent implements OnInit {
 
     prospectage(event) {
 
-       console.log(event)
+       //console.log(event)
        this.postprospect.ageMin=event.value;
        this.postprospect.ageMax=event.highValue;
        this.filterApp(this.postprospect);
@@ -361,7 +361,7 @@ export class DashboardComponent implements OnInit {
 
       prospectsalary(event) {
     
-         console.log(event)
+         //console.log(event)
          this.postprospect.salaryMin=event.value;
          this.postprospect.salaryMax=event.highValue;
          this.filterApp(this.postprospect);
@@ -373,7 +373,7 @@ export class DashboardComponent implements OnInit {
 
    prospectcity(event) {
     // console.log(JSON.parse(localStorage.getItem('soft')))
-     console.log(event)
+     //console.log(event)
      this.postprospect.city_id=event
      this.filterApp(this.postprospect); 
       
@@ -641,7 +641,7 @@ getsoftware() {
       
     };
    
-console.log(postprospect)
+    //console.log(postprospect)
     this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect/baja").then(
       result => {
     //    console.log(result);
@@ -688,7 +688,7 @@ console.log(postprospect)
       
     };
    
-console.log(postprospect)
+    //console.log(postprospect)
     this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect").then(
       result => {
     //    console.log(result);
@@ -710,7 +710,7 @@ console.log(postprospect)
    
   
     if(_years < 18 ){
-      console.log(_years);
+      //console.log(_years);
       return true;
    
 
@@ -778,7 +778,7 @@ console.log(postprospect)
 
      
     };
-    console.log(postprospect)
+    //console.log(postprospect)
     this.globalService.addModel(postprospect, "/prospect").then(
       result => {
   //      console.log(result);

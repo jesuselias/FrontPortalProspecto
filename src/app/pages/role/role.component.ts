@@ -82,8 +82,8 @@ export class RoleComponent implements OnInit{
         this.edit=true;
         this.role=this.roleList.filter(data=>data.role_id==item.role_id);
         this.role=this.role[0]
-        console.log(this.role);
-        console.log(this.functiones);
+        /*console.log(this.role);
+        console.log(this.functiones);*/
         this.role.functions.map(item=>{
          
         this.functiones.push({
@@ -167,7 +167,7 @@ export class RoleComponent implements OnInit{
     deleterole() {
       this.globalService.removeModel(this.role.role_id,"/role").then(
         result => {
-          console.log(result);
+          //console.log(result);
           this.getroles();
         },
         err => {
@@ -195,10 +195,10 @@ export class RoleComponent implements OnInit{
         'functions': arrayfun
         
       };
-      console.log(postrole)
+      //console.log(postrole)
       this.globalService.updateModel(this.role.id,postrole, "/role").then(
         result => {
-          console.log(result);
+          //console.log(result);
           this.getroles();
         },
         err => {
@@ -211,7 +211,7 @@ export class RoleComponent implements OnInit{
 
 
     saverole() {
-      console.log(this.role)
+      //console.log(this.role)
 
       this.submitted = true;
 
@@ -235,7 +235,7 @@ export class RoleComponent implements OnInit{
   
       this.globalService.addModel(postrole, "/role").then(
         result => {
-          console.log(result);
+          //console.log(result);
           this.getroles();
         },
         err => {

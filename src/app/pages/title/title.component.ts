@@ -59,12 +59,12 @@ export class TitleComponent implements OnInit{
      // this.title=this.titleList[index];
      this.title=this.titleList.filter(data=>data.title_id==item.title_id);
         this.title=this.title[0]
-        console.log(this.title);
+        //console.log(this.title);
     }else
     if(option==='delete'){
       this.title=this.titleList.filter(data=>data.title_id==item.title_id);
         this.title=this.title[0]
-        console.log(this.title);
+        //console.log(this.title);
 
     }
     this.bsModalRef = this.bsModalService.show(template);
@@ -117,7 +117,7 @@ export class TitleComponent implements OnInit{
     this.onClose()
   }
   saveTitle() {
-    console.log(this.title)
+   // console.log(this.title)
 
     this.submitted = true;
 

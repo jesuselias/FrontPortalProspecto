@@ -41,8 +41,8 @@ export class SoftwareComponent implements OnInit{
     
 
     OpenSoftwareModal(template: TemplateRef<any>, option, item) {
-      console.log(item);
-      console.log("algo")
+      //console.log(item);
+      //console.log("algo")
       this.software=[]
      
       if(option==="save"){
@@ -65,8 +65,8 @@ export class SoftwareComponent implements OnInit{
         });  
         this.edit=true;
         this.software=this.softwareList.filter(data=>data.software_id==item.software_id);
-        this.software=this.software[0]
-        console.log(this.software);
+        this.software=this.software[0];
+        //console.log(this.software);
          
       }else
       if(option==='delete'){
@@ -114,7 +114,7 @@ export class SoftwareComponent implements OnInit{
     deleteSoftware() {
       this.globalService.removeModel(this.software.software_id,"/Software").then(
         result => {
-          console.log(result);
+          //console.log(result);
           this.getSoftwares();
         },
         err => {
@@ -126,7 +126,7 @@ export class SoftwareComponent implements OnInit{
     }
   
     editSoftware() {
-      console.log(this.software)
+      //console.log(this.software)
       
       let postSoftware = {
         'software_id': this.software.software_id,
@@ -136,7 +136,7 @@ export class SoftwareComponent implements OnInit{
   
       this.globalService.updateModel(this.software.id,postSoftware, "/Software").then(
         result => {
-          console.log(result);
+          //console.log(result);
           this.getSoftwares();
         },
         err => {
@@ -161,7 +161,7 @@ export class SoftwareComponent implements OnInit{
   
       this.globalService.addModel(postSoftware, "/Software").then(
         result => {
-          console.log(result);
+          //console.log(result);
           this.getSoftwares();
         },
         err => {

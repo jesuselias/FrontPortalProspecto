@@ -47,11 +47,11 @@ export class AssignmentComponent implements OnInit {
       if (option === "edit") {
         this.titleModal = 'Assignment';
         this.save = true;
-        console.log(this.UserList[index])
+        //console.log(this.UserList[index])
         this.user = this.UserList[index];
         this.assignment.UserID = this.user.id
         this.showAssignment();
-        console.log(this.user);
+        //console.log(this.user);
       } else
         if (option === 'delete') {
 
@@ -67,7 +67,7 @@ export class AssignmentComponent implements OnInit {
   getAssignment() {
     this.globalService.getModel("/users").then(
       result => {
-        console.log(result);
+        //console.log(result);
         this.UserList = result;
       },
       err => {
@@ -79,7 +79,7 @@ export class AssignmentComponent implements OnInit {
 
     this.globalService.getModel("/hardware").then(
       result => {
-        console.log(result);
+        //console.log(result);
         this.HardwareList = result;
       },
       err => {
@@ -89,7 +89,7 @@ export class AssignmentComponent implements OnInit {
     );
     this.globalService.getModel("/software").then(
       result => {
-        console.log(result);
+        //console.log(result);
         this.SoftwareList = result;
       },
       err => {
@@ -103,7 +103,7 @@ export class AssignmentComponent implements OnInit {
     console.log(this.assignment);
     this.globalService.getModel("/assignment/user/" + this.assignment.UserID).then(
       result => {
-        console.log(result);
+        //console.log(result);
         this.AssignmentList = result;
       },
       err => {
@@ -118,7 +118,7 @@ export class AssignmentComponent implements OnInit {
   deleteAssignment(index) {
     this.assignment.hardwareID = this.AssignmentList[index].hardwareID;
     this.assignment.softwareID = this.AssignmentList[index].softwareID;
-    console.log(this.assignment);
+    //console.log(this.assignment);
     let postAss = {
       "userID": this.assignment.UserID,
       "softwareID": this.assignment.SoftwareID,
@@ -127,7 +127,7 @@ export class AssignmentComponent implements OnInit {
 
     this.globalService.addModel(postAss, "/assignment/delete").then(
       result => {
-        console.log(result);
+        //console.log(result);
         // this.getAssignment();
         this.showAssignment();
       },
@@ -142,7 +142,7 @@ export class AssignmentComponent implements OnInit {
   }
 
   editAssignment(index) {
-    console.log(this.user)
+    //console.log(this.user)
 
     let postUser = {
       'id': this.user.id,
@@ -155,7 +155,7 @@ export class AssignmentComponent implements OnInit {
 
     this.globalService.updateModel(this.user.id, postUser, "/users").then(
       result => {
-        console.log(result);
+        //console.log(result);
         this.getAssignment();
       },
       err => {
@@ -169,18 +169,18 @@ export class AssignmentComponent implements OnInit {
 
 
   saveAssignment() {
-    console.log(this.assignment)
+    //console.log(this.assignment)
 
     let postAss = {
       "userID": this.assignment.UserID,
       "softwareID": this.assignment.SoftwareID,
       "hardwareID": this.assignment.HardwareID,
     };
-    console.log(postAss);
+    //console.log(postAss);
 
     this.globalService.addModel(postAss, "/assignment").then(
       result => {
-        console.log(result);
+        //console.log(result);
         //this.getAssignment();
         this.showAssignment();
       },

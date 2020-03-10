@@ -40,7 +40,7 @@ export class UsuarioComponent implements OnInit{
   }
 
   OpenUsersModal(template: TemplateRef<any>, option, item) {
-    console.log(item);
+    //console.log(item);
     this.user=[]
     if(option==="save"){
       this.userModal='Crear Usuario';
@@ -64,7 +64,7 @@ export class UsuarioComponent implements OnInit{
       this.edit=true;
       this.user=this.usersList.filter(data=>data.user_name==item.user_name);
       this.user=this.user[0]
-      console.log(this.user);
+      //console.log(this.user);
       //this.user=this.usersList[index];
     }else
     if(option==='delete'){
@@ -185,7 +185,7 @@ export class UsuarioComponent implements OnInit{
 
     this.globalService.addModel(postUsers, "/users").then(
       result => {
-        console.log(result);
+        //console.log(result);
         this.getUsers();
       },
       err => {
