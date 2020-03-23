@@ -58,6 +58,7 @@
                         <div *ngIf="countrys1.length < 2 " >
                         <select style="width: 240px;" (ngModelChange)="prospectcity($event)"   class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" [ngModelOptions]="{standalone: true}">
                          <option value="">---Seleccionar Todo---</option>
+                          
                           <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
                              {{cityList[i].city_name}}
                            </option>
