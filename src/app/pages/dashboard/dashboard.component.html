@@ -13,15 +13,15 @@
                   </div>  
                     <hr>
                     <div class="input-group" class="col-11">
-                      <label style="color: black;" >Nivel de Experiencia</label>
-                     
-                    
-                        <select class="col-sm-3" style="width: 240px;" (ngModelChange)="prospectexp($event)"  name="experience_level" class="form-control"  [(ngModel)]="levelTest">
-                            <option value="">---Seleccionar todos---</option>
-                          <option  *ngFor="let item of experiencieList; let i = index" [ngValue]="item.id">
-                             {{experiencieList[i].experience_level}}
-                           </option>
-                          </select>
+                  <label style="color: black;" >Nivel de Experiencia</label>
+                 
+                
+                    <select style="width: 240px;" (ngModelChange)="prospectexp($event)"  name="experience_level" class="form-control"  [(ngModel)]="levelTest">
+                        <option value="">---Seleccionar todos---</option>
+                      <option  *ngFor="let item of experiencieList; let i = index" [ngValue]="item.id">
+                         {{experiencieList[i].experience_level}}
+                       </option>
+                      </select>
                   </div>
                 
 
@@ -53,11 +53,11 @@
                        
                     </div>
                     <div class="input-group" class="col-11">
-                    <label style="color: black;">Ciudad*</label>                
+                    <label  style="color: black;">Ciudad*</label>                
                        
-                        <div *ngIf="countrys1.length < 2" >
+                        <div *ngIf="countrys1.length < 2 " >
                         <select style="width: 240px;" (ngModelChange)="prospectcity($event)"   class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" [ngModelOptions]="{standalone: true}">
-                          <option value="">---Seleccionar Todo---</option>
+                         <option value="">---Seleccionar Todo---</option>
                           <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
                              {{cityList[i].city_name}}
                            </option>
@@ -67,7 +67,7 @@
 
                     
 
-                    <div class="input-group" class="col-10">
+                    <div  class="input-group" class="col-10">
             
                       <label style="color: black;">Años de Experiencia</label>
                       <ng5-slider style="width: 240px;"  (userChangeEnd)="prospectyear($event)" [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
@@ -75,21 +75,19 @@
 
                    
 
-                   <div class="input-group" class="col-10">
-            <label style="color: black;">Edad</label>
-          <ng5-slider style="width: 240px;" (userChangeEnd)="prospectage($event)" [(value)]="minValue2" [(highValue)]="maxValue2" [options]="options2"></ng5-slider>
-          </div>
+                  <div class="input-group" class="col-10">
+                    <label style="color: black;">Edad</label>
+                    <ng5-slider style="width: 240px;" (userChangeEnd)="prospectage($event)" [(value)]="minValue2" [(highValue)]="maxValue2" [options]="options2"></ng5-slider>
+                 </div>
 
-          <div class="input-group" class="col-10">
-            <label style="color: black;">Salario</label>
-          <ng5-slider style="width: 240px;" (userChangeEnd)=" prospectsalary($event)" [(value)]="minValue3" [(highValue)]="maxValue3" [options]="options3"></ng5-slider>
+                  <div class="input-group" class="col-10">
+                    <label style="color: black;">Salario</label>
+                  <ng5-slider style="width: 240px;" (userChangeEnd)=" prospectsalary($event)" [(value)]="minValue3" [(highValue)]="maxValue3" [options]="options3"></ng5-slider>
+                  </div>
+              </div>
+            </div>
           </div>
-
-          </div>
-        </div>
-      </div>
-          <div class="col-md-9">
-    
+      <div class="col-md-9">
       <div class="card-header">
         <h4 class="card-title align-center">Prospecto</h4>
       </div>
@@ -403,14 +401,14 @@
         <div *ngIf="edit"><button (click)="editprospect()" type="submit" class="btn btn-primary">Editar</button></div>
       </div>
   
-  </ng-template>
-  <ng-template #confirm>
-    <div class="modal-body text-center">
-      <p>Eliminar logica,Desea inavilitar al Prospecto?</p>
-      <button type="button" class="btn btn-default" (click)="deletelbprospect()" >Si</button>
-      <button type="button" class="btn btn-primary" (click)="onClose()" >No</button>
-    </div>
-  </ng-template>
-</div>
+    </ng-template>
+    <ng-template #confirm>
+      <div class="modal-body text-center">
+        <p>Eliminar logica,Desea inavilitar al Prospecto?</p>
+        <button type="button" class="btn btn-default" (click)="deletelbprospect()" >Si</button>
+        <button type="button" class="btn btn-primary" (click)="onClose()" >No</button>
+      </div>
+    </ng-template>
+  </div>
 <ngx-spinner></ngx-spinner>
 </div>

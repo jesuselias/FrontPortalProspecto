@@ -146,24 +146,23 @@ export class DashboardComponent implements OnInit {
       }
     }
 
+
     ngOnInit(){
 
-      this.selectCountry()
+      this.selectCountry();
       this.selectSoftware();
-      this.selectCity();
-      this.getsoftware();
-    //  this.getsoftware1(); 
-      this.getprospects();
-      this.getcountry();
-      this.gettile();
-    //  this.getcity();
+    //   this.selectCity();
+       this.getsoftware();
+    // //  this.getsoftware1(); 
+       this.getprospects();
+       this.getcountry();
+       this.gettile();
+    // //  this.getcity();
       this.submitted = false;
-
-     
- 
       this.spinner.hide();
 
-    } 
+    }
+    
 
    public experiencieList: any = [
     {
@@ -750,7 +749,6 @@ getsoftware() {
     let arraysoft=[];
     this.softwares.map(item=>{
       arraysoft.push({'software_id':item.id})
-
      
       })
     
