@@ -52,11 +52,11 @@ export class SoftwareComponent implements OnInit{
                 
         });  
         
-        this.titleModal='Create Software';
+        this.titleModal='Crear Software';
         this.save=true;
       }else
       if(option==="edit"){
-        this.titleModal='Edit Software';
+        this.titleModal='Editar Software';
 
           
         this.contacto = this.formBuilder.group({

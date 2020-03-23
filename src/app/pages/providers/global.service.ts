@@ -75,7 +75,7 @@ export class GlobalService {
 
             }, err => {
                 console.log(err);
-                return this.toastr.error('No existe Usuario o Contraseña Invalida')
+                return this.toastr.error('No existe el usuario o contraseña invalida')
 
             })
         })
@@ -122,12 +122,12 @@ export class GlobalService {
         return new Promise(resolve => {
             this.http.post(this.apiBaseUrl + "" + tipo, model, httpOptions).subscribe((data: any) => {
                // console.log(data);
-                this.showNotification('bottom', 'right', 2, "Bienvenido al Sistema");
+                this.showNotification('bottom', 'right', 2, "Bienvenido al sistema");
                 resolve(data);
             }, err => {
                 this.spinner.hide();
                 console.log(err);
-                return this.toastr.error('No existe Usuario o Contraseña Invalida')
+                return this.toastr.error('No existe el usuario o contraseña invalida')
                 
              } )
 
@@ -157,7 +157,7 @@ export class GlobalService {
         return new Promise(resolve => {
             this.http.put(this.apiBaseUrl + "" + tipo + '/' + id, model, httpOptions).subscribe((data: any) => {
                // console.log(data);
-                this.showNotification('bottom', 'right', 2, "Datos Actualizados con exito");
+                this.showNotification('bottom', 'right', 2, "Datos actualizados con exito");
 
 
 
@@ -175,7 +175,7 @@ export class GlobalService {
         return new Promise(resolve => {
             this.http.delete(this.apiBaseUrl + "" + tipo + '/' + id, httpOptions).subscribe((data: any) => {
                // console.log(data);
-                this.showNotification('bottom', 'right', 2, "Datos Eliminados con exito");
+                this.showNotification('bottom', 'right', 2, "Datos eliminados con exito");
 
 
 

@@ -48,7 +48,7 @@ export class TitleComponent implements OnInit{
       this.save=true;
     }else
     if(option==="edit"){
-      this.titleModal='Edit Title';
+      this.titleModal='Editar Título';
 
       this.contacto = this.formBuilder.group({
         title_name: ['', Validators.required], 

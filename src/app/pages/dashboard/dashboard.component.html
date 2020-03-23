@@ -92,7 +92,7 @@
       <div class="card-header">
         <h4 class="card-title align-center">Prospecto</h4>
       </div>
-       <span  (click)="OpenProspectModal(template,'save',index)" class="btn btn-primary btn-xs">Agregar nuevo Prospecto</span>
+       <span  (click)="OpenProspectModal(template,'save',index)" class="btn btn-primary btn-xs">Nuevo Prospecto</span>
        
         <br /><br />
         <div class="table-responsive">
@@ -143,7 +143,7 @@
                 <div class="col-8">
                 <input placeholder="Ingrese el Nombre" type="text" formControlName="prospect_name" class="form-control" [(ngModel)]="prospect.prospect_name" [ngClass]="{ 'is-invalid': submitted && f.prospect_name.errors }" />
                 <div *ngIf="submitted && f.prospect_name.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_name.errors.required">Por favor, ingresa Nombre del Prospecto</div>
+                  <div *ngIf="f.prospect_name.errors.required">Por favor, ingresa nombre del prospecto</div>
                 </div>
                 </div>
              </div>   
@@ -152,19 +152,19 @@
                 <div class="col-8">
                 <input placeholder="Ingrese el Apellido" type="text" formControlName="prospect_lastname" class="form-control" [(ngModel)]="prospect.prospect_lastname" [ngClass]="{ 'is-invalid': submitted && f.prospect_lastname.errors }" />
                 <div *ngIf="submitted && f.prospect_lastname.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_lastname.errors.required">Por favor, ingresa el Apellido del Prospecto</div>
+                  <div *ngIf="f.prospect_lastname.errors.required">Por favor, ingresa el apellido del prospecto</div>
                 </div>
                 </div>
              </div> 
             <div class="form-group row">
                 <label class="col-4 col-form-label">Fecha de Nacimiento*</label> 
                 <div class="col-8">
-                  <input type="date" #Fecha formControlName="prospect_birthday"class="form-control"
+                  <input type="date" #Fecha formControlName="prospect_birthday" class="form-control"
                    [(ngModel)]="prospect.prospect_birthday" id="txtvalor"  placeholder="Fecha" (change)="ValidateDate(Fecha.value)" 
                    required [ngClass]="{ 'is-invalid': submitted && f.prospect_birthday.errors }" />
                    <div style="color: #dc3545; font-size: 9;" *ngIf="ValidateDate(Fecha.value)" >El usuario debe ser mayor de edad</div>
                 <div *ngIf="submitted && f.prospect_birthday.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_birthday.errors.required">Por favor, ingrese fecha de Nacimiento</div>
+                  <div *ngIf="f.prospect_birthday.errors.required">Por favor, ingrese fecha de nacimiento</div>
                 </div>
                 </div>
              </div>
@@ -180,11 +180,11 @@
             </div> -->
                   
              <div class="form-group row">
-                <label class="col-4 col-form-label">Numero de Telefono*</label> 
+                <label class="col-4 col-form-label">Número de Telefono*</label> 
                 <div class="col-8">
                 <input placeholder="Ingrese el Numero de Telefono" type="text" formControlName="prospect_phonenumber" class="form-control" [(ngModel)]="prospect.prospect_phonenumber" [ngClass]="{ 'is-invalid': submitted && f.prospect_phonenumber.errors }" />
                 <div *ngIf="submitted && f.prospect_phonenumber.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_phonenumber.errors.required">Por favor, ingrese Numero de Telefono</div>
+                  <div *ngIf="f.prospect_phonenumber.errors.required">Por favor, ingrese número de telefono</div>
                 </div>
                 </div>
              </div>
@@ -193,7 +193,7 @@
                 <div class="col-8">
                 <input placeholder="Ingrese el Direccion" type="text" formControlName="prospect_address" class="form-control" [(ngModel)]="prospect.prospect_address" [ngClass]="{ 'is-invalid': submitted && f.prospect_address.errors }" />
                 <div *ngIf="submitted && f.prospect_address.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_address.errors.required">Por favor, ingrese Direccion</div>
+                  <div *ngIf="f.prospect_address.errors.required">Por favor, ingrese Dirección</div>
                 </div>
                 </div>
              </div>
@@ -207,7 +207,7 @@
                        </option>
                       </select>  
                       <div *ngIf="submitted && f.title_id.errors" class="invalid-feedback">
-                        <div *ngIf="f.title_id.errors.required">Por favor, seleccione un Titulo</div>
+                        <div *ngIf="f.title_id.errors.required">Por favor, seleccione un título</div>
                        
                       </div>                                  
                    </div>
@@ -221,7 +221,7 @@
                        </option>
                       </select>  
                       <div *ngIf="submitted && f.country_id.errors" class="invalid-feedback">
-                        <div *ngIf="f.country_id.errors.required">Por favor, seleccione un Pais</div>
+                        <div *ngIf="f.country_id.errors.required">Por favor, seleccione un pais</div>
                       </div>                                  
                    </div>
                 </div>
@@ -234,7 +234,7 @@
                      </option>
                     </select>   
                     <div *ngIf="submitted && f.city_id.errors" class="invalid-feedback">
-                      <div *ngIf="f.city_id.errors.required">Por favor, seleccione una Ciudad</div>
+                      <div *ngIf="f.city_id.errors.required">Por favor, seleccione una ciudad</div>
                     </div>                                  
                  </div>
               </div>
@@ -244,8 +244,8 @@
                   <div class="col-8">
                   <input placeholder="Ingrese el salario en Numero" type="text" formControlName="prospect_salary" class="form-control" [(ngModel)]="prospect.prospect_salary" [ngClass]="{ 'is-invalid': submitted && f.prospect_salary.errors }" />
                   <div *ngIf="submitted && f.prospect_salary.errors" class="invalid-feedback">
-                    <div *ngIf="f.prospect_salary.errors.required">Por favor, ingrese Salario</div>
-                    <div *ngIf="f.prospect_salary.errors.pattern">Por favor, ingrese solo numero</div>
+                    <div *ngIf="f.prospect_salary.errors.required">Por favor, ingrese salario</div>
+                    <div *ngIf="f.prospect_salary.errors.pattern">Por favor, ingrese solo numeros</div>
                   </div>
                   </div>
                </div>
@@ -274,8 +274,8 @@
               <div class="col-8">
               <input placeholder="Ingrese el Año en Numero" formControlName="experience_years" class="form-control" [(ngModel)]="prospect.experience_years" [ngClass]="{ 'is-invalid': submitted && f.experience_years.errors }" />
               <div *ngIf="submitted && f.experience_years.errors" class="invalid-feedback">
-                <div *ngIf="f.experience_years.errors.required">Por favor, ingrese Años de Experiencia</div>
-                <div *ngIf="f.experience_years.errors.pattern">Por favor, ingrese solo numero</div>
+                <div *ngIf="f.experience_years.errors.required">Por favor, ingrese años de experiencia</div>
+                <div *ngIf="f.experience_years.errors.pattern">Por favor, ingrese solo número</div>
               </div>
               </div>
           </div>
@@ -295,7 +295,7 @@
                    </div>
                 </div> 
                 <div class="form-group row">
-                  <label class="col-4 col-form-label">email*</label> 
+                  <label class="col-4 col-form-label">Email*</label> 
                   <div class="col-8">
                   <input type="text" class="form-control" formControlName="email"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
                   [(ngModel)]="prospect.email"/>
@@ -305,7 +305,7 @@
                   </div>
               </div>
               <div class="form-group row">
-                <label class="col-4 col-form-label">comentario*</label> 
+                <label class="col-4 col-form-label">Comentario*</label> 
                 <div class="col-8">
                 <input type="text" class="form-control" formControlName="commentary"  [ngClass]="{ 'is-invalid': submitted && f.commentary.errors }"
                 [(ngModel)]="prospect.commentary"  />
@@ -320,7 +320,7 @@
               <input type="text" class="form-control" formControlName="referral_name"  [ngClass]="{ 'is-invalid': submitted && f.referral_name.errors }"
               [(ngModel)]="prospect.referral_name" />
               <div *ngIf="submitted && f.referral_name.errors" class="invalid-feedback">
-                  <div *ngIf="f.referral_name.errors.required">Por favor, ingrese Referencia</div>
+                  <div *ngIf="f.referral_name.errors.required">Por favor, ingrese referencia</div>
                 </div>
               </div>
           </div>
@@ -399,7 +399,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
         <div *ngIf="save"><button (click)="saveprospect()" type="submit" class="btn btn-primary">Guardar</button></div>
-        <div *ngIf="edit"><button (click)="editprospect()" type="submit" class="btn btn-primary">Editar</button></div>
+        <div *ngIf="edit"><button (click)="editprospect()" type="submit" class="btn btn-primary">Aceptar</button></div>
       </div>
   
     </ng-template>

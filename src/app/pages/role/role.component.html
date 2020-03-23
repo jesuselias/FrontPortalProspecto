@@ -6,12 +6,12 @@
           <h4 class="card-title"></h4>
         </div>
       
-          <span  (click)="OpenroleModal(template,'save', index)" class="btn btn-primary btn-xs">Agregar Nuevo rol</span>
+          <span  (click)="OpenroleModal(template,'save', index)" class="btn btn-primary btn-xs">Nuevo rol</span>
           <br /><br />
           <div class="table-responsive">
             <table id="mytable" class="table table-bordred table-striped">
               <thead>
-                <th>role Id</th>
+                <th>Role Id</th>
                 <th>Nombre de rol</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
@@ -70,7 +70,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
           <div *ngIf="save"><button (click)="saverole()" type="submit" class="btn btn-primary">Guardar</button></div>
-          <div *ngIf="edit"><button (click)="editrole()" type="submit" class="btn btn-primary">Editar</button></div>
+          <div *ngIf="edit"><button (click)="editrole()" type="submit" class="btn btn-primary">Aceptar</button></div>
         </div>
     
     </ng-template>

@@ -8,13 +8,13 @@
           <h4 class="card-title"></h4>
         </div>
       
-          <span  (click)="OpenSoftwareModal(template,'save', index)" class="btn btn-primary btn-xs">Agregar Nuevo Software</span>
+          <span  (click)="OpenSoftwareModal(template,'save', index)" class="btn btn-primary btn-xs">Nuevo Software</span>
           <br /><br />
           <div class="table-responsive">
             <table id="mytable" class="table table-bordred table-striped">
               <thead>
                 <th>Software Id</th>
-                <th>Nombre de Software</th>
+                <th>Nombre del Software</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
               </thead>
@@ -43,11 +43,11 @@
         <form [formGroup]="contacto" (ngSubmit)="onSubmit()">
         <div class="modal-body">
           <div class="form-group">
-            <label class="col-sm-7 control-label">Nombre del Software</label>
+            <label class="col-sm-7 control-label">Nombre del software</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" formControlName="software_name" [(ngModel)]="software.software_name" [ngClass]="{ 'is-invalid': submitted && f.software_name.errors }" />
               <div *ngIf="submitted && f.software_name.errors" class="invalid-feedback">
-                <div *ngIf="f.software_name.errors.required">Por favor, ingrese nombre de Software</div>
+                <div *ngIf="f.software_name.errors.required">Por favor, ingrese nombre del software</div>
             </div>
             </div>
           </div>
@@ -58,7 +58,7 @@
           <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
         
           <div *ngIf="save"><button (click)="saveSoftware()" class="btn btn-primary">Guardar</button></div>
-          <div *ngIf="edit"><button (click)="editSoftware()" type="submit" class="btn btn-primary">Editar</button></div>
+          <div *ngIf="edit"><button (click)="editSoftware()" type="submit" class="btn btn-primary">Aceptar</button></div>
         </div>
     
     </ng-template>

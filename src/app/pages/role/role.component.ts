@@ -69,7 +69,7 @@ export class RoleComponent implements OnInit{
       this.functiones=[];
       this.role=[]
       if(option==="save"){
-        this.titleModal='Create role';
+        this.titleModal='Crear role';
 
         this.contacto = this.formBuilder.group({
           role_name: ['', Validators.required], 
@@ -78,7 +78,7 @@ export class RoleComponent implements OnInit{
         this.save=true;
       }else
       if(option==="edit"){
-        this.titleModal='Edit role';
+        this.titleModal='Editar Rol';
         this.edit=true;
         this.role=this.roleList.filter(data=>data.role_id==item.role_id);
         this.role=this.role[0]
