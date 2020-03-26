@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { GlobalService } from "../providers/global.service";
-
+import { ToastrService } from "ngx-toastr";
 import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
@@ -18,8 +18,11 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class SoftwareComponent implements OnInit{
   contacto: FormGroup;
   submitted = false;
+  mensaje: string;
+  existe: boolean;
   
-  constructor(private globalService: GlobalService, private bsModalService: BsModalService,private formBuilder: FormBuilder,private spinner: NgxSpinnerService) {
+  constructor(private globalService: GlobalService, private bsModalService: BsModalService,private formBuilder: FormBuilder,
+              private spinner: NgxSpinnerService, private toastr: ToastrService) {
     this.software=[];
     
  }
@@ -149,6 +152,16 @@ export class SoftwareComponent implements OnInit{
 
 
     saveSoftware() {
+      //  validacion para que no se repita el nombre del software
+      /*const software = new FormData();
+      const datos = new FormData();
+
+      if (this.contacto.get('software_name').valid) {
+        software.append('software_name', this.contacto.get('software_name').value);
+      }*/
+
+     
+
       //console.log(this.software)
       this.submitted = true;
 
@@ -159,8 +172,9 @@ export class SoftwareComponent implements OnInit{
         'software_name': this.software.software_name,
       };
   
-      this.globalService.addModel(postSoftware, "/Software").then(
+      this.globalService.addModelSoftware(postSoftware, "/Software").then(
         result => {
+          this.existe = true;
           //console.log(result);
           this.getSoftwares();
         },

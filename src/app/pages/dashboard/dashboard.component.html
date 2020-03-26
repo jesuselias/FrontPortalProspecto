@@ -3,25 +3,34 @@
           <div class="col-md-3 " >
               <div class="card" style="align-content: center;background-color: #999da0;">
                 <div class="card-body">
-                    <div class="col-md-7 ">
-                  <div class="row">                  
-                        <i  style="color: black;"class="fa fa-filter" aria-hidden="true"></i>         
-                      <h6 style="color: black;" href="" class="simple-text logo-normal" >
-                        Filtros
-                      </h6>
-                    </div>
-                  </div>  
+                    <div class="col-md-7">
+                      <div class="row">                  
+                          <i  style="color: black;"class="fa fa-filter" aria-hidden="true"></i>         
+                        <h6 style="color: black;" href="" class="simple-text logo-normal" >
+                          Filtros
+                        </h6>
+                      </div>
+                    </div>  
                     <hr>
                     <div class="input-group" class="col-11">
-                  <label style="color: black;" >Nivel de Experiencia</label>
-                 
-                
-                    <select style="width: 240px;" (ngModelChange)="prospectexp($event)"  name="experience_level" class="form-control"  [(ngModel)]="levelTest">
-                        <option value="">---Seleccionar todos---</option>
-                      <option  *ngFor="let item of experiencieList; let i = index" [ngValue]="item.id">
-                         {{experiencieList[i].experience_level}}
-                       </option>
-                      </select>
+                        <label style="color: black;" >Nivel de Experiencia</label>
+                        <!--<select style="width: 240px;" (ngModelChange)="prospectexp($event)"  name="experience_level" class="form-control"  [(ngModel)]="levelTest">
+                            <option value="">---Seleccionar todos---</option>
+                            <option  *ngFor="let item of experiencieList; let i = index" [ngValue]="item.id">
+                                 {{experiencieList[i].experience_level}}
+                            </option>
+                        </select>-->
+
+                        <ngx-multiselect
+                          (ngModelChange)="prospectexp($event)"
+                          [(ngModel)]="levelTest"
+                          [options]="experiencieList"
+                          theme="bootstrap" 
+                          ngDefaultControl
+                        >
+
+                        </ngx-multiselect>
+
                   </div>
                 
 
@@ -128,7 +137,7 @@
     </div>
   </div>
 
-  <ng-template #template>
+  <ng-template #template let-modal>
    
       <div class="modal-header">
        
@@ -136,262 +145,404 @@
       </div>
       <div class="modal-body">       
         <div class="form-group">
-          <div class="col-sm-10">
+          <div class="col-md-12">
             <form [formGroup]="contacto" (ngSubmit)="onSubmit()">
-              <div class="form-group row">
-                <label class="col-4 col-form-label">Nombre*</label> 
-                <div class="col-8">
-                <input placeholder="Ingrese el Nombre" type="text" formControlName="prospect_name" class="form-control" [(ngModel)]="prospect.prospect_name" [ngClass]="{ 'is-invalid': submitted && f.prospect_name.errors }" />
-                <div *ngIf="submitted && f.prospect_name.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_name.errors.required">Por favor, ingresa nombre del prospecto</div>
-                </div>
-                </div>
-             </div>   
-            <div class="form-group row">
-                <label class="col-4 col-form-label">Apellido*</label> 
-                <div class="col-8">
-                <input placeholder="Ingrese el Apellido" type="text" formControlName="prospect_lastname" class="form-control" [(ngModel)]="prospect.prospect_lastname" [ngClass]="{ 'is-invalid': submitted && f.prospect_lastname.errors }" />
-                <div *ngIf="submitted && f.prospect_lastname.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_lastname.errors.required">Por favor, ingresa el apellido del prospecto</div>
-                </div>
-                </div>
-             </div> 
-            <div class="form-group row">
-                <label class="col-4 col-form-label">Fecha de Nacimiento*</label> 
-                <div class="col-8">
-                  <input type="date" #Fecha formControlName="prospect_birthday" class="form-control"
-                   [(ngModel)]="prospect.prospect_birthday" id="txtvalor"  placeholder="Fecha" (change)="ValidateDate(Fecha.value)" 
-                   required [ngClass]="{ 'is-invalid': submitted && f.prospect_birthday.errors }" />
-                   <div style="color: #dc3545; font-size: 9;" *ngIf="ValidateDate(Fecha.value)" >El usuario debe ser mayor de edad</div>
-                <div *ngIf="submitted && f.prospect_birthday.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_birthday.errors.required">Por favor, ingrese fecha de nacimiento</div>
-                </div>
-                </div>
-             </div>
+              <div class="container">
 
-             <!-- <div class="form-group">
-              <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd"
-                       name="dp" [(ngModel)]="prospect.prospect_birthday" ngbDatepicker #d="ngbDatepicker">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="col-form-label" >Nombre*</label> 
+                            
+                              <input placeholder="Ingrese el Nombre" type="text" formControlName="prospect_name" class="form-control" [(ngModel)]="prospect.prospect_name" [ngClass]="{ 'is-invalid': submitted && f.prospect_name.errors }" />
+                              <div *ngIf="submitted && f.prospect_name.errors" class="invalid-feedback">
+                                  <div *ngIf="f.prospect_name.errors.required">Por favor, ingresa nombre del prospecto</div>
+                              </div>                            
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="col-form-label" style="align-items: center;">Apellido*</label> 
+                            
+                            <input placeholder="Ingrese el Apellido" type="text" formControlName="prospect_lastname" class="form-control" [(ngModel)]="prospect.prospect_lastname" [ngClass]="{ 'is-invalid': submitted && f.prospect_lastname.errors }" />
+                            <div *ngIf="submitted && f.prospect_lastname.errors" class="invalid-feedback">
+                              <div *ngIf="f.prospect_lastname.errors.required">Por favor, ingresa el apellido del prospecto</div>
+                            </div>
+                          
+                        </div>
+                    </div>                   
+                 
                 </div>
-              </div>
-            </div> -->
                   
-             <div class="form-group row">
-                <label class="col-4 col-form-label">Número de Telefono*</label> 
-                <div class="col-8">
-                <input placeholder="Ingrese el Numero de Telefono" type="text" formControlName="prospect_phonenumber" class="form-control" [(ngModel)]="prospect.prospect_phonenumber" [ngClass]="{ 'is-invalid': submitted && f.prospect_phonenumber.errors }" />
-                <div *ngIf="submitted && f.prospect_phonenumber.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_phonenumber.errors.required">Por favor, ingrese número de telefono</div>
-                </div>
-                </div>
-             </div>
-              <div class="form-group row">
-                <label class="col-4 col-form-label">Direccion*</label> 
-                <div class="col-8">
-                <input placeholder="Ingrese el Direccion" type="text" formControlName="prospect_address" class="form-control" [(ngModel)]="prospect.prospect_address" [ngClass]="{ 'is-invalid': submitted && f.prospect_address.errors }" />
-                <div *ngIf="submitted && f.prospect_address.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_address.errors.required">Por favor, ingrese Dirección</div>
-                </div>
-                </div>
-             </div>
-            
-             <div class="form-group row">
-                  <label class="col-4 col-form-label">Titulo*</label> 
-                  <div  class="col-8">
-                    <select name="title_id" class="form-control"  [(ngModel)]="prospect.title_id" required  formControlName="title_id" [ngClass]="{ 'is-invalid': submitted && f.title_id.errors }"  >
-                      <option *ngFor="let item of titleList; let i = index" [ngValue]="item.title_id">
-                         {{titleList[i].title_name}}
-                       </option>
-                      </select>  
-                      <div *ngIf="submitted && f.title_id.errors" class="invalid-feedback">
-                        <div *ngIf="f.title_id.errors.required">Por favor, seleccione un título</div>
-                       
-                      </div>                                  
-                   </div>
-                </div>
-                 <div class="form-group row">
-                    <label class="col-4 col-form-label">Pais*</label> 
-                    <div  class="col-8">
-                    <select class="form-control" name="country_id"  [(ngModel)]="prospect.country_id" (ngModelChange)="showcity()" required  formControlName="country_id" [ngClass]="{ 'is-invalid': submitted && f.country_id.errors }" >
-                      <option   *ngFor="let item of countryList; let i = index" [ngValue]="item.country_id" >
-                         {{countryList[i].country_name}}
-                       </option>
-                      </select>  
-                      <div *ngIf="submitted && f.country_id.errors" class="invalid-feedback">
-                        <div *ngIf="f.country_id.errors.required">Por favor, seleccione un pais</div>
-                      </div>                                  
-                   </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-4 col-form-label">Ciudad*</label> 
-                  <div *ngIf="prospect.country_id" class="col-8">
-                  <select class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" required  formControlName="city_id" [ngClass]="{ 'is-invalid': submitted && f.city_id.errors }">
-                    <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
-                       {{cityList[i].city_name}}
-                     </option>
-                    </select>   
-                    <div *ngIf="submitted && f.city_id.errors" class="invalid-feedback">
-                      <div *ngIf="f.city_id.errors.required">Por favor, seleccione una ciudad</div>
-                    </div>                                  
-                 </div>
-              </div>
+                 <div class="row">
 
-                 <div class="form-group row">
-                  <label class="col-4 col-form-label">Salario($)*</label> 
-                  <div class="col-8">
-                  <input placeholder="Ingrese el salario en Numero" type="text" formControlName="prospect_salary" class="form-control" [(ngModel)]="prospect.prospect_salary" [ngClass]="{ 'is-invalid': submitted && f.prospect_salary.errors }" />
-                  <div *ngIf="submitted && f.prospect_salary.errors" class="invalid-feedback">
-                    <div *ngIf="f.prospect_salary.errors.required">Por favor, ingrese salario</div>
-                    <div *ngIf="f.prospect_salary.errors.pattern">Por favor, ingrese solo numeros</div>
-                  </div>
-                  </div>
-               </div>
-               <div class="form-group row">
-                <label class="col-4 col-form-label">CV*</label> 
-                <div class="col-8">
-                <input type="text" formControlName="prospect_cv" class="form-control" [(ngModel)]="prospect.prospect_cv" [ngClass]="{ 'is-invalid': submitted && f.prospect_cv.errors }" />
-                <div *ngIf="submitted && f.prospect_cv.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_cv.errors.required">Por favor, ingrese cv</div>
-                  <div *ngIf="f.prospect_cv.errors.pattern">Por favor, ingrese una direccion url correcta</div>
-                </div>
-                </div>
-             </div>
-         
-           <div class="form-group row">
-            <label class="col-4 col-form-label">Fuente*</label> 
-            <div class="col-8">
-            <input type="text" formControlName="prospect_link" class="form-control" [(ngModel)]="prospect.prospect_link" [ngClass]="{ 'is-invalid': submitted && f.prospect_link.errors }" />
-            <div *ngIf="submitted && f.prospect_link.errors" class="invalid-feedback">
-              <div *ngIf="f.prospect_link.errors.required">Por favor, ingrese fuente</div>
-            </div>
-            </div>
-         </div>
-            <div class="form-group row">
-              <label class="col-4 col-form-label">Años de Experiencia*</label> 
-              <div class="col-8">
-              <input placeholder="Ingrese el Año en Numero" formControlName="experience_years" class="form-control" [(ngModel)]="prospect.experience_years" [ngClass]="{ 'is-invalid': submitted && f.experience_years.errors }" />
-              <div *ngIf="submitted && f.experience_years.errors" class="invalid-feedback">
-                <div *ngIf="f.experience_years.errors.required">Por favor, ingrese años de experiencia</div>
-                <div *ngIf="f.experience_years.errors.pattern">Por favor, ingrese solo número</div>
-              </div>
-              </div>
-          </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                          <label class="col-form-label">Fecha de Nacimiento*</label> 
+                          <div class="">
+                            <input type="date" #Fecha formControlName="prospect_birthday" class="form-control"
+                            [(ngModel)]="prospect.prospect_birthday" id="txtvalor"  placeholder="Fecha" (change)="ValidateDate(Fecha.value)" 
+                            required [ngClass]="{ 'is-invalid': submitted && f.prospect_birthday.errors }" />
+                            <div style="color: #dc3545; font-size: 9;" *ngIf="ValidateDate(Fecha.value)" >El usuario debe ser mayor de edad</div>
+                          <div *ngIf="submitted && f.prospect_birthday.errors" class="invalid-feedback">
+                            <div *ngIf="f.prospect_birthday.errors.required">Por favor, ingrese fecha de nacimiento</div>
+                          </div>
+                          </div>
+                      </div>
+                    </div>
 
-                <div class="form-group row">
-                  <label class="col-4 col-form-label">Nivel de Experiencia*</label> 
-                  <div  class="col-8">
-                    <select name="experience_level" class="form-control"  [(ngModel)]="prospect.experience_level" required  formControlName="experience_level" [ngClass]="{ 'is-invalid': submitted && f.experience_level.errors }" >
-                      <option  *ngFor="let item of experiencieList; let i = index" [ngValue]="item.id" >
-                         {{experiencieList[i].experience_level}}
-                       </option>
-                      </select>
-                      <div *ngIf="submitted && f.experience_level.errors" class="invalid-feedback">
-                        <div *ngIf="f.experience_level.errors.required">Por favor, seleccione nivel de experiencia</div>
-                       
-                      </div>                                    
-                   </div>
-                </div> 
-                <div class="form-group row">
-                  <label class="col-4 col-form-label">Email*</label> 
-                  <div class="col-8">
-                  <input type="text" class="form-control" formControlName="email"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-                  [(ngModel)]="prospect.email"/>
-                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                      <div *ngIf="f.email.errors.required">Por favor, ingrese email</div>
+                    <div class="col-6">
+                      <div class="form-group">
+                          <label class="col-form-label">Número de Telefono*</label> 
+                          <div class="">
+                          <input placeholder="Ingrese el Telefono" type="text" formControlName="prospect_phonenumber" class="form-control" [(ngModel)]="prospect.prospect_phonenumber" [ngClass]="{ 'is-invalid': submitted && f.prospect_phonenumber.errors }" />
+                          <div *ngIf="submitted && f.prospect_phonenumber.errors" class="invalid-feedback">
+                            <div *ngIf="f.prospect_phonenumber.errors.required">Por favor, ingrese número de telefono</div>
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+
+                 </div>      
+                   
+
+                <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                          <label class="col-form-label">Direccion*</label> 
+                          <div class="">
+                          <input placeholder="Ingrese el Direccion" type="text" formControlName="prospect_address" class="form-control" [(ngModel)]="prospect.prospect_address" [ngClass]="{ 'is-invalid': submitted && f.prospect_address.errors }" />
+                          <div *ngIf="submitted && f.prospect_address.errors" class="invalid-feedback">
+                            <div *ngIf="f.prospect_address.errors.required">Por favor, ingrese Dirección</div>
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="col-form-label">Titulo*</label> 
+                        <div  class="">
+                          <select name="title_id" class="form-control"  [(ngModel)]="prospect.title_id" required  formControlName="title_id" [ngClass]="{ 'is-invalid': submitted && f.title_id.errors }"  >
+                            <option *ngFor="let item of titleList; let i = index" [ngValue]="item.title_id">
+                               {{titleList[i].title_name}}
+                             </option>
+                            </select>  
+                            <div *ngIf="submitted && f.title_id.errors" class="invalid-feedback">
+                              <div *ngIf="f.title_id.errors.required">Por favor, seleccione un título</div>
+                             </div>                                  
+                         </div>
+                      </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="col-form-label">Pais*</label> 
+                        <div  class="">
+                        <select class="form-control" name="country_id"  [(ngModel)]="prospect.country_id" (ngModelChange)="showcity()" required  formControlName="country_id" [ngClass]="{ 'is-invalid': submitted && f.country_id.errors }" >
+                          <option   *ngFor="let item of countryList; let i = index" [ngValue]="item.country_id" >
+                             {{countryList[i].country_name}}
+                           </option>
+                          </select>  
+                          <div *ngIf="submitted && f.country_id.errors" class="invalid-feedback">
+                            <div *ngIf="f.country_id.errors.required">Por favor, seleccione un pais</div>
+                          </div>                                  
+                       </div>
+                    </div>
+                    </div>
+
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="col-form-label">Ciudad*</label> 
+                        <div *ngIf="prospect.country_id" class="">
+                        <select class="form-control" name="city_id" [(ngModel)]="prospect.city_id" required  formControlName="city_id" [ngClass]="{ 'is-invalid': submitted && f.city_id.errors }">
+                          <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
+                             {{cityList[i].city_name}}
+                           </option>
+                          </select>   
+                          <div *ngIf="submitted && f.city_id.errors" class="invalid-feedback">
+                            <div *ngIf="f.city_id.errors.required">Por favor, seleccione una ciudad</div>
+                          </div>                                  
+                       </div>
+                     </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="col-form-label">Salario($)*</label> 
+                        <div class="">
+                        <input placeholder="Ingrese el salario" style="width: 80px;" type="text" formControlName="prospect_salary" class="form-control" [(ngModel)]="prospect.prospect_salary" [ngClass]="{ 'is-invalid': submitted && f.prospect_salary.errors }" />
+                        <select style="width: 80px;" class="form-control" name="currency"  [(ngModel)]="prospect.currency" required  formControlName="currency"
+                            [ngClass]="{ 'is-invalid': submitted && f.currency.errors }">
+                              <option   *ngFor="let item of currencyList; let i = index" [ngValue]="item.id" >
+                                {{currencyList[i].currency_name}}
+                              </option>
+      
+                            <div *ngIf="submitted && f.prospect_salary.errors" class="invalid-feedback">
+                              <div *ngIf="f.prospect_salary.errors.required">Por favor, ingrese la moneda</div>  
+                            </div>
+      
+                        </select>
+                        <div *ngIf="submitted && f.prospect_salary.errors" class="invalid-feedback">
+                          <div *ngIf="f.prospect_salary.errors.required">Por favor, ingrese salario</div>
+                          <div *ngIf="f.prospect_salary.errors.pattern">Por favor, ingrese solo numeros</div>
+                        </div>
+                        </div>
+                     </div>
+                    </div>
+
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="col-form-label">CV*</label> 
+                        <div class="">
+                          <input type="file" formControlName="prospect_cv" class="form-control" [(ngModel)]="prospect.prospect_cv" [ngClass]="{ 'is-invalid': submitted && f.prospect_cv.errors }" />
+                          <div *ngIf="submitted && f.prospect_cv.errors" class="invalid-feedback">
+                            <div *ngIf="f.prospect_cv.errors.required">Por favor, ingrese cv</div>
+                            <div *ngIf="f.prospect_cv.errors.pattern">Por favor, ingrese una direccion url correcta</div>
+                          </div>
+                        </div>
+                     </div>
+                    </div>
+                </div>
+                 
+                <div class="row">
+
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="col-form-label">Fuente*</label> 
+                        <div class="">
+                            <select name="prospect_link" class="form-control"  [(ngModel)]="prospect.prospect_link" required 
+                                  formControlName="prospect_link" 
+                                  [ngClass]="{ 'is-invalid': submitted && f.prospect_link.errors }">
+          
+                                  <option *ngFor="let item of sourceList; let i = index" [ngValue]="item.id">
+                                    {{sourceList[i].source_name}}
+                                  </option>
+          
+                                  <div *ngIf="submitted && f.prospect_link.errors" class="invalid-feedback">
+                                      <div *ngIf="f.prospect_link.errors.required">Por favor, seleccione la fuente</div>
+                                  </div>
+          
+                            </select>
+                            <!--<input type="text" formControlName="prospect_link" class="form-control" [(ngModel)]="prospect.prospect_link" [ngClass]="{ 'is-invalid': submitted && f.prospect_link.errors }" />
+                            <div *ngIf="submitted && f.prospect_link.errors" class="invalid-feedback">
+                                <div *ngIf="f.prospect_link.errors.required">Por favor, ingrese fuente</div>
+                            </div>-->
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-6">
+                      <div class="form-group">
+                          <label class="col-form-label">Años de Experiencia*</label> 
+                          <div class="">
+                          <input placeholder="Ingrese el Año en Numero" formControlName="experience_years" class="form-control" [(ngModel)]="prospect.experience_years" [ngClass]="{ 'is-invalid': submitted && f.experience_years.errors }" />
+                          <div *ngIf="submitted && f.experience_years.errors" class="invalid-feedback">
+                            <div *ngIf="f.experience_years.errors.required">Por favor, ingrese años de experiencia</div>
+                            <div *ngIf="f.experience_years.errors.pattern">Por favor, ingrese solo número</div>
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="col-form-label">Nivel de Experiencia*</label> 
+                        <div  class="">
+                          <select name="experience_level" class="form-control"  [(ngModel)]="prospect.experience_level" required  formControlName="experience_level" [ngClass]="{ 'is-invalid': submitted && f.experience_level.errors }" >
+                            <option  *ngFor="let item of experiencieList; let i = index" [ngValue]="item.id" >
+                               {{experiencieList[i].experience_level}}
+                             </option>
+                            </select>
+                            <div *ngIf="submitted && f.experience_level.errors" class="invalid-feedback">
+                              <div *ngIf="f.experience_level.errors.required">Por favor, seleccione nivel de experiencia</div>
+                             
+                            </div>                                    
+                         </div>
+                      </div>
+    
+                    </div>
+
+                    <div class="col-6">
+                      <div class="form-group">
+                          <label class="col-form-label">Email*</label> 
+                          <div class="">
+                          <input type="text" class="form-control" formControlName="email"  [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+                          [(ngModel)]="prospect.email"/>
+                          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                              <div *ngIf="f.email.errors.required">Por favor, ingrese email</div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label class="col-form-label">Comentario*</label> 
+                        <div class="">
+                          <input type="text" class="form-control" formControlName="commentary"  [ngClass]="{ 'is-invalid': submitted && f.commentary.errors }"
+                          [(ngModel)]="prospect.commentary"  />
+                          <div *ngIf="submitted && f.commentary.errors" class="invalid-feedback">
+                              <div *ngIf="f.commentary.errors.required">Por favor, ingrese comentario</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-6">
+                      <div class="form-group">
+                          <label class="col-form-label">Referido por:*</label> 
+                          <div class="">
+                          <input type="text" class="form-control" formControlName="referral_name"  [ngClass]="{ 'is-invalid': submitted && f.referral_name.errors }"
+                          [(ngModel)]="prospect.referral_name" />
+                          <div *ngIf="submitted && f.referral_name.errors" class="invalid-feedback">
+                              <div *ngIf="f.referral_name.errors.required">Por favor, ingrese referencia</div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-4">
+                      <div class="form-group" *ngIf="software.length">
+                        <label class="col-form-label">Software*</label> 
+                        <div class="margin">
+                          <ngx-multiselect style="width: 100px;"
+                          [ngModelOptions]="{standalone: true}"
+                            name="software_Prospect"
+                            [(ngModel)]="softwares"
+                            [options]="software"
+                            theme="bootstrap"
+                            ngDefaultControl>
+                          </ngx-multiselect>
+                          <div style="color: #dc3545; font-size: 9;" *ngIf="submitted && !softwares[0]">Por favor, ingrese software</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    
+
+                </div>
+
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group" style="margin-left: 110px;">
+                        <label class="col-form-label">Foto*</label> 
+                        <div class="">
+                          <input type="file" id="file" formControlName="prospect_photo"  [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }"/>
+                          <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
+                            <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
+                            <div *ngIf="f.prospect_photo.errors.pattern">Por favor, ingrese una direccion url correcta</div>
+                          </div>
+                        </div>
                     </div>
                   </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-4 col-form-label">Comentario*</label> 
-                <div class="col-8">
-                <input type="text" class="form-control" formControlName="commentary"  [ngClass]="{ 'is-invalid': submitted && f.commentary.errors }"
-                [(ngModel)]="prospect.commentary"  />
-                <div *ngIf="submitted && f.commentary.errors" class="invalid-feedback">
-                    <div *ngIf="f.commentary.errors.required">Por favor, ingrese comentario</div>
+                </div>
+                
+
+               
+  
+               <!-- <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" placeholder="yyyy-mm-dd"
+                         name="dp" [(ngModel)]="prospect.prospect_birthday" ngbDatepicker #d="ngbDatepicker">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
                   </div>
                 </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-4 col-form-label">Referido por:*</label> 
-              <div class="col-8">
-              <input type="text" class="form-control" formControlName="referral_name"  [ngClass]="{ 'is-invalid': submitted && f.referral_name.errors }"
-              [(ngModel)]="prospect.referral_name" />
-              <div *ngIf="submitted && f.referral_name.errors" class="invalid-feedback">
-                  <div *ngIf="f.referral_name.errors.required">Por favor, ingrese referencia</div>
-                </div>
-              </div>
-          </div>
+              </div> -->
+                    
+                
 
-          
-          <!-- <div class="form-group row">
-              <label class="col-4 col-form-label">CV*</label> 
-              <div class="col-8">
+                
+              
+               
 
-                  <input
-           style="display: none"
-           type="file" (change)="onFileChanged($event)" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }"
-           #fileInput>
-         <button (click)="fileInput.click()">Seleccione Foto</button>
-               <input type="text" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" />
-              <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
-                <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
-              </div>
-              </div>
-           </div> -->
+                   
 
-           <div class="form-group row">
-            <label class="col-4 col-form-label">Foto*</label> 
-            <div class="col-8">
-            <input type="text" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" />
-            <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
-              <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
-              <div *ngIf="f.prospect_photo.errors.pattern">Por favor, ingrese una direccion url correcta</div>
-            </div>
-            </div>
-         </div>
+                  
+  
+                   
 
-          <!-- <div class="form-group row">
-              <label class="col-4 col-form-label">Foto*</label> 
-              <div class="col-8">
+                 
+           
+              
 
-                  <input
-           style="display: none"
-           type="file" (change)="onFileChanged($event)" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }"
-           #fileInput>
-         <button (click)="fileInput.click()">Seleccione Foto</button>
-               <input type="text" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" /> 
-              <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
-                <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
-              </div>
-              </div>
-           </div> -->
+              
+  
+                  
+                  
 
+                
 
-
-               <div class="form-group row" *ngIf="software.length">
-                <label class="col-4 col-form-label">Software*</label> 
+              
+  
+            
+            <!-- <div class="form-group row">
+                <label class="col-4 col-form-label">CV*</label> 
                 <div class="col-8">
-                  <ngx-multiselect
-                  [ngModelOptions]="{standalone: true}"
-                    name="software_Prospect"
-                    [(ngModel)]="softwares"
-                    [options]="software"
-                    theme="bootstrap"
-                    ngDefaultControl>
-                  </ngx-multiselect>
-                  <div style="color: #dc3545; font-size: 9;" *ngIf="submitted && !softwares[0]">Por favor, ingrese software</div>
-                  </div>
-            </div>
+  
+                    <input
+             style="display: none"
+             type="file" (change)="onFileChanged($event)" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }"
+             #fileInput>
+           <button (click)="fileInput.click()">Seleccione Foto</button>
+                 <input type="text" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" />
+                <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
+                  <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
+                </div>
+                </div>
+             </div> -->
+  
+             
+  
+            <!-- <div class="form-group row">
+                <label class="col-4 col-form-label">Foto*</label> 
+                <div class="col-8">
+  
+                    <input
+             style="display: none"
+             type="file" (change)="onFileChanged($event)" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }"
+             #fileInput>
+           <button (click)="fileInput.click()">Seleccione Foto</button>
+                 <input type="text" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" /> 
+                <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
+                  <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
+                </div>
+                </div>
+             </div> -->
+  
+  
+  
+                 
+
+              </div>
+              
                 <!-- <div class="form-group row">
                   <label for="pass" class="col-4 col-form-label">Referido Por:</label> 
                   <div class="col-8">
                     <input class="form-control here" [(ngModel)]="prospect.prospect_referencia">
                   </div>
                 </div> -->
-              </form>
+            </form>
           </div>
         </div>
         

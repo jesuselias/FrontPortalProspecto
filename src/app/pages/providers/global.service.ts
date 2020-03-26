@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { ToastrService } from "ngx-toastr";
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -106,12 +106,35 @@ export class GlobalService {
                // console.log(data);
                 this.showNotification('bottom', 'right', 2, "Datos guardados con exito");
 
-
-
                 resolve(data);
             }, (err: any) => {
                 console.log(err);
                 this.showNotification('bottom', 'right', 4, err);
+               
+            })
+        })
+    }
+
+    addModelSoftware(model, tipo: String, httpOptions = httpOptionsDefault) {
+
+        return new Promise(resolve => {
+            this.http.post(this.apiBaseUrl + "" + tipo, model, httpOptions).subscribe((data: any) => {
+               // console.log(data);
+                this.showNotification('bottom', 'right', 2, "Datos guardados con exito");
+
+                resolve(data);
+            }, (err: any) => {
+                console.log(err);
+                //this.showNotification('bottom', 'right', 4, err);
+                this.showNotification('bottom', 'right', 4, 'El nombre del software ya ha sido registrado');
+
+                /*
+                if (err instanceof HttpErrorResponse) {
+                    console.log("err.status", err);
+                    if (err.status === 500 ) {
+                        this.showNotification('bottom', 'right', 4, 'El nombre del software ya ha sido registrado');
+                    }
+                }*/
 
             })
         })

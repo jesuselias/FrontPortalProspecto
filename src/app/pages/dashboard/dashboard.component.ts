@@ -4,7 +4,7 @@ import { GlobalService } from "../providers/global.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Options } from 'ng5-slider';
-
+import { ToastrService } from "ngx-toastr";
 import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
@@ -83,6 +83,8 @@ export class DashboardComponent implements OnInit {
   softwares: any;
  // softwares1: any;
   software1: any;
+  nivel1: any;
+  levelTest: any;
   country1:any;
   countrys1:any;
   countryList1:any;
@@ -97,7 +99,7 @@ export class DashboardComponent implements OnInit {
   FiltersProspects:any;
   model: NgbDateStruct;
   date: {year: number, month: number};
-  levelTest: any;
+  
   postprospect = {
       
     "ageMin": null,
@@ -111,6 +113,7 @@ export class DashboardComponent implements OnInit {
     "yearsExpierenceMin": null,
     "yearsExpierenceMax": null,
     "software":[]
+    //'experiencieList':[]
    }; 
    
    prospect_birthday:any;
@@ -129,13 +132,15 @@ export class DashboardComponent implements OnInit {
       this.softwares= [];
      // this.softwares1=[];
       this.software1 = [];
+      this.levelTest = [];
+      this.nivel1 = [];
       this.country1 = [];
       this.countrys1 = [];
       this.countryList1 = [];
       this.cityTest = [];
       this.yearsExpierenceMin=[];
       this.yearsExpierenceMax=[];
-      
+      //this.experiencieList=[];
     }
 
     public initialValues(){
@@ -183,6 +188,8 @@ export class DashboardComponent implements OnInit {
     }
     
   ]
+
+  public currencyList
 
     checkSoftware(id) 
     {
@@ -329,8 +336,31 @@ export class DashboardComponent implements OnInit {
    prospectexp(event) {
 
     //console.log(event)
-    this.postprospect.expierenceLevel=event
+    /*this.postprospect.expierenceLevel=event
+    this.filterApp(this.postprospect);*/
+
+    let arrayExp=[];
+    let experience = event;
+
+    experience.map(item=>{
+        arrayExp.push({id:item.id, name: item.source_name})
+        //this.country1.push({ id: item.country_id, name: item.country_name})
+    })
+
+    this.experiencieList = arrayExp
     this.filterApp(this.postprospect);
+
+    /*let arraycountry=[];
+       let country=event;
+       country.map(item=>{
+
+      arraycountry.push(item.id)
+      
+         })
+  
+       this.postprospect.country_list=arraycountry
+       this.filterApp(this.postprospect);*/
+
 
    }
 
@@ -685,6 +715,7 @@ getsoftware() {
       'commentary': this.prospect.commentary,
       'referral_name': this.prospect.referral_name
       
+      
     };
    
     //console.log(postprospect)
@@ -784,6 +815,7 @@ getsoftware() {
       },
       err => {
         console.log(err);
+       
         //this.loader.dismiss();
       }
     );
@@ -809,5 +841,20 @@ getsoftware() {
 
      // alert('Usuario Correcto !')
   }
+
+
+  public sourceList: any = [
+    {
+      source_name: "Linkedin",
+      id: 1
+    }, {
+      source_name: "Internet",
+      id: 2
+    },
+    {
+      source_name: "Hackerran",
+      id: 3
+    }
+  ]
     
 }
