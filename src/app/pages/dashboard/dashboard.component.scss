@@ -2,4 +2,7 @@ $my-slider-theme: igx-slider-theme($thumb-on-color: black, $track-on-color: yell
 // Pass the theme to the igx-slider component mixin
 @include igx-slider($my-slider-theme);
 
-
+input[type="file"] {
+    background-color: black;
+    color: blanchedalmond;
+}

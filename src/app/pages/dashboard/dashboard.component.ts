@@ -1,5 +1,5 @@
 
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { GlobalService } from "../providers/global.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,37 +7,57 @@ import { Options } from 'ng5-slider';
 import { ToastrService } from "ngx-toastr";
 import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
-
+//import {FileUploaderComponent} from './file-uploader.component';
 import { NgxSpinnerService } from "ngx-spinner";
-
 
 @Component({
     selector: 'dashboard-cmp',
-    moduleId: module.id,
-    templateUrl: 'dashboard.component.html'
+    //moduleId: module.id,
+    templateUrl: 'dashboard.component.html',
+    
     
 })
 
 export class DashboardComponent implements OnInit {
 
+ 
 
+  
   selectedFilef: File
 
   selectedFilec: File
-  
-  minValue: number = 0;
+
+  //minValue7: number = this.getMoneda();
+
+  /*minValue: number = 0;
   maxValue: number = 20;
   options: Options = {
-    floor: 0,
-    ceil: 20
+    floor: 1,
+    ceil: 20,
+    
+  };*/
+
+  valorMinimo: number = Number(this.getMinYear());
+  valorMaximo: number = Number(this.getMaxYear());
+  
+  minValue = 1;
+  maxValue = 25;
+  options: Options = {
+    floor: 1,
+    ceil: 25,
+    minRange: this.valorMinimo,
+    maxRange: this.valorMaximo,
   };
 
+  
   minValue2: number = 0;
   maxValue2: number = 100;
   options2: Options = {
     floor: 0,
     ceil: 100
   };
+
+  
 
 
   minValue3: number = 0;
@@ -74,6 +94,8 @@ export class DashboardComponent implements OnInit {
   cityList:any;
   titleList: any;
   titleList1: any;
+  sourceList: any;
+  currencyList: any;
   title: any;
   bsModalRef: BsModalRef;
   arraysoftware: any;
@@ -118,6 +140,13 @@ export class DashboardComponent implements OnInit {
    
    prospect_birthday:any;
 
+   //Slider
+   valueMaxLevel:any;
+   valueMinLevel:any;
+   valueMaxYear:any;
+   valueMinYear:any;
+   valueMaxAge:any;
+   valueMinAge:any;
    
   
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
@@ -163,8 +192,13 @@ export class DashboardComponent implements OnInit {
        this.getcountry();
        this.gettile();
     // //  this.getcity();
+      this.getFuente();
+      this.getMoneda();
       this.submitted = false;
       this.spinner.hide();
+      this.getMaxYear();
+      this.getMinYear();
+
 
     }
     
@@ -189,7 +223,27 @@ export class DashboardComponent implements OnInit {
     
   ]
 
-  public currencyList
+  public experiencieListPost: any = [
+    {
+      experience_nivel: "Basico",
+      Id: 1
+    },
+    {
+      experience_nivel: "Intermedio",
+      Id: 2
+    },
+    {
+      experience_nivel: "Experto",
+      Id: 3
+    },
+    {
+      experience_nivel: "Master",
+      Id: 4
+    }
+    
+  ]
+
+  
 
     checkSoftware(id) 
     {
@@ -645,6 +699,147 @@ getsoftware() {
     );
 }
 
+
+getFuente() {
+    
+  this.globalService.getModel("/fuente").then(
+    
+      result => {
+        
+        this.sourceList = result;
+        
+      },
+      err => {
+        console.log(err);
+      
+      }
+    );
+}
+
+
+getMoneda() {
+    
+  this.globalService.getModel("/moneda").then(
+    
+      result => {
+        
+        this.currencyList = result;
+        
+      },
+      err => {
+        console.log(err);
+      
+      }
+    );
+}
+
+// Slider
+
+getMaxLevel() {
+    
+  this.globalService.getModel("/Prospect/MaxLevel").then(
+    
+      result => {
+        
+        this.valueMaxLevel = result;
+        console.log(this.valueMaxLevel);
+        
+      },
+      err => {
+        console.log(err);
+      
+      }
+    );
+}
+
+
+getMinLevel() {
+    
+  this.globalService.getModel("/Prospect/MinLevel").then(
+    
+      result => {
+        
+        this.valueMinLevel = result;
+        console.log(this.valueMinLevel);
+        
+      },
+      err => {
+        console.log(err);
+      
+      }
+    );
+}
+
+
+getMaxYear() {
+    
+  this.globalService.getModel("/prospect/MaxYear").then(
+    
+      result => {
+        
+        this.valueMaxYear = result;
+        console.log(this.valueMaxYear);
+        
+      },
+      err => {
+        console.log(err);
+      
+      }
+    );
+}
+
+
+getMinYear() {
+    
+  this.globalService.getModel("/prospect/MinYear").then(
+    
+      result => {
+        
+        this.valueMinYear = result;
+        console.log(this.valueMinYear);
+        
+      },
+      err => {
+        console.log(err);
+      
+      }
+    );
+}
+
+getMaxAge() {
+    
+  this.globalService.getModel("/Prospect/MaxAge").then(
+    
+      result => {
+        
+        this.valueMaxAge = result;
+        
+      },
+      err => {
+        console.log(err);
+      
+      }
+    );
+}
+
+
+getMinAge() {
+    
+  this.globalService.getModel("/Prospect/MinAge").then(
+    
+      result => {
+        
+        this.valueMinAge = result;
+        
+      },
+      err => {
+        console.log(err);
+      
+      }
+    );
+}
+
+
   deleteprospect() {
     this.globalService.removeModel(this.prospect.prospect_id,"/prospect").then(
       result => {
@@ -843,18 +1038,6 @@ getsoftware() {
   }
 
 
-  public sourceList: any = [
-    {
-      source_name: "Linkedin",
-      id: 1
-    }, {
-      source_name: "Internet",
-      id: 2
-    },
-    {
-      source_name: "Hackerran",
-      id: 3
-    }
-  ]
+  
     
 }

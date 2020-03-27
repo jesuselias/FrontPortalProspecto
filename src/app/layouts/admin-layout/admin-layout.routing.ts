@@ -13,7 +13,7 @@ import { RoleComponent } from '../../pages/role/role.component';
 import { TitleComponent } from '../../pages/title/title.component';
 import { UsuarioComponent } from '../../pages/usuario/usuario.component';
 import { ProspectiComponent } from '../../pages/prospecti/prospecti.component';
-
+import { CurrencyComponent } from "../../pages/currency/currency.component";
 
 import { AssignmentComponent } from '../../pages/assignment/assignment.component';
 
@@ -32,4 +32,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'assignment', component: AssignmentComponent },
     { path: 'usuario', component: UsuarioComponent },
     { path: 'prospecti', component: ProspectiComponent },
+    { path: 'currency', component: CurrencyComponent },
 ];

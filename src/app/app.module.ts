@@ -27,6 +27,7 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+//import { CurrencyComponent } from './pages/currency/currency.component';
 
 
 //I keep the new line
@@ -35,7 +36,8 @@ import { environment } from '../environments/environment';
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
-    RegisterComponent,
+    RegisterComponent
+    //CurrencyComponent,
 
   ],
   imports: [

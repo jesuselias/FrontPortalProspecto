@@ -1,0 +1,83 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-header">
+              <h4 class="card-title"></h4>
+            </div>
+          
+              <span  (click)="OpenCurrencyModal(template,'save', index)" class="btn btn-primary btn-xs">Nueva Moneda</span>
+              <br /><br />
+              <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                  <thead>
+                    <th>Codigo</th>
+                    <th>Nombre de la Moneda</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of currencyList | paginate: {itemsPerPage: 5, currentPage: pageActual};let i = index">
+                      <td>{{item.codigoMoneda}}</td>
+                      <td>{{item.descripcionMoneda}}</td>
+                      
+                      <td><span class="btn btn-primary btn-xs" (click)="OpenCurrencyModal(template,'edit',item)">
+                          <span class="nc-icon nc-ruler-pencil"></span></span></td>
+                      <td><span class="btn btn-danger btn-xs" (click)="OpenCurrencyModal(confirm,'delete', item)">
+                          <span class="nc-icon nc-simple-remove"></span></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+          </div>
+        </div>
+      
+        <ng-template #template>
+         
+            <div class="modal-header">
+             
+              <h4 class="modal-title" id="add-modal-label">{{titleModal}}</h4>
+            </div>
+            <form [formGroup]="currencyForm" (ngSubmit)="onSubmit()">
+              <div class="modal-body">
+
+                  <div class="form-group">
+                      <label class="col-sm-7 control-label">Código de la Moneda</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" formControlName="codigoMoneda" [(ngModel)]="currency.codigoMoneda" [ngClass]="{ 'is-invalid': submitted && f.codigoMoneda.errors }" />
+                        <div *ngIf="submitted && f.codigoMoneda.errors" class="invalid-feedback">
+                          <div *ngIf="f.codigoMoneda.errors.required">Por favor, ingrese el codigo de la moneda</div>
+                      </div>
+                      </div>
+                    </div>
+
+                <div class="form-group">
+                  <label class="col-sm-7 control-label">Nombre de la Moneda</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" formControlName="descripcionMoneda" [(ngModel)]="currency.descripcionMoneda" [ngClass]="{ 'is-invalid': submitted && f.descripcionMoneda.errors }" />
+                    <div *ngIf="submitted && f.descripcionMoneda.errors" class="invalid-feedback">
+                      <div *ngIf="f.descripcionMoneda.errors.required">Por favor, ingrese nombre de la moneda</div>
+                  </div>
+                  </div>
+                </div>
+                
+              </div>
+          </form>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
+            
+              <div *ngIf="save"><button (click)="saveCurrency()" type="submit" class="btn btn-primary">Guardar</button></div>
+              <div *ngIf="edit"><button (click)="editCurrency()" type="submit" class="btn btn-primary">Aceptar</button></div>
+            </div>
+        
+        </ng-template>
+        <ng-template #confirm>
+          <div class="modal-body text-center">
+            <p>Estas seguro de Eliminar?</p>
+            <button type="button" class="btn btn-default" (click)="deleteCurrency()" >Si</button>
+            <button type="button" class="btn btn-primary" (click)="onClose()" >No</button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    
+      
