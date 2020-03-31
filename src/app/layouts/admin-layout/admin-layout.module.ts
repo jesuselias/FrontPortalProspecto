@@ -35,7 +35,7 @@ import {
 
  import { NgxSpinnerModule } from "ngx-spinner";
 
- import { FileUploadModule } from 'ng2-file-upload'
+ //import { FileUploadModule } from 'ng2-file-upload'
 
 @NgModule({
   imports: [
@@ -47,8 +47,8 @@ import {
     ModalModule.forRoot(),
     NgxMultiselectModule,
     NgbModalModule,IgxInputGroupModule,
-    IgxSliderModule,Ng5SliderModule,NgxSpinnerModule,
-    FileUploadModule
+    IgxSliderModule,Ng5SliderModule,NgxSpinnerModule
+    //FileUploadModule
   ],
   declarations: [
     DashboardComponent,

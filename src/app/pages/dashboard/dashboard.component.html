@@ -20,13 +20,15 @@
                                  {{experiencieList[i].experience_level}}
                             </option>
                         </select>-->
-
+                                      
                         <ngx-multiselect
-                          (ngModelChange)="prospectexp($event)"
-                          [(ngModel)]="levelTest"
-                          [options]="experiencieList"
-                          theme="bootstrap" 
-                          ngDefaultControl
+                            (ngModelChange)="prospectexp($event)"
+                            [(ngModel)]="selectedLevel"
+                            [options]="nivel"
+                            name="test"
+                            [required]="true"
+                            theme="bootstrap" 
+                            ngDefaultControl
                         >
 
                         </ngx-multiselect>
@@ -65,7 +67,7 @@
                     <label  style="color: black;">Ciudad*</label>                
                        
                         <div *ngIf="countrys1.length < 2 " >
-                        <select style="width: 240px;" (ngModelChange)="prospectcity($event)"   class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" [ngModelOptions]="{standalone: true}">
+                        <select style="width: 240px;" (ngModelChange)="prospectcity($event)" class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" [ngModelOptions]="{standalone: true}">
                          <option value="">---Seleccionar Todo---</option>
                           
                           <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
@@ -83,9 +85,7 @@
                       <div *ngIf="minValue">
                           <ng5-slider style="width: 240px;"  (userChangeEnd)="prospectyear($event)" [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
                       </div> 
-                   </div>
-
-                   
+                   </div>            
 
                   <div class="input-group" class="col-10">
                     <label style="color: black;">Edad</label>
@@ -140,7 +140,7 @@
     </div>
   </div>
 
-  <ng-template #template>
+  <ng-template #template let-modal>
    
       <div class="modal-header">
        
@@ -427,7 +427,7 @@
                         <div  class="">
                           <select name="experience_level" class="form-control"  [(ngModel)]="prospect.experience_level" required  formControlName="experience_level" [ngClass]="{ 'is-invalid': submitted && f.experience_level.errors }" >
                             <option  *ngFor="let item of experiencieListPost; let i = index" [ngValue]="item.Id" >
-                               {{item.experience_nivel}}
+                               {{item.experience_level}}
                              </option>
                             </select>
                             <div *ngIf="submitted && f.experience_level.errors" class="invalid-feedback">

@@ -10,6 +10,9 @@ import * as moment from 'moment';
 //import {FileUploaderComponent} from './file-uploader.component';
 import { NgxSpinnerService } from "ngx-spinner";
 //import { FileUploader } from 'ng2-file-upload';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { GridSummaryCalculationMode } from 'igniteui-angular';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
     selector: 'dashboard-cmp',
@@ -38,16 +41,21 @@ export class DashboardComponent implements OnInit {
     
   };*/
 
-  valorMinimo: number = Number(this.getMinYear());
-  valorMaximo: number = Number(this.getMaxYear());
+  //public valorMaximo = Number(this.getMaxLevel());
+  
+  
+
+  valorMinimo = Number(this.getMinLevel());
+  //valorMaximo = this.getMaxLevel();
+  
   
   minValue = 1;
   maxValue = 25;
   options: Options = {
     floor: 1,
     ceil: 25,
-    minRange: this.valorMinimo,
-    maxRange: this.valorMaximo,
+    /*minRange: this.valorMinimo,
+    maxRange: this.valorMaximo,*/
   };
 
   
@@ -71,6 +79,9 @@ export class DashboardComponent implements OnInit {
     }
   };
 
+  //multiselct de experiencia
+  expierenceLevel:any; 
+
   public canvas : any;
   public ctx;
   public chartColor;
@@ -85,7 +96,6 @@ export class DashboardComponent implements OnInit {
   fileFoto:any;
   loaderFileCV = false;
   loaderFileFoto = false;
-
 
   //Hasta aqui lo de los archivos
 
@@ -126,6 +136,7 @@ export class DashboardComponent implements OnInit {
   software_Prospect: any;
   software_filtros:any;
   softwareList: any;
+  level: any;
   index : any;
   prospect:any;
   FiltersProspects:any;
@@ -158,6 +169,9 @@ export class DashboardComponent implements OnInit {
    valueMaxAge:any;
    valueMinAge:any;
    
+  //multiselct de nivel
+  selectedLevel;
+  nivel;
   
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
               private formBuilder: FormBuilder,private spinner: NgxSpinnerService,
@@ -180,7 +194,13 @@ export class DashboardComponent implements OnInit {
       this.cityTest = [];
       this.yearsExpierenceMin=[];
       this.yearsExpierenceMax=[];
-      //this.experiencieList=[];
+      this.expierenceLevel=[];
+      this.level = [];
+
+      //this.valueMaxYear = this.getMaxLevel();
+
+     
+      
     }
 
     public initialValues(){
@@ -207,48 +227,54 @@ export class DashboardComponent implements OnInit {
       this.getMoneda();
       this.submitted = false;
       this.spinner.hide();
-      this.getMaxYear();
-      this.getMinYear();
+      /*this.getMaxYear();
+      this.getMinYear();*/
+      this.getMinLevel();
+      this.getMaxLevel();
+      //this.calculo = this.getMaxLevel();
+     // console.log(this.valorMaximo);
+     //this.verMaxLevel();
+
+     this.nivel = [
+        {
+          name: "Basico",
+          id: 1
+        },
+        {
+          name: "Intermedio",
+          id: 2
+        },
+        {
+          name: "Experto",
+          id: 3
+        },
+        {
+          name: "Master",
+          id: 4
+        }
+     ];
 
 
     }
     
 
-   public experiencieList: any = [
-    {
-      experience_level: "Basico",
-      id: 1
-    },
-    {
-      experience_level: "Intermedio",
-      id: 2
-    },
-    {
-      experience_level: "Experto",
-      id: 3
-    },
-    {
-      experience_level: "Master",
-      id: 4
-    }
-    
-  ]
+   
 
   public experiencieListPost: any = [
     {
-      experience_nivel: "Basico",
+      experience_level: "Basico",
       Id: 1
     },
     {
-      experience_nivel: "Intermedio",
+      experience_level: "Intermedio",
       Id: 2
     },
     {
-      experience_nivel: "Experto",
+      experience_level: "Experto",
       Id: 3
     },
     {
-      experience_nivel: "Master",
+      experience_level: "Master",
       Id: 4
     }
     
@@ -402,36 +428,7 @@ export class DashboardComponent implements OnInit {
       );
   }
 
-   prospectexp(event) {
-
-    //console.log(event)
-    /*this.postprospect.expierenceLevel=event
-    this.filterApp(this.postprospect);*/
-
-    let arrayExp=[];
-    let experience = event;
-
-    experience.map(item=>{
-        arrayExp.push({id:item.id, name: item.source_name})
-        //this.country1.push({ id: item.country_id, name: item.country_name})
-    })
-
-    this.experiencieList = arrayExp
-    this.filterApp(this.postprospect);
-
-    /*let arraycountry=[];
-       let country=event;
-       country.map(item=>{
-
-      arraycountry.push(item.id)
-      
-         })
-  
-       this.postprospect.country_list=arraycountry
-       this.filterApp(this.postprospect);*/
-
-
-   }
+   
 
    prospectyear(event) {
 
@@ -492,6 +489,34 @@ export class DashboardComponent implements OnInit {
    
         
       }
+
+      prospectexp(event) {
+        let arrayExp=[];
+        let experience = event;
+  
+        experience.map(item=>{
+            arrayExp.push(item.id)
+            //this.country1.push({ id: item.country_id, name: item.country_name})
+        })
+  
+        this.postprospect.expierenceLevel = arrayExp
+        this.filterApp(this.postprospect);
+     }
+
+
+     /*
+     prospecteFuente(event){
+       let ArrayFuente = [];
+       let fuente = event;
+
+       fuente.map(item =>{
+          ArrayFuente.push({'idFuente':item.id})
+       })
+
+       this.postprospect.expierenceLevel = ArrayFuente;
+       this.filterApp(this.postprospect);
+       
+     }*/
 
 
     prospectsoft(event) {
@@ -758,6 +783,7 @@ getMaxLevel() {
         
         this.valueMaxLevel = result;
         console.log(this.valueMaxLevel);
+        return result;
         
       },
       err => {
@@ -766,6 +792,14 @@ getMaxLevel() {
       }
     );
 }
+
+/*
+public verMaxLevel() {
+  this.globalService.getMaxLevel().pipe().subscribe(z => {
+    this.valueMaxLevel = z;
+    console.log(z);
+  })
+}*/
 
 
 getMinLevel() {
@@ -788,7 +822,7 @@ getMinLevel() {
 
 getMaxYear() {
     
-  this.globalService.getModel("/prospect/MaxYear").then(
+  this.globalService.getModel("/Prospect/MaxYear").then(
     
       result => {
         
@@ -806,7 +840,7 @@ getMaxYear() {
 
 getMinYear() {
     
-  this.globalService.getModel("/prospect/MinYear").then(
+  this.globalService.getModel("/Prospect/MinYear").then(
     
       result => {
         
@@ -986,11 +1020,11 @@ getMinAge() {
 
        if (this.contacto.invalid) {
            return;
-       } else
+       } 
 
      //alert('Usuario Correcto !')
    
-    console.log(this.experiencieList);
+    //console.log(this.experiencieList);
     let arraysoft=[];
     this.softwares.map(item=>{
       arraysoft.push({'software_id':item.id})
