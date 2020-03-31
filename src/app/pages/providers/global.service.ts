@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { ToastrService } from "ngx-toastr";
 import { BehaviorSubject, Observable } from 'rxjs';
-
+import { map } from 'rxjs/operators';
 import { NgxSpinnerService } from "ngx-spinner";
 
 const httpOptionsDefault = {
@@ -223,6 +223,19 @@ export class GlobalService {
 
             })
         })
+    }
+
+    loadFile(file: File) {
+        const formData: FormData = new FormData();
+        formData.append('file', file);
+        console.log(file)
+        return this.http.post(`${this.apiBaseUrl}/prospect/upload`, formData)
+        
+          .pipe(map(response => {
+            //console.log(response)
+            return response;
+            
+          }));
     }
 
 

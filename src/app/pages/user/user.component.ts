@@ -17,6 +17,7 @@ export class UserComponent implements OnInit{
         this.initialValues();
         this.gettile();
         this.getcity();
+        this.getMoneda();
       //this.getsoftwareProspect();
         this.route
         .queryParams
@@ -37,7 +38,8 @@ export class UserComponent implements OnInit{
               return location.href='#';
             }
           }
-    softwareList:any
+    softwareList:any;
+    currencyList:any;
     title : any;
     UserList: any;
     bsModalRef: BsModalRef;
@@ -55,6 +57,22 @@ export class UserComponent implements OnInit{
        this.user=[];
        this.prospect=[];
        
+    }
+
+    getMoneda() {
+    
+      this.globalService.getModel("/moneda").then(
+        
+          result => {
+            
+            this.currencyList = result;
+            
+          },
+          err => {
+            console.log(err);
+          
+          }
+        );
     }
    
     gettile() {

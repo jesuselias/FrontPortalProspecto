@@ -9,6 +9,7 @@ import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 //import {FileUploaderComponent} from './file-uploader.component';
 import { NgxSpinnerService } from "ngx-spinner";
+//import { FileUploader } from 'ng2-file-upload';
 
 @Component({
     selector: 'dashboard-cmp',
@@ -21,7 +22,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class DashboardComponent implements OnInit {
 
  
-
+  //uploader:FileUploader;
   
   selectedFilef: File
 
@@ -77,9 +78,18 @@ export class DashboardComponent implements OnInit {
   public chartHours;
   public isCollapsed = true;
   public labels:any;
+  // archvos
+  btnSubirCv = false;
+  btnSubirFoto = false;
+  fileCV:any;
+  fileFoto:any;
+  loaderFileCV = false;
+  loaderFileFoto = false;
+
+
+  //Hasta aqui lo de los archivos
 
   currDate = new Date();
-
   yearsExpierenceMin:any;
   yearsExpierenceMax:any;
   contacto: FormGroup;
@@ -150,7 +160,8 @@ export class DashboardComponent implements OnInit {
    
   
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
-    private formBuilder: FormBuilder,private spinner: NgxSpinnerService) {
+              private formBuilder: FormBuilder,private spinner: NgxSpinnerService,
+              private toastr: ToastrService) {
     
       this.initialValues();
       this.softwareList = [];
@@ -307,8 +318,11 @@ export class DashboardComponent implements OnInit {
           prospect_phonenumber: ['', Validators.required],
           prospect_address: ['', Validators.required],
           prospect_salary: ['', [Validators.required,Validators.pattern('[0-9]+')]],
-          prospect_cv: ['',[Validators.required,Validators.pattern('https?://.+')]],
-          prospect_photo: ['', [Validators.required,Validators.pattern('https?://.+')]],
+          prospect_cv: ['',[Validators.required]],
+          prospect_photo: ['', [Validators.required]],
+          codigoMoneda: ['', [Validators.required]],
+          /*prospect_cv: ['',[Validators.required,Validators.pattern('https?://.+')]],
+          prospect_photo: ['', [Validators.required,Validators.pattern('https?://.+')]],*/
           prospect_link: ['', Validators.required],
           experience_years: ['', [Validators.required,Validators.pattern('[0-9]+')]],
           email: ['', [Validators.required,Validators.email]],
@@ -343,7 +357,8 @@ export class DashboardComponent implements OnInit {
           experience_level:['', Validators.required],
           country_id: ['', Validators.required],
           city_id: ['', Validators.required],
-          referral_name: ['', Validators.required]
+          referral_name: ['', Validators.required],
+          codigoMoneda: ['', [Validators.required]],
 
 
       });
@@ -900,7 +915,11 @@ getMinAge() {
       'prospect_phonenumber': this.prospect.prospect_phonenumber,
       'prospect_cv':  this.prospect.prospect_cv,
       'prospect_photo':  this.prospect.prospect_photo,
-      'prospect_link': this.prospect.prospect_link,
+      //prospect_link: this.prospect.nombreFuente,
+      // probando
+      //id_Proveedor: this.listprovider[this.requestGP.id_Proveedor].id_Proveedor,
+      prospect_link: this.sourceList[this.prospect.idFuente].idFuente,
+
       'prospect_salary': this.prospect.prospect_salary,
       'title_id': this.prospect.title_id,
       'software_prospect': arraysoft,
@@ -908,8 +927,8 @@ getMinAge() {
       'experience_level': this.prospect.experience_level,
       'email': this.prospect.email,
       'commentary': this.prospect.commentary,
-      'referral_name': this.prospect.referral_name
-      
+      'referral_name': this.prospect.referral_name,
+      codigoMoneda: this.prospect.codigoMoneda
       
     };
    
@@ -990,7 +1009,7 @@ getMinAge() {
       'prospect_phonenumber': this.prospect.prospect_phonenumber,
       'prospect_cv':  this.prospect.prospect_cv,
       'prospect_photo':  this.prospect.prospect_photo,
-      'prospect_link': this.prospect.prospect_link,
+      'prospect_link': this.prospect.nombreFuente,
       'prospect_salary': this.prospect.prospect_salary,
       'title_id': this.prospect.title_id,
       'software_prospect': arraysoft,
@@ -999,7 +1018,7 @@ getMinAge() {
       'email': this.prospect.email,
       'commentary': this.prospect.commentary,
       'referral_name': this.prospect.referral_name,
-
+      'codigoMoneda': this.prospect.codigoMoneda
      
     };
     //console.log(postprospect)
@@ -1037,7 +1056,69 @@ getMinAge() {
      // alert('Usuario Correcto !')
   }
 
+  //subir archivos
+  onSelectFileCV(ev: any){
+    //this.loaderFileCV = true;
+    if (ev.target.files.length > 0) {
+      this.fileCV = ev.target.files[0];
+      console.log(ev.target.files[0])
+     // this.excelName = 'gestionpagos';
+      //console.log(this.excelName)
+      //this.loaderFileCV = false;
+      console.log('antes')
+      
+      this.btnSubirCv = true;
+    }
+  }
 
+  onSelectFileFoto(ev: any){
+    this.loaderFileFoto = true;
+    if (ev.target.files.length > 0) {
+      this.fileFoto = ev.target.files[0];
+      console.log(ev.target.files[0])
+     // this.excelName = 'gestionpagos';
+      //console.log(this.excelName)
+      this.loaderFileFoto = false;
+      console.log('antes')
+      
+      this.btnSubirFoto = true;
+    }
+  }
+
+  serviceFile(file, type){
+      this.globalService.loadFile(file).subscribe(
+        (data:any) => {
+          if(type == 'cv'){
+            this.loaderFileCV = false;
+            this.btnSubirCv = false;
+          }
+          if(type == 'foto'){
+            this.loaderFileFoto = false;
+            this.btnSubirFoto = false;
+          }
+
+          this.toastr.info('Guardado el archivo')
+        },
+      );
+  }
+
+  upFileCV(){
+    /*this.loaderFileO=true;
+    this.btnUpO=false;*/
+
+      this.loaderFileCV = true;
+      this.btnSubirCv = false;
+      this.serviceFile(this.fileCV,"cv")
+      
+
+  }
+
+  upFileFoto(){
+    this.loaderFileFoto = true;
+    this.btnSubirFoto = false
+    this.serviceFile(this.fileFoto,"foto")     
+
+  }
   
     
 }
