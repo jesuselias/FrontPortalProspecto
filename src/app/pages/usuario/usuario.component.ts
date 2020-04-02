@@ -4,6 +4,7 @@ import { BehaviorSubject } from "rxjs";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { GlobalService } from "../providers/global.service";
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-usuario',
@@ -33,7 +34,8 @@ export class UsuarioComponent implements OnInit{
   save: boolean=false;
   edit: boolean=false;
   titleModal: string="";
-  constructor(private globalService: GlobalService, private bsModalService: BsModalService,private formBuilder: FormBuilder) {
+  constructor(private globalService: GlobalService, private bsModalService: BsModalService,
+              private formBuilder: FormBuilder, public http: HttpClient) {
      this.user=[];
      this.usersList=[];
      this.roleList=[];
@@ -167,6 +169,13 @@ export class UsuarioComponent implements OnInit{
     this.onClose()
   }
 
+
+  getExportUser() {
+   
+    return this.http.get('https://consultorestmapi.azurewebsites.net/api/excel/exportUsers',{responseType: 'blob'})
+    .subscribe(data => saveAs(data));
+
+}
 
   
   saveUsers() {

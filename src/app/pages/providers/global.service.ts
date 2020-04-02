@@ -239,15 +239,7 @@ export class GlobalService {
     }
 
 
-    // para los slider
-    /*getMaxLevel() {
-        return this.http.get<any>(`${this.apiBaseUrl}/Prospect/MaxLevel`)
-        .pipe(map(response => {
-            return response;
-        }));
-      }*/
-
-
+   
 
     showNotification(from, align, color, text) {
         

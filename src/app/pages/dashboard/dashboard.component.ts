@@ -13,6 +13,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { GridSummaryCalculationMode } from 'igniteui-angular';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { saveAs } from 'file-saver';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
     selector: 'dashboard-cmp',
@@ -29,9 +31,7 @@ export class DashboardComponent implements OnInit {
   
   selectedFilef: File
 
-  selectedFilec: File
-
-    
+  selectedFilec: File    
   
   minValue = 1;
   maxValue = 25;
@@ -136,7 +136,7 @@ export class DashboardComponent implements OnInit {
     'experience_years': null,
     "salaryMin": null,
     "salaryMax": null,
-    "expierenceLevel": null,
+    "expierenceLevel":null,
     "yearsExpierenceMin": null,
     "yearsExpierenceMax": null,
     "software":[]
@@ -153,13 +153,16 @@ export class DashboardComponent implements OnInit {
    valueMaxAge:any;
    valueMinAge:any;
    
+   seeFoto=true;
+   seeCV=true;
+
   //multiselct de nivel
   selectedLevel;
   nivel;
   
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
               private formBuilder: FormBuilder,private spinner: NgxSpinnerService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService, public http: HttpClient) {
     
       this.initialValues();
       this.softwareList = [];
@@ -178,7 +181,7 @@ export class DashboardComponent implements OnInit {
       this.cityTest = [];
       this.yearsExpierenceMin=[];
       this.yearsExpierenceMax=[];
-      this.expierenceLevel=[];
+      
       this.level = [];
       
       
@@ -246,7 +249,12 @@ export class DashboardComponent implements OnInit {
 
     }
     
+    getExportProspect() {
+   
+      return this.http.get('https://consultorestmapi.azurewebsites.net/api/excel/exportProspect',{responseType: 'blob'})
+      .subscribe(data => saveAs(data));
 
+    }
    
 
   public experiencieListPost: any = [
@@ -364,7 +372,7 @@ export class DashboardComponent implements OnInit {
           prospect_salary: ['', Validators.required],
           prospect_cv: ['', Validators.required],
           prospect_photo: ['', Validators.required],
-          prospect_link: ['', Validators.required],
+          idFuente: ['', Validators.required],
           experience_years: ['', Validators.required],
           email: ['', Validators.required],
           commentary: ['', Validators.required],
@@ -489,21 +497,35 @@ export class DashboardComponent implements OnInit {
             //this.country1.push({ id: item.country_id, name: item.country_name})
         })
 
+        // filter(data=>data.prospect_id==item.prospect_id)
+
         //this.postprospect.expierenceLevel = this.nivel.id;
-        this.postprospect.expierenceLevel = arrayExp
+       
         //this.nivel=arrayExp
-        this.filterApp(this.postprospect);
-        console.log(arrayExp)
+        this.prospectList.experience_level = arrayExp.filter(data=>data.expierenceLevel == this.expierenceLevel.id);
+        //return this.prospectList.experience_level;
+        //this.filterApp(this.postprospect);
+        console.log(arrayExp);
+        console.log(this.prospectList.experience_level);
      }*/
 
 
      
      prospectexp(event){
       console.log(event)
-      //this.postprospect.expierenceLevel=event
+      this.postprospect.expierenceLevel=event
       this.filterApp(this.expierenceLevel);
+      
        
      }
+
+     /*
+        public filterChange(filter: any): void {
+        this.log('filterChange', filter);
+        this.data = this.source.filter((s) => s.toLowerCase().indexOf(filter.toLowerCase()) !== -1);
+    }
+
+     */
 
 
     prospectsoft(event) {
@@ -988,14 +1010,14 @@ getMinAge() {
       'email': this.prospect.email,
       'commentary': this.prospect.commentary,
       'referral_name': this.prospect.referral_name,
-      'codigoMoneda': this.prospect.codigoMoneda
+      codigoMoneda: this.prospect.codigoMoneda
       
     };
    
     //console.log(postprospect)
     this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect").then(
       result => {
-    //    console.log(result);
+        console.log(postprospect);
         this.getprospects();
       },
       err => {
@@ -1069,7 +1091,7 @@ getMinAge() {
       'prospect_phonenumber': this.prospect.prospect_phonenumber,
       'prospect_cv':  this.prospect.prospect_cv,
       'prospect_photo':  this.prospect.prospect_photo,
-      'prospect_link': this.prospect.nombreFuente,
+      'prospect_link': this.prospect.prospect_link,
       'prospect_salary': this.prospect.prospect_salary,
       'title_id': this.prospect.title_id,
       'software_prospect': arraysoft,
@@ -1086,6 +1108,7 @@ getMinAge() {
       result => {
   //      console.log(result);
         this.getprospects();
+        console.log(postprospect);
       },
       err => {
         console.log(err);
@@ -1093,7 +1116,7 @@ getMinAge() {
         //this.loader.dismiss();
       }
     );
-   
+      console.log(postprospect)
     this.onClose();
   }
 
@@ -1169,6 +1192,7 @@ getMinAge() {
       this.loaderFileCV = true;
       this.btnSubirCv = false;
       this.serviceFile(this.fileCV,"cv")
+      this.seeCV = false;
       
 
   }
@@ -1176,7 +1200,8 @@ getMinAge() {
   upFileFoto(){
     this.loaderFileFoto = true;
     this.btnSubirFoto = false
-    this.serviceFile(this.fileFoto,"foto")     
+    this.serviceFile(this.fileFoto,"foto")  
+    this.seeFoto = false;   
 
   }
   

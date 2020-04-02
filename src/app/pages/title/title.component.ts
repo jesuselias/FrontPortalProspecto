@@ -2,6 +2,7 @@ import { Component, OnInit,TemplateRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { saveAs } from 'file-saver';
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { GlobalService } from "../providers/global.service";
@@ -17,22 +18,27 @@ export class TitleComponent implements OnInit{
   contacto: FormGroup;
   submitted = false;
 
+
   ngOnInit(){
     this.initialValues();
       this.getTitle();
+    
   }
 
   index:any;
   pageActual: number = 1;
   titleList: any;
+  titleExcel:any;
   bsModalRef: BsModalRef;
   title: any;
   titleModal: string="";
   save: boolean=false;
   edit: boolean=false;
-  constructor(private globalService: GlobalService, private bsModalService: BsModalService,private formBuilder: FormBuilder) {
+  constructor(private globalService: GlobalService, private bsModalService: BsModalService,
+              private formBuilder: FormBuilder, public http: HttpClient) {
      this.title=[];
      this.titleList=[];
+     
   }
 
   OpenTitleModal(template: TemplateRef<any>, option, item) {
@@ -76,6 +82,8 @@ export class TitleComponent implements OnInit{
       return location.href='#';
     }
   }
+
+
   getTitle() {
       this.globalService.getModel("/title").then(
           result => {
@@ -86,6 +94,17 @@ export class TitleComponent implements OnInit{
           }
         );
   }
+
+
+  getExportTitle() {
+   
+      return this.http.get('https://consultorestmapi.azurewebsites.net/api/excel/exportTitle',{responseType: 'blob'})
+      .subscribe(data => saveAs(data));
+
+  }
+
+
+
   deleteTitle() {
     this.globalService.removeModel(this.title.title_id,"/title").then(
       result => {
@@ -116,6 +135,8 @@ export class TitleComponent implements OnInit{
     );
     this.onClose()
   }
+
+
   saveTitle() {
    // console.log(this.title)
 
@@ -127,8 +148,6 @@ export class TitleComponent implements OnInit{
     
     let postTitle = {
       'title_name': this.title.title_name,
-      
-     
     };
 
     this.globalService.addModel(postTitle, "/title").then(

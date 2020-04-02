@@ -4,6 +4,8 @@ import { GlobalService } from '../providers/global.service';
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from 'ngx-toastr';
+import { saveAs } from 'file-saver';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
   selector: 'app-currency',
@@ -31,7 +33,8 @@ export class CurrencyComponent implements OnInit {
               private bsModalService: BsModalService,
               private formBuilder: FormBuilder,
               private spinner: NgxSpinnerService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              public http: HttpClient) { }
 
   ngOnInit() {
     this.getCurrency();
@@ -98,6 +101,13 @@ export class CurrencyComponent implements OnInit {
       }
 
   }
+
+  getExportCurrency() {
+   
+    return this.http.get('https://consultorestmapi.azurewebsites.net/api/excel/exportMoneda',{responseType: 'blob'})
+    .subscribe(data => saveAs(data));
+
+}
  
 
   getCurrency() {

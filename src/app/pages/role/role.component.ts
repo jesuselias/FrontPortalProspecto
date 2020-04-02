@@ -1,7 +1,7 @@
 import { Component, OnInit,TemplateRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
-
+import { saveAs } from 'file-saver';
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { GlobalService } from "../providers/global.service";
 
@@ -41,7 +41,8 @@ export class RoleComponent implements OnInit{
     save: boolean=false;
     edit: boolean=false;
 
-    constructor(private globalService: GlobalService, private bsModalService: BsModalService,private formBuilder: FormBuilder) {
+    constructor(private globalService: GlobalService, private bsModalService: BsModalService,
+                private formBuilder: FormBuilder, public http: HttpClient) {
        this.role=[];
        this.function= [];
        this.functiones= [];
@@ -208,6 +209,14 @@ export class RoleComponent implements OnInit{
      
       this.onClose()
     }
+
+
+    getExportRole() {
+   
+      return this.http.get('https://consultorestmapi.azurewebsites.net/api/excel/exportRol',{responseType: 'blob'})
+      .subscribe(data => saveAs(data));
+
+  }
 
 
     saverole() {
