@@ -31,27 +31,11 @@ export class DashboardComponent implements OnInit {
 
   selectedFilec: File
 
-  //minValue7: number = this.getMoneda();
-
-  /*minValue: number = 0;
-  maxValue: number = 20;
-  options: Options = {
-    floor: 1,
-    ceil: 20,
     
-  };*/
-
-  //public valorMaximo = Number(this.getMaxLevel());
-  
-  
-
-  valorMinimo = Number(this.getMinLevel());
-  //valorMaximo = this.getMaxLevel();
-  
   
   minValue = 1;
   maxValue = 25;
-  options: Options = {
+  options1: Options = {
     floor: 1,
     ceil: 25,
     /*minRange: this.valorMinimo,
@@ -164,8 +148,8 @@ export class DashboardComponent implements OnInit {
    //Slider
    valueMaxLevel:any;
    valueMinLevel:any;
-   valueMaxYear:any;
-   valueMinYear:any;
+   valueMaxSalary:any;
+   valueMinSalary:any;
    valueMaxAge:any;
    valueMinAge:any;
    
@@ -196,6 +180,9 @@ export class DashboardComponent implements OnInit {
       this.yearsExpierenceMax=[];
       this.expierenceLevel=[];
       this.level = [];
+      
+      
+
 
       //this.valueMaxYear = this.getMaxLevel();
 
@@ -231,11 +218,13 @@ export class DashboardComponent implements OnInit {
       this.getMinYear();*/
       this.getMinLevel();
       this.getMaxLevel();
-      //this.calculo = this.getMaxLevel();
-     // console.log(this.valorMaximo);
-     //this.verMaxLevel();
+      this.getMaxAge();
+      this.getMinAge();
+      this.getMaxSalary();
+      this.getMinSalary()
+      
 
-     this.nivel = [
+     this.expierenceLevel = [
         {
           name: "Basico",
           id: 1
@@ -490,33 +479,31 @@ export class DashboardComponent implements OnInit {
         
       }
 
+      /*
       prospectexp(event) {
         let arrayExp=[];
         let experience = event;
   
         experience.map(item=>{
-            arrayExp.push(item.id)
+            arrayExp.push({'id':item.id, 'name':item.name})
             //this.country1.push({ id: item.country_id, name: item.country_name})
         })
-  
+
+        //this.postprospect.expierenceLevel = this.nivel.id;
         this.postprospect.expierenceLevel = arrayExp
+        //this.nivel=arrayExp
         this.filterApp(this.postprospect);
-     }
-
-
-     /*
-     prospecteFuente(event){
-       let ArrayFuente = [];
-       let fuente = event;
-
-       fuente.map(item =>{
-          ArrayFuente.push({'idFuente':item.id})
-       })
-
-       this.postprospect.expierenceLevel = ArrayFuente;
-       this.filterApp(this.postprospect);
-       
+        console.log(arrayExp)
      }*/
+
+
+     
+     prospectexp(event){
+      console.log(event)
+      //this.postprospect.expierenceLevel=event
+      this.filterApp(this.expierenceLevel);
+       
+     }
 
 
     prospectsoft(event) {
@@ -532,7 +519,6 @@ export class DashboardComponent implements OnInit {
        this.postprospect.software=arraysoft
        this.filterApp(this.postprospect);
         
-   
         
       }
   
@@ -775,6 +761,13 @@ getMoneda() {
 
 // Slider
 
+  setNewMaxLevel(newCeil: number): void {
+    // Due to change detection rules in Angular, we need to re-create the options object to apply the change
+    const newOptions: Options = Object.assign({}, this.options1);
+    newOptions.ceil = newCeil;
+    this.options1 = newOptions;
+  }
+
 getMaxLevel() {
     
   this.globalService.getModel("/Prospect/MaxLevel").then(
@@ -782,8 +775,7 @@ getMaxLevel() {
       result => {
         
         this.valueMaxLevel = result;
-        console.log(this.valueMaxLevel);
-        return result;
+        this.setNewMaxLevel(Number(result));
         
       },
       err => {
@@ -793,14 +785,12 @@ getMaxLevel() {
     );
 }
 
-/*
-public verMaxLevel() {
-  this.globalService.getMaxLevel().pipe().subscribe(z => {
-    this.valueMaxLevel = z;
-    console.log(z);
-  })
-}*/
-
+  setNewMinLevel(floor:number): void {
+    // Due to change detection rules in Angular, we need to re-create the options object to apply the change
+    const newOptions: Options = Object.assign({}, this.options1);
+    newOptions.floor = floor;
+    this.options1 = newOptions;
+  }
 
 getMinLevel() {
     
@@ -809,7 +799,34 @@ getMinLevel() {
       result => {
         
         this.valueMinLevel = result;
-        console.log(this.valueMinLevel);
+        this.setNewMinLevel(Number(result));
+        
+      },
+      err => {
+        console.log(err);
+      
+      }
+    );
+}
+
+// Salario
+
+  setNewMaxSalary(newCeil: number): void {
+    // Due to change detection rules in Angular, we need to re-create the options object to apply the change
+    const newOptions: Options = Object.assign({}, this.options3);
+    newOptions.ceil = newCeil;
+    this.options3 = newOptions;
+  }
+
+
+getMaxSalary() {
+    
+  this.globalService.getModel("/Prospect/MaxSalary").then(
+    
+      result => {
+        
+        this.valueMaxSalary = result;
+        this.setNewMaxSalary(Number(result));
         
       },
       err => {
@@ -820,14 +837,22 @@ getMinLevel() {
 }
 
 
-getMaxYear() {
+setNewMinSalary(floor:number): void {
+  // Due to change detection rules in Angular, we need to re-create the options object to apply the change
+  const newOptions: Options = Object.assign({}, this.options3);
+  newOptions.floor = floor;
+  this.options3 = newOptions;
+}
+
+
+getMinSalary() {
     
-  this.globalService.getModel("/Prospect/MaxYear").then(
+  this.globalService.getModel("/Prospect/MinSalary").then(
     
       result => {
         
-        this.valueMaxYear = result;
-        console.log(this.valueMaxYear);
+        this.valueMinSalary = result;
+        this.setNewMinSalary(Number(result));
         
       },
       err => {
@@ -838,21 +863,12 @@ getMaxYear() {
 }
 
 
-getMinYear() {
-    
-  this.globalService.getModel("/Prospect/MinYear").then(
-    
-      result => {
-        
-        this.valueMinYear = result;
-        console.log(this.valueMinYear);
-        
-      },
-      err => {
-        console.log(err);
-      
-      }
-    );
+
+setNewCeil(newCeil: number): void {
+  // Due to change detection rules in Angular, we need to re-create the options object to apply the change
+  const newOptions: Options = Object.assign({}, this.options2);
+  newOptions.ceil = newCeil;
+  this.options2 = newOptions;
 }
 
 getMaxAge() {
@@ -862,6 +878,7 @@ getMaxAge() {
       result => {
         
         this.valueMaxAge = result;
+        this.setNewCeil(Number(result));
         
       },
       err => {
@@ -869,6 +886,14 @@ getMaxAge() {
       
       }
     );
+}
+
+
+setNewFloor(floor:number): void {
+  // Due to change detection rules in Angular, we need to re-create the options object to apply the change
+  const newOptions: Options = Object.assign({}, this.options2);
+  newOptions.floor = floor;
+  this.options2 = newOptions;
 }
 
 
@@ -879,6 +904,7 @@ getMinAge() {
       result => {
         
         this.valueMinAge = result;
+        this.setNewFloor(Number(result));
         
       },
       err => {
@@ -952,7 +978,7 @@ getMinAge() {
       //prospect_link: this.prospect.nombreFuente,
       // probando
       //id_Proveedor: this.listprovider[this.requestGP.id_Proveedor].id_Proveedor,
-      prospect_link: this.sourceList[this.prospect.idFuente].idFuente,
+      'prospect_link': this.prospect.idFuente,
 
       'prospect_salary': this.prospect.prospect_salary,
       'title_id': this.prospect.title_id,
@@ -962,7 +988,7 @@ getMinAge() {
       'email': this.prospect.email,
       'commentary': this.prospect.commentary,
       'referral_name': this.prospect.referral_name,
-      codigoMoneda: this.prospect.codigoMoneda
+      'codigoMoneda': this.prospect.codigoMoneda
       
     };
    
