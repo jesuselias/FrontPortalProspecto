@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgxSpinnerService } from "ngx-spinner";
+import { prospect } from '../models/prospect';
 
 const httpOptionsDefault = {
     headers: new HttpHeaders({
@@ -229,7 +230,7 @@ export class GlobalService {
         const formData: FormData = new FormData();
         formData.append('file', file);
         console.log(file)
-        return this.http.post(`${this.apiBaseUrl}/prospect/upload`, formData)
+        return this.http.post(`${this.apiBaseUrl}/Prospect/upload`, formData)
         
           .pipe(map(response => {
             //console.log(response)
@@ -237,6 +238,22 @@ export class GlobalService {
             
           }));
     }
+
+    //importar
+    UploadExcel(formData: FormData) {  
+        let headers = new HttpHeaders();  
+      
+        headers.append('Content-Type', 'multipart/form-data');  
+        headers.append('Accept', 'application/json');  
+      
+        const httpOptions = { headers: headers };  
+      
+        return this.http.post(this.apiBaseUrl + '/excel/importExcel', formData, httpOptions)  
+      }  
+      
+      BindUser(): Observable<prospect[]> {  
+        return this.http.get<prospect[]>(this.apiBaseUrl + '/Prospect');  
+      }  
 
 
    

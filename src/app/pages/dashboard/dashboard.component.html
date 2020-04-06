@@ -22,9 +22,9 @@
                         </select>-->
                                       
                         <ngx-multiselect
-                            (ngModelChange)="prospectexp($event)"
+                            (ngModelChange)="prospectexp($event, filter)"
                             [(ngModel)]="selectedLevel"
-                            [options]="expierenceLevel"
+                            [options]="nivel"
                             name="test"
                             [required]="true"
                             theme="bootstrap" 
@@ -95,7 +95,7 @@
 
                   <div class="input-group" class="col-10">
                     <label style="color: black;">Salario</label>
-                        <ng5-slider style="width: 240px;" (userChangeEnd)=" prospectsalary($event)" [(value)]="valueMinSalary" [(highValue)]="valueMaxSalary" [options]="options3"></ng5-slider>
+                        <ng5-slider style="width: 240px;" (userChangeEnd)="prospectsalary($event)" [(value)]="valueMinSalary" [(highValue)]="valueMaxSalary" [options]="options3"></ng5-slider>
                   </div>
               </div>
             </div>
@@ -106,6 +106,9 @@
       </div>
        <span (click)="OpenProspectModal(template,'save',index)" class="btn btn-primary btn-xs">Nuevo Prospecto</span>
        <span (click)="getExportProspect()" class="btn btn-success btn-xs">Exportar Excel</span>
+       <input type="file" #fileInput class="btn-sm" (change)="getExport($event)">
+       <span *ngIf="exportExcel" (click)="openModal(importar)" class="btn btn-primary btn-xs">Importar</span>
+      
        
         <br /><br />
         <div class="table-responsive">
@@ -115,19 +118,19 @@
               <th>Apellido</th>
               <th>Titulo</th>
               <th>Salario</th>
+              <th>Moneda</th>
               <th>Detalles</th>
               <th>Editar</th>
               <th>Eliminar</th>
             </thead>
             <tbody>
-              <tr *ngFor="let item of prospectList| paginate: {itemsPerPage: 6, currentPage: pageActual};let i = index">
+              <tr *ngFor="let item of prospectList | paginate: {itemsPerPage: 6, currentPage: pageActual};let i = index">
                 <td>{{item.prospect_name}}</td>
                 <td>{{item.prospect_lastname}}</td>
                 <td>{{checkTitle(item.title_id)}}</td>
                 <td>{{item.prospect_salary}}</td>
-                
-               
-              
+                <td>{{item.codigoMoneda}}</td>
+                            
                 <td><span (click)="getsoftwareProspect(item.prospect_id)" class="btn btn-primary btn-xs" [routerLink]="['/user']" [queryParams]="item">
                     <span class="nc-icon nc-tap-01"></span></span></td>
                     <td><span class="btn btn-primary btn-xs" (click)="OpenProspectModal(template,'edit',item)">
@@ -317,8 +320,9 @@
                   <div class="col-6">
                     <div class="form-group">
                       <label class="col-form-label">CV*</label> 
+                      
                       <div class="">
-                        <input type="file" *ngIf="seeCV" formControlName="prospect_cv" class="form-control" class="adjuntar" (change)="onSelectFileCV($event)"
+                        <input type="file" *ngIf="seeCV" formControlName="prospect_cv" class="form-control" (change)="onSelectFileCV($event)"
                               [(ngModel)]="prospect.prospect_cv" [ngClass]="{ 'is-invalid': submitted && f.prospect_cv.errors }"/>
                         <div *ngIf="submitted && f.prospect_cv.errors" class="invalid-feedback">
                           <div *ngIf="f.prospect_cv.errors.required">Por favor, ingrese cv</div>
@@ -344,10 +348,10 @@
 
                 <div class="row">
                   <div class="col-6">
-                      <div class="">
-                          <label class="col-form-label">Foto*</label> 
-                          <div class="">
-                            <input type="file" *ngIf="seeFoto" class="adjuntar" formControlName="prospect_photo"  [(ngModel)]="prospect.prospect_photo"
+                      
+                          <label class="col-form-label">Foto*</label>
+                          <div>
+                            <input [ngStyle]="{'color': 'blue'}" type="file" *ngIf="seeFoto" value={this.state.image} formControlName="prospect_photo" [(ngModel)]="prospect.prospect_photo"
                                  [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" (change)="onSelectFileFoto($event)"/>
                             <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
                               <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
@@ -357,10 +361,9 @@
                             <!--<input type="file" file-model="files">-->
                             <!--<input type="file" file-upload>-->
                             <!--<input type="file" class='form-control'>-->
-
-                                                       
+                                                    
                         </div> 
-                      </div>
+                      
                   </div>
 
                   <div class="col-6">
@@ -615,5 +618,18 @@
       </div>
     </ng-template>
   </div>
+
+  <ng-template #importar>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Modal</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      This is a modal.
+    </div>
+  </ng-template>
+
 <ngx-spinner></ngx-spinner>
 </div>
