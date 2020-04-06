@@ -68,7 +68,7 @@
                     <label  style="color: black;">Ciudad*</label>                
                        
                         <div *ngIf="countrys1.length < 2 " >
-                        <select style="width: 240px;" (ngModelChange)="prospectcity($event)" class="form-control" name="city_id"  [(ngModel)]="prospect.city_id" [ngModelOptions]="{standalone: true}">
+                        <select style="width: 240px;" (ngModelChange)="prospectcity($event)" class="form-control" name="city_id"  [(ngModel)]="prospect.city_id">
                          <option value="">---Seleccionar Todo---</option>
                           
                           <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
@@ -83,19 +83,25 @@
                     <div  class="input-group" class="col-10">
             
                       <label style="color: black;">Años de Experiencia</label>
-                      <div *ngIf="minValue">
-                          <ng5-slider style="width: 240px;"  (userChangeEnd)="prospectyear($event)" [(value)]="valueMinLevel" [(highValue)]="valueMaxLevel" [options]="options1"></ng5-slider>
+                      <div *ngIf="valueMinLevel">
+                          <ng5-slider style="width: 240px;" (userChangeEnd)="prospectyear($event)" [(value)]="valueMinLevel" [(highValue)]="valueMaxLevel" [options]="options1"></ng5-slider>
                       </div> 
                    </div>            
 
                   <div class="input-group" class="col-10">
                     <label style="color: black;">Edad</label>
-                    <ng5-slider style="width: 240px;" (userChangeEnd)="prospectage($event)" [(value)]="valueMinAge" [(highValue)]="valueMaxAge" [options]="options2"></ng5-slider>
+                    <div *ngIf="valueMinAge">
+                      <ng5-slider style="width: 240px;" (userChangeEnd)="prospectage($event)" [(value)]="valueMinAge" [(highValue)]="valueMaxAge" [options]="options2"></ng5-slider>
+                    </div>
+                    
                  </div>
 
                   <div class="input-group" class="col-10">
                     <label style="color: black;">Salario</label>
-                        <ng5-slider style="width: 240px;" (userChangeEnd)="prospectsalary($event)" [(value)]="valueMinSalary" [(highValue)]="valueMaxSalary" [options]="options3"></ng5-slider>
+                        <div *ngIf="valueMinSalary">
+                          <ng5-slider style="width: 240px;" (userChangeEnd)="prospectsalary($event)" [(value)]="valueMinSalary" [(highValue)]="valueMaxSalary" [options]="options3"></ng5-slider>
+                        </div>
+                        
                   </div>
               </div>
             </div>
@@ -286,7 +292,7 @@
                 <div class="row">
                     <div class="col-6">
                       <div class="form-group">
-                        <label class="col-form-label">Salario($)*</label> 
+                        <label class="col-form-label">Salario</label> 
                         <div class="">
                           <input placeholder="Ingrese el salario" type="text" formControlName="prospect_salary" class="form-control" [(ngModel)]="prospect.prospect_salary" [ngClass]="{ 'is-invalid': submitted && f.prospect_salary.errors }" />
                            
@@ -507,7 +513,6 @@
                     </div>
 
                     
-
                 </div>
 
             
@@ -621,13 +626,34 @@
 
   <ng-template #importar>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Modal</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <h4 class="modal-title pull-left">Importación de Prospectos</h4>
+      <!--<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
-      </button>
+      </button>-->
     </div>
     <div class="modal-body">
-      This is a modal.
+        
+            <div class="col-md-12">
+              <form [formGroup]="formFile">
+                <div class="form-group">
+                  <label class="col-form-label">Entidad*</label> 
+                  
+                    <input placeholder="Ingrese la entidad" type="text" formControlName="pathFile" class="form-control" [(ngModel)]="prospect.pathFile" [ngClass]="{ 'is-invalid': submitted && f.pathFile.errors }" />
+                    <div *ngIf="submitted && f.pathFile.errors" class="invalid-feedback">
+                        <div *ngIf="f.pathFile.errors.required">Por favor, ingresa la entidad</div>
+                    </div>
+                    
+                  </div>
+              </form>
+            </div>
+        
+      
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="onCloseImportar()">Cerrar</button>
+      <div><button type="submit" (click)="uploadFile()" class="btn btn-primary">Aceptar</button></div>
+      
     </div>
   </ng-template>
 
