@@ -37,20 +37,29 @@ export class DashboardComponent implements OnInit {
     this.prospectList = this.globalService.BindUser();  
   }
 
-  uploadFile() {  
-    let formData = new FormData();  
-    formData.append('upload', this.fileInput.nativeElement.files[0])  
-  
-    this.globalService.UploadExcel(formData).subscribe(result => {  
-      this.message = result.toString();  
-      this.loadAllProspect();
-      this.toastr.info('Importación realizada exitosamenete')
-    },
-    err => {
-      console.log(err);
-      this.toastr.info('Error al importar')
+  uploadFile(pathFile) {  
     
-    });   
+    if(pathFile == 'prospecto'){
+      let formData = new FormData();  
+      formData.append('upload', this.fileInput.nativeElement.files[0]) 
+  
+     
+    
+      this.globalService.UploadExcel(formData).subscribe(result => {  
+        this.message = result.toString();  
+        this.loadAllProspect();
+        this.toastr.info('Importación realizada exitosamenete')
+      },
+      err => {
+        console.log(err);
+        this.toastr.info('Error al importar')
+      
+      });   
+    }else{
+      this.toastr.info('Debe ser prospecto')
+    }
+
+    
   
   }  
 
@@ -116,6 +125,7 @@ export class DashboardComponent implements OnInit {
   yearsExpierenceMin:any;
   yearsExpierenceMax:any;
   contacto: FormGroup;
+  formFile: FormGroup;
   submitted = false;
   pageActual: number = 1;
   request: any;
@@ -154,6 +164,7 @@ export class DashboardComponent implements OnInit {
   level: any;
   index : any;
   prospect:any;
+  excel:any;
   FiltersProspects:any;
   model: NgbDateStruct;
   date: {year: number, month: number};
@@ -203,6 +214,7 @@ export class DashboardComponent implements OnInit {
       //this.softwareList1 = [];
       this.software = [];
       this.prospect=[];
+      this.excel=[];
       this.prospectList=[];
       this.softwares= [];
      // this.softwares1=[];
@@ -251,7 +263,7 @@ export class DashboardComponent implements OnInit {
       this.getMaxAge();
       this.getMinAge();
       this.getMaxSalary();
-      this.getMinSalary()
+      this.getMinSalary();
       //this.loadAllProspect();
       
 
@@ -1085,6 +1097,12 @@ getMinAge() {
       result => {
         //console.log(postprospect);
         this.getprospects();
+        this.getMinLevel();
+        this.getMaxLevel();
+        this.getMaxAge();
+        this.getMinAge();
+        this.getMaxSalary();
+        this.getMinSalary();
       },
       err => {
         console.log(err);
@@ -1175,6 +1193,12 @@ getMinAge() {
   //      console.log(result);
         this.getprospects();
         console.log(postprospect);
+        this.getMinLevel();
+        this.getMaxLevel();
+        this.getMaxAge();
+        this.getMinAge();
+        this.getMaxSalary();
+        this.getMinSalary();
       },
       err => {
         console.log(err);
@@ -1189,6 +1213,11 @@ getMinAge() {
   onClose() {
     this.edit=false;
     this.save=false;
+    this.bsModalRef.hide();
+    this.submitted = false;
+  }
+
+  onCloseImportar(){
     this.bsModalRef.hide();
     this.submitted = false;
   }
@@ -1288,6 +1317,9 @@ getMinAge() {
     //this.modalRef = this.modalService.show(template);
 
     this.bsModalRef = this.bsModalService.show(template);
+    this.formFile = this.formBuilder.group({
+      pathFile: ['', Validators.required]    
+    }); 
   }
   
     
