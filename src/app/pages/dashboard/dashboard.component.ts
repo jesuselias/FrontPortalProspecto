@@ -119,7 +119,9 @@ export class DashboardComponent implements OnInit {
   submitted = false;
   pageActual: number = 1;
   request: any;
+
   prospectList: any;
+  oldProspectList:any;
   country:any;
   countrys:any;
   countryList :any;
@@ -519,24 +521,39 @@ export class DashboardComponent implements OnInit {
       }
 
       
-      prospectexp(event) {
-        let arrayExp=[];
-        let experience = event;
-  
-        experience.map(item=>{
-            arrayExp.push({'id':item.id, 'name':item.name})
-            //this.country1.push({ id: item.country_id, name: item.country_name})
-        })
+      prospectExp(event) {
+        console.log(event)
+        this.clearLocalstorage();
+        let newList=[];
+        //  console.log(postprospect);
+         this.globalService.addfilter(this.postprospect, "/prospect/filter").then(
+           result => {
+            this.prospectList = result;
+            for (let item of event){
+              this.prospectList.map(data=>{
+                if(data.experience_level==item.id)
+                    newList.push(data)
+              })
+             
+      
+               // newList=newList.filter(data=>data.experience_level==item.id)
+            }
+            if(!event.length)
+            this.prospectList=result
+            else
+            this.prospectList=newList 
+           },
+           err => {
+             console.log(err);
+             //this.loader.dismiss();
+           }
+         );
 
-        
-        this.prospectList.experience_level = arrayExp.filter(data=>data.expierenceLevel == this.expierenceLevel.id);
-        
-        //return this.prospectList.experience_level;
-        //this.filterApp(this.postprospect);
-
-        /*
-        console.log(arrayExp);
-        console.log(this.prospectList.experience_level);*/
+       
+     
+      //console.log(newList)
+    
+       
      }
 
 
@@ -673,6 +690,7 @@ export class DashboardComponent implements OnInit {
         
           result => {
             this.prospectList = result;
+            console.log(result)
           },
           
           err => {
