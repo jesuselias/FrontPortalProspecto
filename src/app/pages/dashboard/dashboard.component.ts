@@ -16,7 +16,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { prospect } from '../models/prospect';
-//import { ConsoleReporter } from 'jasmine';
 
 @Component({
     selector: 'dashboard-cmp',
@@ -1015,7 +1014,7 @@ getMinAge() {
       //prospect_link: this.prospect.nombreFuente,
       // probando
       //id_Proveedor: this.listprovider[this.requestGP.id_Proveedor].id_Proveedor,
-      'prospect_link': this.prospect.prospect_link,
+      'prospect_link': Number(this.prospect.prospect_link),
 
       'prospect_salary': Number(this.prospect.prospect_salary),
       'title_id': this.prospect.title_id,
@@ -1113,7 +1112,8 @@ getMinAge() {
       'prospect_phonenumber': this.prospect.prospect_phonenumber,
       'prospect_cv':  this.prospect.prospect_cv,
       'prospect_photo':  this.prospect.prospect_photo,
-      'prospect_link': this.prospect.prospect_link,
+      //'prospect_link': this.prospect.prospect_link,
+      'prospect_link': Number(this.prospect.prospect_link),
       'prospect_salary': Number(this.prospect.prospect_salary),
       'title_id': this.prospect.title_id,
       'software_prospect': arraysoft,

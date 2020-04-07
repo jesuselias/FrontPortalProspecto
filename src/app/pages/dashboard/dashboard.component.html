@@ -68,7 +68,7 @@
                     <label  style="color: black;">Ciudad*</label>                
                        
                         <div *ngIf="countrys1.length < 2 " >
-                        <select style="width: 240px;" (ngModelChange)="prospectcity($event)" class="form-control" name="city_id"  [(ngModel)]="prospect.city_id">
+                        <select style="width: 240px;" (ngModelChange)="prospectcity($event)" class="form-control" name="city_id2"  [(ngModel)]="prospect.city_id2">
                          <option value="">---Seleccionar Todo---</option>
                           
                           <option *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
@@ -112,8 +112,12 @@
       </div>
        <span (click)="OpenProspectModal(template,'save',index)" class="btn btn-primary btn-xs">Nuevo Prospecto</span>
        <span (click)="getExportProspect()" class="btn btn-success btn-xs">Exportar Excel</span>
-       <input type="file" #fileInput class="btn-sm" (change)="getExport($event)">
-       <span *ngIf="exportExcel" (click)="uploadFile()" class="btn btn-primary btn-xs">Importar</span>
+       
+       <label class="btn btn-default btn-file">
+         Importar Excel
+        <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="getExport($event)" style="display: none;">
+       </label>
+       <!-- <span *ngIf="exportExcel" (click)="uploadFile()" class="btn btn-primary btn-xs">Importar</span> -->
       
        
         <br /><br />
@@ -386,9 +390,8 @@
                       <div class="form-group">
                         <label class="col-form-label">Fuente*</label> 
                         <div class="">
-                            <select name="prospect_link" class="form-control"  [(ngModel)]="prospect.prospect_link" required 
-                                  formControlName="prospect_link" 
-                                  [ngClass]="{ 'is-invalid': submitted && f.prospect_link.errors }">
+                            <select name="prospect_link" class="form-control" [(ngModel)]="prospect.prospect_link" required 
+                                  formControlName="prospect_link" [ngClass]="{ 'is-invalid': submitted && f.prospect_link.errors }">
           
                                   <option *ngFor="let item of sourceList; let i = index" [ngValue]="item.idFuente">
                                     {{sourceList[i].nombreFuente}}
