@@ -28,6 +28,7 @@ export class CurrencyComponent implements OnInit {
   titleModal: string="";
   save: boolean=false;
   edit: boolean=false;
+  disabled = true;
 
   constructor(private globalService: GlobalService,
               private bsModalService: BsModalService,
@@ -47,6 +48,7 @@ export class CurrencyComponent implements OnInit {
    
     if(option==="save"){
       this.titleModal='Crear Software';
+      this.disabled = false;
       this.currencyForm = this.formBuilder.group({
         codigoMoneda: ['', Validators.required],
         descripcionMoneda: ['', Validators.required], 
@@ -58,13 +60,15 @@ export class CurrencyComponent implements OnInit {
     }else
     if(option==="edit"){
       this.titleModal='Editar Moneda';
-
+      
         
       this.currencyForm = this.formBuilder.group({
         codigoMoneda: ['', Validators.required],
         descripcionMoneda: ['', Validators.required],  
               
       });  
+
+      this.disabled = true;
       this.edit=true;
       this.currency=this.currencyList.filter(data=>data.codigoMoneda==item.codigoMoneda);
       this.currency=this.currency[0];

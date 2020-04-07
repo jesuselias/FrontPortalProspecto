@@ -80,6 +80,11 @@ export class RoleComponent implements OnInit{
       }else
       if(option==="edit"){
         this.titleModal='Editar Rol';
+
+        this.contacto = this.formBuilder.group({
+          role_name: ['', Validators.required],                
+        }); 
+
         this.edit=true;
         this.role=this.roleList.filter(data=>data.role_id==item.role_id);
         this.role=this.role[0]

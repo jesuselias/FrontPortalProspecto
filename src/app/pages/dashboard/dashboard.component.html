@@ -112,12 +112,8 @@
       </div>
        <span (click)="OpenProspectModal(template,'save',index)" class="btn btn-primary btn-xs">Nuevo Prospecto</span>
        <span (click)="getExportProspect()" class="btn btn-success btn-xs">Exportar Excel</span>
-       
-       <label class="btn btn-default btn-file">
-         Importar Excel
-        <input type="file" #fileInput (change)="getExport($event)" style="display: none;">
-       </label>
-       <!-- <span *ngIf="exportExcel" (click)="uploadFile()" class="btn btn-primary btn-xs">Importar</span> -->
+       <input type="file" #fileInput class="btn-sm" (change)="getExport($event)">
+       <span *ngIf="exportExcel" (click)="uploadFile()" class="btn btn-primary btn-xs">Importar</span>
       
        
         <br /><br />
@@ -326,12 +322,12 @@
                   </div> 
 
                 <div class="row" >
-                  <div class="col-10">
+                  <div class="col-6">
                     <div class="form-group">
                       <label class="col-form-label">CV*</label> 
                       
                      
-                        <input type="file" style="opacity: initial; position: relative;"  formControlName="prospect_cv" class="form-control" (change)="onSelectFileCV($event)"
+                        <input type="file" style="opacity: initial; position: relative;" *ngIf="seeCV" formControlName="prospect_cv" class="form-control" (change)="onSelectFileCV($event)"
                               [(ngModel)]="prospect.prospect_cv1" [ngClass]="{ 'is-invalid': submitted && f.prospect_cv.errors }"/>
                         <div *ngIf="submitted && f.prospect_cv.errors" class="invalid-feedback">
                           <div *ngIf="f.prospect_cv.errors.required">Por favor, ingrese cv</div>
@@ -343,9 +339,8 @@
                    </div>
                   </div>
 
-                  <div class="col-2">
-                    <br>
-                    <div style="padding-top: 20px;" *ngIf="loaderFileCV">
+                  <div class="col-6">
+                    <div *ngIf="loaderFileCV">
                         <img src="assets/img/loaderF.gif" />
                     </div>
 
@@ -357,12 +352,12 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-10">
+                  <div class="col-6">
                     <div class="form-group">
                           <label class="col-form-label">Foto*</label>
                           
                          
-                            <input style="opacity: initial; position: relative;" type="file"  value={this.state.image} class="form-control" formControlName="prospect_photo" [(ngModel)]="prospect.prospect_photo1"
+                            <input style="opacity: initial; position: relative;" type="file" *ngIf="seeFoto" value={this.state.image} class="form-control" formControlName="prospect_photo" [(ngModel)]="prospect.prospect_photo1"
                                  [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" (change)="onSelectFileFoto($event)"/>
                          
                                                     
@@ -370,9 +365,9 @@
                       </div>
                   </div>
 
-                  <div class="col-2">
-                     <br>
-                    <div style="padding-top: 20px;" *ngIf="loaderFileFoto">
+                  <div class="col-6">
+                     
+                    <div *ngIf="loaderFileFoto">
                       <img src="assets/img/loaderF.gif" />
                     </div>
 
