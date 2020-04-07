@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
     formData.append('upload', this.fileInput.nativeElement.files[0])  
   
     this.globalService.UploadExcel(formData).subscribe(result => {  
-      this.message = result.toString();  
+      //this.message = result.toString();  
       this.loadAllProspect();
       this.toastr.info('Importación realizada exitosamenete')
     },
@@ -820,7 +820,7 @@ getMoneda() {
 
 getMaxLevel() {
     
-  this.globalService.getModel("/Prospect/MaxLevel").then(
+  this.globalService.getModel("/Prospect/MaxYear").then(
     
       result => {
         
@@ -844,7 +844,7 @@ getMaxLevel() {
 
 getMinLevel() {
     
-  this.globalService.getModel("/Prospect/MinLevel").then(
+  this.globalService.getModel("/Prospect/MinYear").then(
     
       result => {
         
@@ -1030,10 +1030,11 @@ getMinAge() {
       //id_Proveedor: this.listprovider[this.requestGP.id_Proveedor].id_Proveedor,
       'prospect_link': this.prospect.prospect_link,
 
-      'prospect_salary': this.prospect.prospect_salary,
+      'prospect_salary': Number(this.prospect.prospect_salary),
       'title_id': this.prospect.title_id,
       'software_prospect': arraysoft,
-      'experience_years': this.prospect.experience_years,
+      //'experience_years': this.prospect.experience_years,
+      'experience_years': Number(this.prospect.experience_years),
       'experience_level': this.prospect.experience_level,
       'email': this.prospect.email,
       'commentary': this.prospect.commentary,
@@ -1047,6 +1048,12 @@ getMinAge() {
       result => {
         console.log(postprospect);
         this.getprospects();
+        this.getMinLevel();
+        this.getMaxLevel();
+        this.getMaxAge();
+        this.getMinAge();
+        this.getMaxSalary();
+        this.getMinSalary();
       },
       err => {
         console.log(err);
@@ -1120,10 +1127,10 @@ getMinAge() {
       'prospect_cv':  this.prospect.prospect_cv,
       'prospect_photo':  this.prospect.prospect_photo,
       'prospect_link': this.prospect.prospect_link,
-      'prospect_salary': this.prospect.prospect_salary,
+      'prospect_salary': Number(this.prospect.prospect_salary),
       'title_id': this.prospect.title_id,
       'software_prospect': arraysoft,
-      'experience_years': this.prospect.experience_years,
+      'experience_years': Number(this.prospect.experience_years),
       'experience_level': this.prospect.experience_level,
       'email': this.prospect.email,
       'commentary': this.prospect.commentary,
@@ -1137,12 +1144,12 @@ getMinAge() {
   //      console.log(result);
         this.getprospects();
         console.log(postprospect);
-        /*this.getMinLevel();
+        this.getMinLevel();
         this.getMaxLevel();
         this.getMaxAge();
         this.getMinAge();
         this.getMaxSalary();
-        this.getMinSalary();*/
+        this.getMinSalary();
       },
       err => {
         console.log(err);

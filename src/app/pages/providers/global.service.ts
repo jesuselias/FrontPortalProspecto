@@ -249,7 +249,7 @@ export class GlobalService {
         const httpOptions = { headers: headers };  
       
        // return this.http.post(`${this.apiBaseUrl}/excel/importExcel`, formFile, httpOptions)  
-        return this.http.post(this.apiBaseUrl + '/excel/importExcel', formData, httpOptions)
+        return this.http.post(this.apiBaseUrl + '/excel/importProspect', formData, httpOptions)
     }  
       
     BindProspect(): Observable<prospect[]> {  

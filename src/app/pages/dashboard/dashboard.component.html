@@ -113,7 +113,7 @@
        <span (click)="OpenProspectModal(template,'save',index)" class="btn btn-primary btn-xs">Nuevo Prospecto</span>
        <span (click)="getExportProspect()" class="btn btn-success btn-xs">Exportar Excel</span>
        <input type="file" #fileInput class="btn-sm" (change)="getExport($event)">
-       <span *ngIf="exportExcel" (click)="openModal(importar)" class="btn btn-primary btn-xs">Importar</span>
+       <span *ngIf="exportExcel" (click)="uploadFile()" class="btn btn-primary btn-xs">Importar</span>
       
        
         <br /><br />
