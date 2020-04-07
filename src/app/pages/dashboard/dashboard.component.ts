@@ -1178,13 +1178,14 @@ getMinAge() {
     //this.loaderFileCV = true;
     if (ev.target.files.length > 0) {
       this.fileCV = ev.target.files[0];
-      console.log(ev.target.files[0])
+      console.log(ev.target.files[0]);
+      this.upFileCV();
      // this.excelName = 'gestionpagos';
       //console.log(this.excelName)
       //this.loaderFileCV = false;
       
       
-      this.btnSubirCv = true;
+      //this.btnSubirCv = true;
     }
   }
 
@@ -1194,13 +1195,14 @@ getMinAge() {
     console.log(ev.target.files[0])
     if (ev.target.files.length > 0) {
       this.fileFoto = ev.target.files[0];
+      this.upFileFoto()
       console.log(ev.target.files[0])
      // this.excelName = 'gestionpagos';
       //console.log(this.excelName)
-      this.loaderFileFoto = false;
+      //this.loaderFileFoto = false;
       
       
-      this.btnSubirFoto = true;
+     // this.btnSubirFoto = true;
     }
   }
 
