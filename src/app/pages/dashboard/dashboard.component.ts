@@ -1253,12 +1253,13 @@ getMinAge() {
   uploadFile() {  
     //let formData = new FormData();  
     //formData.append('upload', this.fileInput.nativeElement.files[0])  
-  
+    this.exportExcel=true
     this.globalService.UploadExcel(this.fileExcel).subscribe(result => {  
       //this.message = result.toString();  
       console.log(result)
     this.getprospects()
       this.toastr.info('Importación realizada exitosamente')
+      this.exportExcel=false
     },
     err => {
       console.log(err);
