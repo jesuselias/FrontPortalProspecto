@@ -12,29 +12,7 @@
                       </div>
                     </div>  
                     <hr>
-                    <div class="input-group" class="col-11">
-                        <label style="color: black;" >Nivel de Experiencia</label>
-                        <!--<select style="width: 240px;" (ngModelChange)="prospectexp($event)"  name="experience_level" class="form-control"  [(ngModel)]="levelTest">
-                            <option value="">---Seleccionar todos---</option>
-                            <option  *ngFor="let item of experiencieListPost; let i = index" [ngValue]="item.Id">
-                                 {{experiencieList[i].experience_level}}
-                            </option>
-                        </select>-->
-                                      
-                        <ngx-multiselect
-                            (ngModelChange)="prospectExp($event)"
-                            [(ngModel)]="selectedLevel"
-                            [options]="nivel"
-                            name="test"
-                            [required]="true"
-                            theme="bootstrap" 
-                            ngDefaultControl
-                            name="experience_level"
-                        >
-
-                        </ngx-multiselect>
-
-                  </div>
+                  
                 
 
                   <div class="input-group"  class="col-8" *ngIf="software.length">
@@ -77,7 +55,29 @@
                           </select>                                    
                        </div>
                     </div>
+                    <div class="input-group" class="col-11">
+                      <label style="color: black;" >Nivel de Experiencia</label>
+                      <!--<select style="width: 240px;" (ngModelChange)="prospectexp($event)"  name="experience_level" class="form-control"  [(ngModel)]="levelTest">
+                          <option value="">---Seleccionar todos---</option>
+                          <option  *ngFor="let item of experiencieListPost; let i = index" [ngValue]="item.Id">
+                               {{experiencieList[i].experience_level}}
+                          </option>
+                      </select>-->
+                                    
+                      <ngx-multiselect
+                          (ngModelChange)="prospectExp($event)"
+                          [(ngModel)]="selectedLevel"
+                          [options]="nivel"
+                          name="test"
+                          [required]="true"
+                          theme="bootstrap" 
+                          ngDefaultControl
+                          name="experience_level"
+                      >
 
+                      </ngx-multiselect>
+
+                </div>
                     
 
                     <div  class="input-group" class="col-10">
