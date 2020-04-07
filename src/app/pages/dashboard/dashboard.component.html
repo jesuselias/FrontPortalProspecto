@@ -71,7 +71,7 @@
                         <select style="width: 240px;" (ngModelChange)="prospectcity($event)" class="form-control" name="city_id"  [(ngModel)]="prospect.city_id">
                          <option value="">---Seleccionar Todo---</option>
                           
-                          <option   *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
+                          <option *ngFor="let item of cityList; let i = index" [ngValue]="item.city_id" >
                              {{cityList[i].city_name}}
                            </option>
                           </select>                                    
@@ -171,8 +171,7 @@
                               <div *ngIf="submitted && f.prospect_name.errors" class="invalid-feedback">
                                   <div *ngIf="f.prospect_name.errors.required">Por favor, ingresa nombre del prospecto</div>
                               </div>
-                              
-                              
+                                                           
                         </div>
                     </div>
 
@@ -393,9 +392,9 @@
                       <div class="form-group">
                         <label class="col-form-label">Fuente*</label> 
                         <div class="">
-                            <select name="idFuente" class="form-control"  [(ngModel)]="prospect.idFuente" required 
-                                  formControlName="idFuente" 
-                                  [ngClass]="{ 'is-invalid': submitted && f.idFuente.errors }">
+                            <select name="prospect_link" class="form-control"  [(ngModel)]="prospect.prospect_link" required 
+                                  formControlName="prospect_link" 
+                                  [ngClass]="{ 'is-invalid': submitted && f.prospect_link.errors }">
           
                                   <option *ngFor="let item of sourceList; let i = index" [ngValue]="item.idFuente">
                                     {{sourceList[i].nombreFuente}}
@@ -638,7 +637,7 @@
                 <div class="form-group">
                   <label class="col-form-label">Entidad*</label> 
                   
-                    <input placeholder="Ingrese la entidad" type="text" formControlName="pathFile" class="form-control" [(ngModel)]="prospect.pathFile" [ngClass]="{ 'is-invalid': submitted && f.pathFile.errors }" />
+                    <input  placeholder="Ingrese la entidad" type="text" formControlName="pathFile" class="form-control" [(ngModel)]="prospect.pathFile" [ngClass]="{ 'is-invalid': submitted && f.pathFile.errors }" />
                     <div *ngIf="submitted && f.pathFile.errors" class="invalid-feedback">
                         <div *ngIf="f.pathFile.errors.required">Por favor, ingresa la entidad</div>
                     </div>

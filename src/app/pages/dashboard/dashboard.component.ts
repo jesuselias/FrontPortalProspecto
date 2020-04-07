@@ -29,38 +29,40 @@ export class DashboardComponent implements OnInit {
 
   //@ViewChild('fileInput') fileInput;
   @ViewChild('fileInput', {static: false}) fileInput
-
+  @ViewChild('pathFile', {static: false}) pathFile
+  
   message: string;  
   //allProspect: Observable<prospect[]>;  
 
   loadAllProspect() {  
-    this.prospectList = this.globalService.BindUser();  
+    this.prospectList = this.globalService.BindProspect();  
   }
 
-  uploadFile(pathFile) {  
+  uploadFile(pathFile:any) {
+
     
-    if(pathFile == 'prospecto'){
       let formData = new FormData();  
       formData.append('upload', this.fileInput.nativeElement.files[0]) 
-  
-     
-    
+        
       this.globalService.UploadExcel(formData).subscribe(result => {  
-        this.message = result.toString();  
-        this.loadAllProspect();
-        this.toastr.info('Importación realizada exitosamenete')
+        //this.message = result.toString(); 
+        if(pathFile == "prospecto"){
+          this.pathFile = result;
+          this.loadAllProspect();
+          this.toastr.info('Importación realizada exitosamenete')
+        }else{
+          this.toastr.info('Debe ser prospecto')
+        }
+        
       },
       err => {
         console.log(err);
         this.toastr.info('Error al importar')
       
-      });   
-    }else{
-      this.toastr.info('Debe ser prospecto')
-    }
-
+      });  
     
-  
+       
+     
   }  
 
 
@@ -385,8 +387,8 @@ export class DashboardComponent implements OnInit {
           //prospect_cv: ['',[Validators.required]],
           //prospect_photo: ['', [Validators.compose([Validators.required])]],
           codigoMoneda: ['', [Validators.required]],
-          prospect_cv: ['',[Validators.required,Validators.pattern('https?://.+')]],
-          prospect_photo: ['', [Validators.required,Validators.pattern('https?://.+')]],
+          prospect_cv: ['',[Validators.required]],
+          prospect_photo: ['', [Validators.required]],
           prospect_link: ['', Validators.required],
           experience_years: ['', [Validators.required,Validators.pattern('[0-9]+')]],
           email: ['', [Validators.required,Validators.email]],
@@ -413,7 +415,7 @@ export class DashboardComponent implements OnInit {
           prospect_salary: ['', Validators.required],
           prospect_cv: ['', Validators.required],
           prospect_photo: ['', Validators.required],
-          idFuente: ['', Validators.required],
+          prospect_link: ['', Validators.required],
           experience_years: ['', Validators.required],
           email: ['', Validators.required],
           commentary: ['', Validators.required],
@@ -607,7 +609,7 @@ export class DashboardComponent implements OnInit {
    filterApp(postprospect){
     this.clearLocalstorage();
     //  console.log(postprospect);
-     this.globalService.addfilter(postprospect, "/prospect/filter").then(
+     this.globalService.addfilter(postprospect, "/Prospect/filter").then(
        result => {
         this.prospectList = result;
        },
@@ -631,6 +633,7 @@ export class DashboardComponent implements OnInit {
      localStorage.setItem("exp_max", null);
      localStorage.setItem("soft",null);
    }
+
   showProspect() {
     this.globalService.getModel("/city/" +  this.city.city_id).then(
       result => {
@@ -681,7 +684,7 @@ export class DashboardComponent implements OnInit {
   }
     getprospects() {
     
-      this.globalService.getModel("/prospect").then(
+      this.globalService.getModel("/Prospect").then(
         
           result => {
             this.prospectList = result;
@@ -998,7 +1001,7 @@ getMinAge() {
 
 
   deleteprospect() {
-    this.globalService.removeModel(this.prospect.prospect_id,"/prospect").then(
+    this.globalService.removeModel(this.prospect.prospect_id,"/Prospect").then(
       result => {
 
         this.getprospects();
@@ -1023,7 +1026,7 @@ getMinAge() {
     };
    
     //console.log(postprospect)
-    this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect/baja").then(
+    this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/Prospect/baja").then(
       result => {
     //    console.log(result);
         this.getprospects();
@@ -1060,7 +1063,7 @@ getMinAge() {
       //prospect_link: this.prospect.nombreFuente,
       // probando
       //id_Proveedor: this.listprovider[this.requestGP.id_Proveedor].id_Proveedor,
-      'prospect_link': this.prospect.idFuente,
+      'prospect_link': this.prospect.prospect_link,
 
       'prospect_salary': this.prospect.prospect_salary,
       'title_id': this.prospect.title_id,
@@ -1075,9 +1078,9 @@ getMinAge() {
     };
    
     console.log(postprospect)
-    this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/prospect").then(
+    this.globalService.updateModel(this.prospect.prospect_id,postprospect, "/Prospect").then(
       result => {
-        //console.log(postprospect);
+        console.log(postprospect);
         this.getprospects();
         this.getMinLevel();
         this.getMaxLevel();
@@ -1169,18 +1172,18 @@ getMinAge() {
       'codigoMoneda': this.prospect.codigoMoneda
      
     };
-    //console.log(postprospect)
-    this.globalService.addModel(postprospect, "/prospect").then(
+    console.log(postprospect)
+    this.globalService.addModel(postprospect, "/Prospect").then(
       result => {
   //      console.log(result);
         this.getprospects();
         console.log(postprospect);
-        this.getMinLevel();
+        /*this.getMinLevel();
         this.getMaxLevel();
         this.getMaxAge();
         this.getMinAge();
         this.getMaxSalary();
-        this.getMinSalary();
+        this.getMinSalary();*/
       },
       err => {
         console.log(err);
