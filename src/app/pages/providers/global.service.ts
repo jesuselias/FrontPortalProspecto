@@ -245,14 +245,14 @@ export class GlobalService {
       
         headers.append('Content-Type', 'multipart/form-data');  
         headers.append('Accept', 'application/json');  
-      
+      //  headers.append('responseType', 'blob');
         const formData: FormData = new FormData();
         formData.append("file", file);
         console.log(file);
         const httpOptions = { headers: headers };  
         // return this.http.post(`${this.apiBaseUrl}/excel/importExcel`, formFile, httpOptions)
         return this.http
-          .post(`${this.apiBaseUrl}/excel/importProspect`, formData)
+          .post(`${this.apiBaseUrl}/excel/importProspect`, formData, httpOptions)
           .pipe(
             map((response) => {
               //console.log(response)

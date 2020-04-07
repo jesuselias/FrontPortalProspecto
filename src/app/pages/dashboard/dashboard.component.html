@@ -115,7 +115,7 @@
        
        <label class="btn btn-default btn-file">
          Importar Excel
-        <input type="file" #fileInput (change)="getExport($event)" style="display: none;">
+        <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="getExport($event)" style="display: none;">
        </label>
        <!-- <span *ngIf="exportExcel" (click)="uploadFile()" class="btn btn-primary btn-xs">Importar</span> -->
       
