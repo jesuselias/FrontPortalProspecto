@@ -1056,12 +1056,9 @@ getMinAge() {
 
     var _years = moment().diff(Fecha, 'years');
    
-  
     if(_years < 18 ){
       //console.log(_years);
       return true;
-   
-
    }else
    return false;
   }
@@ -1260,7 +1257,7 @@ getMinAge() {
     this.globalService.UploadExcel(this.fileExcel).subscribe(result => {  
       //this.message = result.toString();  
       console.log(result)
-    //  this.loadAllProspect();
+    this.getprospects()
       this.toastr.info('Importación realizada exitosamente')
     },
     err => {
