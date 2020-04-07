@@ -240,16 +240,25 @@ export class GlobalService {
     }
 
     //importar
-    UploadExcel(formData: FormData) {  
+    UploadExcel(file: File) {  
         let headers = new HttpHeaders();  
       
         headers.append('Content-Type', 'multipart/form-data');  
         headers.append('Accept', 'application/json');  
       
+        const formData: FormData = new FormData();
+        formData.append("file", file);
+        console.log(file);
         const httpOptions = { headers: headers };  
-      
-       // return this.http.post(`${this.apiBaseUrl}/excel/importExcel`, formFile, httpOptions)  
-        return this.http.post(this.apiBaseUrl + '/excel/importProspect', formData, httpOptions)
+        // return this.http.post(`${this.apiBaseUrl}/excel/importExcel`, formFile, httpOptions)
+        return this.http
+          .post(`${this.apiBaseUrl}/excel/importProspect`, formData)
+          .pipe(
+            map((response) => {
+              //console.log(response)
+              return response;
+            })
+          );
     }  
       
     BindProspect(): Observable<prospect[]> {  

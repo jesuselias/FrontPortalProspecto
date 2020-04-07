@@ -16,6 +16,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { prospect } from '../models/prospect';
+import { ConsoleReporter } from 'jasmine';
 
 @Component({
     selector: 'dashboard-cmp',
@@ -38,22 +39,7 @@ export class DashboardComponent implements OnInit {
     this.prospectList = this.globalService.BindProspect();  
   }
 
-  uploadFile() {  
-    let formData = new FormData();  
-    formData.append('upload', this.fileInput.nativeElement.files[0])  
-  
-    this.globalService.UploadExcel(formData).subscribe(result => {  
-      //this.message = result.toString();  
-      this.loadAllProspect();
-      this.toastr.info('Importación realizada exitosamenete')
-    },
-    err => {
-      console.log(err);
-      this.toastr.info('Error al importar')
-    
-    });   
-  
-  }  
+
 
 
 
@@ -108,9 +94,10 @@ export class DashboardComponent implements OnInit {
   btnSubirFoto = false;
   fileCV:any;
   fileFoto:any;
+  fileExcel:any;
   loaderFileCV = false;
   loaderFileFoto = false;
-
+  loaderExcel=false;
   //Hasta aqui lo de los archivos
 
   currDate = new Date();
@@ -1260,9 +1247,29 @@ getMinAge() {
   }
 
   getExport(event: any){
-    this.exportExcel = true;
+    console.log(event.target.files[0])
+    if (event.target.files.length > 0) {
+      this.fileExcel = event.target.files[0];
+       this.uploadFile()
   }
-
+  }
+  uploadFile() {  
+    //let formData = new FormData();  
+    //formData.append('upload', this.fileInput.nativeElement.files[0])  
+  
+    this.globalService.UploadExcel(this.fileExcel).subscribe(result => {  
+      //this.message = result.toString();  
+      console.log(result)
+    //  this.loadAllProspect();
+      this.toastr.info('Importación realizada exitosamente')
+    },
+    err => {
+      console.log(err);
+      this.toastr.info('Error al importar')
+    
+    });   
+  
+  }  
   openModal(template: TemplateRef<any>) {
     //this.modalRef = this.modalService.show(template);
 
