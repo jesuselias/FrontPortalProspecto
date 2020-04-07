@@ -37,29 +37,20 @@ export class DashboardComponent implements OnInit {
     this.prospectList = this.globalService.BindUser();  
   }
 
-  uploadFile(pathFile) {  
-    
-    if(pathFile == 'prospecto'){
-      let formData = new FormData();  
-      formData.append('upload', this.fileInput.nativeElement.files[0]) 
+  uploadFile() {  
+    let formData = new FormData();  
+    formData.append('upload', this.fileInput.nativeElement.files[0])  
   
-     
+    this.globalService.UploadExcel(formData).subscribe(result => {  
+      this.message = result.toString();  
+      this.loadAllProspect();
+      this.toastr.info('Importación realizada exitosamenete')
+    },
+    err => {
+      console.log(err);
+      this.toastr.info('Error al importar')
     
-      this.globalService.UploadExcel(formData).subscribe(result => {  
-        this.message = result.toString();  
-        this.loadAllProspect();
-        this.toastr.info('Importación realizada exitosamenete')
-      },
-      err => {
-        console.log(err);
-        this.toastr.info('Error al importar')
-      
-      });   
-    }else{
-      this.toastr.info('Debe ser prospecto')
-    }
-
-    
+    });   
   
   }  
 
@@ -125,7 +116,6 @@ export class DashboardComponent implements OnInit {
   yearsExpierenceMin:any;
   yearsExpierenceMax:any;
   contacto: FormGroup;
-  formFile: FormGroup;
   submitted = false;
   pageActual: number = 1;
   request: any;
@@ -164,7 +154,6 @@ export class DashboardComponent implements OnInit {
   level: any;
   index : any;
   prospect:any;
-  excel:any;
   FiltersProspects:any;
   model: NgbDateStruct;
   date: {year: number, month: number};
@@ -214,7 +203,6 @@ export class DashboardComponent implements OnInit {
       //this.softwareList1 = [];
       this.software = [];
       this.prospect=[];
-      this.excel=[];
       this.prospectList=[];
       this.softwares= [];
      // this.softwares1=[];
@@ -263,7 +251,7 @@ export class DashboardComponent implements OnInit {
       this.getMaxAge();
       this.getMinAge();
       this.getMaxSalary();
-      this.getMinSalary();
+      this.getMinSalary()
       //this.loadAllProspect();
       
 
@@ -546,8 +534,6 @@ export class DashboardComponent implements OnInit {
                 if(data.experience_level==item.id)
                     newList.push(data)
               })
-             
-      
                // newList=newList.filter(data=>data.experience_level==item.id)
             }
             if(!event.length)
@@ -562,47 +548,9 @@ export class DashboardComponent implements OnInit {
          );
 
        
-     
-      //console.log(newList)
-    
-       
      }
 
 
-     /*
-     prospectexp(event){
-      console.log(event)
-      this.postprospect.expierenceLevel=event
-      this.filterApp(this.expierenceLevel);
-      
-     }*/
-
-
-     // otro intento
-     /*
-     prospectexp2(event, termino:string){
-        let arrayExp=[];
-        termino = termino.toLowerCase();
-        for(let i = 0; i < this.nivel.length; i ++){
-            let nivel = this.nivel[i];
-            let name = nivel.name.toLowerCase();
-
-            if(name.indexOf(termino) >= 0){
-              nivel.id = i;
-              arrayExp.push(nivel.id)
-            }
-        }
-     }*/
-
-     
-
-     /*
-        public filterChange(filter: any): void {
-        this.log('filterChange', filter);
-        this.data = this.source.filter((s) => s.toLowerCase().indexOf(filter.toLowerCase()) !== -1);
-    }
-
-     */
 
 
     prospectsoft(event) {
@@ -1097,12 +1045,6 @@ getMinAge() {
       result => {
         //console.log(postprospect);
         this.getprospects();
-        this.getMinLevel();
-        this.getMaxLevel();
-        this.getMaxAge();
-        this.getMinAge();
-        this.getMaxSalary();
-        this.getMinSalary();
       },
       err => {
         console.log(err);
@@ -1193,12 +1135,6 @@ getMinAge() {
   //      console.log(result);
         this.getprospects();
         console.log(postprospect);
-        this.getMinLevel();
-        this.getMaxLevel();
-        this.getMaxAge();
-        this.getMinAge();
-        this.getMaxSalary();
-        this.getMinSalary();
       },
       err => {
         console.log(err);
@@ -1213,11 +1149,6 @@ getMinAge() {
   onClose() {
     this.edit=false;
     this.save=false;
-    this.bsModalRef.hide();
-    this.submitted = false;
-  }
-
-  onCloseImportar(){
     this.bsModalRef.hide();
     this.submitted = false;
   }
@@ -1252,6 +1183,7 @@ getMinAge() {
   
   onSelectFileFoto(ev: any){
     this.loaderFileFoto = true;
+    console.log(ev.target.files[0])
     if (ev.target.files.length > 0) {
       this.fileFoto = ev.target.files[0];
       console.log(ev.target.files[0])
@@ -1276,15 +1208,16 @@ getMinAge() {
   serviceFile(file, type){
       this.globalService.loadFile(file).subscribe(
         (data:any) => {
+          console.log(data);
           if(type == 'cv'){
             this.loaderFileCV = false;
             this.btnSubirCv = false;
-            //this.fileFoto.push({"prospect_photo": data.uri, "type":type });
+            this.prospect.prospect_cv=data.uri
           }
           if(type == 'foto'){
             this.loaderFileFoto = false;
             this.btnSubirFoto = false;
-            
+            this.prospect.prospect_photo=data.uri
           }
           this.toastr.info('Operación realizada exitosamenete')
           this.foto.push({"prospect_cv": data.uri, "type":type });
@@ -1317,9 +1250,6 @@ getMinAge() {
     //this.modalRef = this.modalService.show(template);
 
     this.bsModalRef = this.bsModalService.show(template);
-    this.formFile = this.formBuilder.group({
-      pathFile: ['', Validators.required]    
-    }); 
   }
   
     

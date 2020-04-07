@@ -327,16 +327,16 @@
                     <div class="form-group">
                       <label class="col-form-label">CV*</label> 
                       
-                      <div class="">
-                        <input type="file" *ngIf="seeCV" formControlName="prospect_cv" class="form-control" (change)="onSelectFileCV($event)"
-                              [(ngModel)]="prospect.prospect_cv" [ngClass]="{ 'is-invalid': submitted && f.prospect_cv.errors }"/>
+                     
+                        <input type="file" style="opacity: initial; position: relative;" *ngIf="seeCV" formControlName="prospect_cv" class="form-control" (change)="onSelectFileCV($event)"
+                              [(ngModel)]="prospect.prospect_cv1" [ngClass]="{ 'is-invalid': submitted && f.prospect_cv.errors }"/>
                         <div *ngIf="submitted && f.prospect_cv.errors" class="invalid-feedback">
                           <div *ngIf="f.prospect_cv.errors.required">Por favor, ingrese cv</div>
                           <!--<div *ngIf="f.prospect_cv.errors.pattern">Por favor, ingrese una direccion url correcta</div>-->
                         </div>
 
                         
-                      </div>
+                      
                    </div>
                   </div>
 
@@ -354,26 +354,20 @@
 
                 <div class="row">
                   <div class="col-6">
-                      
+                    <div class="form-group">
                           <label class="col-form-label">Foto*</label>
-                          <div>
-                            <input [ngStyle]="{'color': 'blue'}" type="file" *ngIf="seeFoto" value={this.state.image} formControlName="prospect_photo" [(ngModel)]="prospect.prospect_photo"
+                          
+                         
+                            <input style="opacity: initial; position: relative;" type="file" *ngIf="seeFoto" value={this.state.image} class="form-control" formControlName="prospect_photo" [(ngModel)]="prospect.prospect_photo1"
                                  [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" (change)="onSelectFileFoto($event)"/>
-                            <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
-                              <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
-                              <!--<div *ngIf="f.prospect_photo.errors.pattern">Por favor, ingrese una direccion url correcta</div>-->
-                            </div>
-                            <!--<input [ngModel] type="file" observeFiles/>-->
-                            <!--<input type="file" file-model="files">-->
-                            <!--<input type="file" file-upload>-->
-                            <!--<input type="file" class='form-control'>-->
+                         
                                                     
-                        </div> 
-                      
+                        
+                      </div>
                   </div>
 
                   <div class="col-6">
-
+                     
                     <div *ngIf="loaderFileFoto">
                       <img src="assets/img/loaderF.gif" />
                     </div>
@@ -500,7 +494,7 @@
                         <label class="col-form-label">Software*</label> 
                         <div class="margin">
                           <ngx-multiselect style="width: 100px;"
-                          [ngModelOptions]="{standalone: true}"
+                            [ngModelOptions]="{standalone: true}"
                             name="software_Prospect"
                             [(ngModel)]="softwares"
                             [options]="software"
