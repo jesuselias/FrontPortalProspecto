@@ -8,8 +8,9 @@
           <h4 class="card-title"></h4>
         </div>
       
-          <span  (click)="OpenSoftwareModal(template,'save', index)" class="btn btn-primary btn-xs">Nuevo Software</span>
-          <span (click)="getExportSotware()" class="btn btn-success btn-xs">Exportar Excel</span>
+          <span (click)="OpenSoftwareModal(template,'save', index)" class="btn btn-primary btn-xs">Nuevo Software</span>
+          <span *ngIf="seeExport" (click)="getExportSotware()" class="btn btn-success btn-xs">Exportar Excel</span>
+          <img src="assets/img/loaderF.gif" *ngIf="loaderExport" style="margin-left: 30px;" />
 
           <br /><br />
           <div class="table-responsive">

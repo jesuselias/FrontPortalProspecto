@@ -40,6 +40,8 @@ export class RoleComponent implements OnInit{
     titleModal: string="";
     save: boolean=false;
     edit: boolean=false;
+    loaderExport = false;
+    seeExport = true;
 
     constructor(private globalService: GlobalService, private bsModalService: BsModalService,
                 private formBuilder: FormBuilder, public http: HttpClient) {
@@ -217,11 +219,17 @@ export class RoleComponent implements OnInit{
 
 
     getExportRole() {
+      this.loaderExport = true;
+      this.seeExport = false;
    
       return this.http.get('https://consultorestmapi.azurewebsites.net/api/excel/exportRol',{responseType: 'blob'})
-      .subscribe(data => saveAs(data));
+      .subscribe(data => {
+        saveAs(data), 
+        this.loaderExport = false,
+        this.seeExport = true
+      });
 
-  }
+    }
 
 
     saverole() {

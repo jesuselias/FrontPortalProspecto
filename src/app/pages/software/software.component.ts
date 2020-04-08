@@ -43,7 +43,8 @@ export class SoftwareComponent implements OnInit{
     titleModal: string="";
     save: boolean=false;
     edit: boolean=false;
-    
+    loaderExport = false;
+    seeExport = true;    
 
     OpenSoftwareModal(template: TemplateRef<any>, option, item) {
       //console.log(item);
@@ -154,9 +155,15 @@ export class SoftwareComponent implements OnInit{
 
 
     getExportSotware() {
+      this.loaderExport = true;
+      this.seeExport = false;
    
       return this.http.get('https://consultorestmapi.azurewebsites.net/api/excel/exportSoftware',{responseType: 'blob'})
-      .subscribe(data => saveAs(data));
+      .subscribe(data =>{
+        saveAs(data), 
+        this.loaderExport = false,
+        this.seeExport = true
+      });
 
   }
 

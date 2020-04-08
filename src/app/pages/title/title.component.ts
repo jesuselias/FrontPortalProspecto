@@ -17,7 +17,8 @@ export class TitleComponent implements OnInit{
   
   contacto: FormGroup;
   submitted = false;
-
+  loaderExport = false;
+  seeExport = true;
 
   ngOnInit(){
     this.initialValues();
@@ -97,9 +98,15 @@ export class TitleComponent implements OnInit{
 
 
   getExportTitle() {
+    this.loaderExport = true;
+    this.seeExport = false;
    
       return this.http.get('https://consultorestmapi.azurewebsites.net/api/excel/exportTitle',{responseType: 'blob'})
-      .subscribe(data => saveAs(data));
+      .subscribe(data => {
+        saveAs(data), 
+        this.loaderExport = false,
+        this.seeExport = true
+      });
 
   }
 

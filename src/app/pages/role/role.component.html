@@ -6,8 +6,9 @@
           <h4 class="card-title"></h4>
         </div>
       
-          <span  (click)="OpenroleModal(template,'save', index)" class="btn btn-primary btn-xs">Nuevo rol</span>
-          <span (click)="getExportRole()" class="btn btn-success btn-xs">Exportar Excel</span>
+          <span (click)="OpenroleModal(template,'save', index)" class="btn btn-primary btn-xs">Nuevo rol</span>
+          <span *ngIf="seeExport" (click)="getExportRole()" class="btn btn-success btn-xs">Exportar Excel</span>
+          <img src="assets/img/loaderF.gif" *ngIf="loaderExport" style="margin-left: 30px;"/>
 
           <br /><br />
           <div class="table-responsive">

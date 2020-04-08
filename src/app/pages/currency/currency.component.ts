@@ -19,7 +19,7 @@ export class CurrencyComponent implements OnInit {
   submitted = false;
   mensaje: string;
   existe: boolean;
-
+  loaderExport = false;
   index:any;
   pageActual: number = 1;
   currencyList: any;
@@ -29,6 +29,7 @@ export class CurrencyComponent implements OnInit {
   save: boolean=false;
   edit: boolean=false;
   disabled = true;
+  seeExport = true;
 
   constructor(private globalService: GlobalService,
               private bsModalService: BsModalService,
@@ -107,9 +108,17 @@ export class CurrencyComponent implements OnInit {
   }
 
   getExportCurrency() {
-   
+   this.loaderExport = true;
+   this.seeExport = false;
+
     return this.http.get('https://consultorestmapi.azurewebsites.net/api/excel/exportMoneda',{responseType: 'blob'})
-    .subscribe(data => saveAs(data));
+      .subscribe(data => {
+        saveAs(data), 
+        this.loaderExport = false,
+        this.seeExport = true
+      }
+    );
+    
 
 }
  

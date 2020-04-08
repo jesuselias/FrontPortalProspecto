@@ -15,6 +15,8 @@ import { saveAs } from 'file-saver';
 export class UsuarioComponent implements OnInit{
   contacto: FormGroup;
   submitted = false;
+  loaderExport = false;
+  seeExport = true;
 
   ngOnInit(){
       this.initialValues();
@@ -171,9 +173,15 @@ export class UsuarioComponent implements OnInit{
 
 
   getExportUser() {
+    this.loaderExport = true;
+    this.seeExport = false;
    
     return this.http.get('https://consultorestmapi.azurewebsites.net/api/excel/exportUsers',{responseType: 'blob'})
-    .subscribe(data => saveAs(data));
+    .subscribe(data => {
+      saveAs(data), 
+      this.loaderExport = false,
+      this.seeExport = true
+    });
 
 }
 

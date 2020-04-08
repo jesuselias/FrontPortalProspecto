@@ -38,10 +38,6 @@ export class DashboardComponent implements OnInit {
     this.prospectList = this.globalService.BindProspect();  
   }
 
-
-
-
-
   //uploader:FileUploader;
   foto=[];
   selectedFilef: File
@@ -53,10 +49,7 @@ export class DashboardComponent implements OnInit {
   options1: Options = {
     floor: 1,
     ceil: 25,
-    /*minRange: this.valorMinimo,
-    maxRange: this.valorMaximo,*/
   };
-
   
   minValue2: number = 0;
   maxValue2: number = 100;
@@ -64,9 +57,6 @@ export class DashboardComponent implements OnInit {
     floor: 0,
     ceil: 100
   };
-
-  
-
 
   minValue3: number = 0;
   maxValue3: number = 3000;
@@ -141,6 +131,7 @@ export class DashboardComponent implements OnInit {
   level: any;
   index : any;
   prospect:any;
+  source:any;
   FiltersProspects:any;
   model: NgbDateStruct;
   date: {year: number, month: number};
@@ -178,8 +169,8 @@ export class DashboardComponent implements OnInit {
   selectedLevel;
   nivel;
   exportExcel=false;
-
-
+  loaderExport = false;
+  seeExport = true;
   
   constructor(private globalService: GlobalService, private bsModalService: BsModalService, 
               private formBuilder: FormBuilder,private spinner: NgxSpinnerService,
@@ -202,7 +193,7 @@ export class DashboardComponent implements OnInit {
       this.cityTest = [];
       this.yearsExpierenceMin=[];
       this.yearsExpierenceMax=[];
-      
+      this.source = [];
       this.level = [];
       
     }
@@ -265,9 +256,15 @@ export class DashboardComponent implements OnInit {
     }
     
     getExportProspect() {
+      this.loaderExport = true;
+      this.seeExport = false;
    
       return this.http.get('https://consultorestmapi.azurewebsites.net/api/excel/exportProspect',{responseType: 'blob'})
-      .subscribe(data => saveAs(data));
+      .subscribe(data => {
+        saveAs(data), 
+        this.loaderExport = false,
+        this.seeExport = true
+      });
 
     }
    
@@ -339,16 +336,15 @@ export class DashboardComponent implements OnInit {
     selectCity(){
       localStorage.getItem('citylogin');
      this.cityList= JSON.parse(localStorage.getItem('citylogin'))
-    }
-     
+    }    
 
     
 
     OpenProspectModal(template: TemplateRef<any>, option, item) {
 
       this.prospect=[];
-      this.softwares=[];
-      
+      this.softwares=[];    
+      this.source = [];  
 
       if(option==="save"){
 
@@ -356,7 +352,7 @@ export class DashboardComponent implements OnInit {
           prospect_name: ['', Validators.required],            
           prospect_lastname: ['', Validators.required],
           prospect_birthday: ['', Validators.required],
-          prospect_phonenumber: ['', Validators.required],
+          prospect_phonenumber: ['', [Validators.required,Validators.pattern('[0-9]+')]],
           prospect_address: ['', Validators.required],
           prospect_salary: ['', [Validators.required,Validators.pattern('[0-9]+')]],
           //prospect_cv: ['',[Validators.required]],
@@ -385,14 +381,14 @@ export class DashboardComponent implements OnInit {
           prospect_name: ['', Validators.required],            
           prospect_lastname: ['', Validators.required],
           prospect_birthday: ['', Validators.required],
-          prospect_phonenumber: ['', Validators.required],
+          prospect_phonenumber: ['', [Validators.required,Validators.pattern('[0-9]+')]],
           prospect_address: ['', Validators.required],
-          prospect_salary: ['', Validators.required],
+          prospect_salary: ['', [Validators.required,Validators.pattern('[0-9]+')]],
           prospect_cv: ['', Validators.required],
           prospect_photo: ['', Validators.required],
           prospect_link: ['', Validators.required],
-          experience_years: ['', Validators.required],
-          email: ['', Validators.required],
+          experience_years: ['', [Validators.required,Validators.pattern('[0-9]+')]],
+          email: ['', [Validators.required,Validators.email]],
           commentary: ['', Validators.required],
           title_id: ['', Validators.required],
           experience_level:['', Validators.required],
@@ -426,13 +422,13 @@ export class DashboardComponent implements OnInit {
       if(option==='delete'){
        // this.prospect=this.prospectList[index];
        this.prospect=this.prospectList.filter(data=>data.prospect_id==item.prospect_id);
-        this.prospect=this.prospect[0]
+       this.prospect=this.prospect[0]
 
       }
-      this.bsModalRef = this.bsModalService.show(template);
-      
+      this.bsModalRef = this.bsModalService.show(template);      
       
     }
+
     showCountry() {
       this.globalService.getModel("/country/" + this.country.country_id).then(
         result => {
@@ -444,7 +440,6 @@ export class DashboardComponent implements OnInit {
         }
       );
   }
-
    
 
    prospectyear(event) {
@@ -466,8 +461,7 @@ export class DashboardComponent implements OnInit {
        this.postprospect.ageMax=event.highValue;
        this.filterApp(this.postprospect);
        let arraysoft=[];
-       let arraycountry=[];
- 
+       let arraycountry=[]; 
    
       }
 
@@ -478,10 +472,9 @@ export class DashboardComponent implements OnInit {
          this.postprospect.salaryMax=event.highValue;
          this.filterApp(this.postprospect);
          let arraysoft=[];
-         let arraycountry=[];
-    
+         let arraycountry=[];   
           
-        }
+      }
 
    prospectcity(event) {
     // console.log(JSON.parse(localStorage.getItem('soft')))
@@ -490,21 +483,17 @@ export class DashboardComponent implements OnInit {
      this.filterApp(this.postprospect); 
       
     }
-
     
     prospectcountry(event) {
        let arraycountry=[];
        let country=event;
        country.map(item=>{
 
-      arraycountry.push(item.id)
+         arraycountry.push(item.id)
       
-         })
-  
+      })  
        this.postprospect.country_list=arraycountry
-       this.filterApp(this.postprospect);
-   
-        
+       this.filterApp(this.postprospect);           
       }
 
       
@@ -532,13 +521,8 @@ export class DashboardComponent implements OnInit {
              console.log(err);
              //this.loader.dismiss();
            }
-         );
-
-       
+         );       
      }
-
-
-
 
     prospectsoft(event) {
       // console.log(JSON.parse(localStorage.getItem('soft')))
@@ -551,10 +535,9 @@ export class DashboardComponent implements OnInit {
         
          })
        this.postprospect.software=arraysoft
-       this.filterApp(this.postprospect);
+       this.filterApp(this.postprospect);        
         
-        
-      }
+    }
   
    filterApp(postprospect){
     this.clearLocalstorage();
@@ -594,7 +577,8 @@ export class DashboardComponent implements OnInit {
         
       }
     );
-}
+  }
+
     showTitle() {
       this.globalService.getModel("/title/" + this.title.title_id).then(
         result => {
@@ -972,8 +956,6 @@ getMinAge() {
     
     let postprospect = {
       'prospect_id': this.prospect.prospect_id,
-      
-      
     };
    
     //console.log(postprospect)
@@ -997,9 +979,14 @@ getMinAge() {
     this.softwares.map(item=>{
    //   console.log(item);
       arraysoft.push({'software_id':item.id})
-
      
       })
+
+      /*let sourceName = [];
+      this.source.map(item => {
+        sourceName.push({'idFuente': item.id, 'nombreFuente': item.name})
+      })*/
+
     
     let postprospect = {
       'prospect_id': this.prospect.prospect_id,
@@ -1014,7 +1001,7 @@ getMinAge() {
       //prospect_link: this.prospect.nombreFuente,
       // probando
       //id_Proveedor: this.listprovider[this.requestGP.id_Proveedor].id_Proveedor,
-      'prospect_link': Number(this.prospect.prospect_link),
+      'prospect_link': this.source.nombreFuente,
 
       'prospect_salary': Number(this.prospect.prospect_salary),
       'title_id': this.prospect.title_id,
@@ -1201,14 +1188,6 @@ getMinAge() {
   }
 
 
- 
-
-
-  // segundo intento
-
-  
-  
-
   serviceFile(file, type){
       this.globalService.loadFile(file).subscribe(
         (data:any) => {
@@ -1270,11 +1249,6 @@ getMinAge() {
     });   
   
   }  
-  openModal(template: TemplateRef<any>) {
-    //this.modalRef = this.modalService.show(template);
-
-    this.bsModalRef = this.bsModalService.show(template);
-  }
   
     
 }

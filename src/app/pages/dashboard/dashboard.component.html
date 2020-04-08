@@ -111,7 +111,8 @@
         <h4 class="card-title align-center">Prospecto</h4>
       </div>
        <span (click)="OpenProspectModal(template,'save',index)" class="btn btn-primary btn-xs">Nuevo Prospecto</span>
-       <span (click)="getExportProspect()" class="btn btn-success btn-xs">Exportar Excel</span>
+       <span (click)="getExportProspect()" *ngIf="seeExport" class="btn btn-success btn-xs">Exportar Excel</span>
+       <img src="assets/img/loaderF.gif" *ngIf="loaderExport" style="margin: 30px;"/>
        
        <label class="btn btn-default btn-file">
          Importar Excel
@@ -328,17 +329,13 @@
                 <div class="row" >
                   <div class="col-6">
                     <div class="form-group">
-                      <label class="col-form-label">CV*</label> 
-                      
-                     
+                      <label class="col-form-label">CV*</label>                      
+                
                         <input type="file" style="opacity: initial; position: relative;" *ngIf="seeCV" formControlName="prospect_cv" class="form-control" (change)="onSelectFileCV($event)"
                               [(ngModel)]="prospect.prospect_cv1" [ngClass]="{ 'is-invalid': submitted && f.prospect_cv.errors }"/>
                         <div *ngIf="submitted && f.prospect_cv.errors" class="invalid-feedback">
                           <div *ngIf="f.prospect_cv.errors.required">Por favor, ingrese cv</div>
-                          <!--<div *ngIf="f.prospect_cv.errors.pattern">Por favor, ingrese una direccion url correcta</div>-->
-                        </div>
-
-                        
+                        </div>                        
                       
                    </div>
                   </div>
@@ -363,7 +360,9 @@
                          
                             <input style="opacity: initial; position: relative;" type="file" *ngIf="seeFoto" value={this.state.image} class="form-control" formControlName="prospect_photo" [(ngModel)]="prospect.prospect_photo1"
                                  [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" (change)="onSelectFileFoto($event)"/>
-                         
+                            <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
+                                <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese cv</div>                            
+                            </div>
                                                     
                         
                       </div>
@@ -394,7 +393,7 @@
                                   formControlName="prospect_link" [ngClass]="{ 'is-invalid': submitted && f.prospect_link.errors }">
           
                                   <option *ngFor="let item of sourceList; let i = index" [ngValue]="item.idFuente">
-                                    {{sourceList[i].nombreFuente}}
+                                    {{item.nombreFuente}}
                                   </option>
           
                                   <div *ngIf="submitted && f.prospect_link.errors" class="invalid-feedback">
@@ -507,89 +506,7 @@
                         </div>
                       </div>
                     </div>
-
-                    
-                </div>
-
-            
-                       
-                
-
-               
-  
-               <!-- <div class="form-group">
-                <div class="input-group">
-                  <input class="form-control" placeholder="yyyy-mm-dd"
-                         name="dp" [(ngModel)]="prospect.prospect_birthday" ngbDatepicker #d="ngbDatepicker">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-                  </div>
-                </div>
-              </div> -->
-                    
-                
-
-                
-              
-               
-
-                   
-
-                  
-  
-                   
-
-                 
-           
-              
-
-              
-  
-                  
-                  
-
-                
-
-              
-  
-            
-            <!-- <div class="form-group row">
-                <label class="col-4 col-form-label">CV*</label> 
-                <div class="col-8">
-  
-                    <input
-             style="display: none"
-             type="file" (change)="onFileChanged($event)" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }"
-             #fileInput>
-           <button (click)="fileInput.click()">Seleccione Foto</button>
-                 <input type="text" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" />
-                <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
-                </div>
-                </div>
-             </div> -->
-  
-             
-  
-            <!-- <div class="form-group row">
-                <label class="col-4 col-form-label">Foto*</label> 
-                <div class="col-8">
-  
-                    <input
-             style="display: none"
-             type="file" (change)="onFileChanged($event)" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }"
-             #fileInput>
-           <button (click)="fileInput.click()">Seleccione Foto</button>
-                 <input type="text" formControlName="prospect_photo" class="form-control" [(ngModel)]="prospect.prospect_photo" [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" /> 
-                <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
-                  <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese foto</div>
-                </div>
-                </div>
-             </div> -->
-  
-  
-  
-                 
+                </div>             
 
               </div>
               
@@ -619,39 +536,6 @@
       </div>
     </ng-template>
   </div>
-
-  <ng-template #importar>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Importación de Prospectos</h4>
-      <!--<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>-->
-    </div>
-    <div class="modal-body">
-        
-            <div class="col-md-12">
-              <form [formGroup]="formFile">
-                <div class="form-group">
-                  <label class="col-form-label">Entidad*</label> 
-                  
-                    <input  placeholder="Ingrese la entidad" type="text" formControlName="pathFile" class="form-control" [(ngModel)]="prospect.pathFile" [ngClass]="{ 'is-invalid': submitted && f.pathFile.errors }" />
-                    <div *ngIf="submitted && f.pathFile.errors" class="invalid-feedback">
-                        <div *ngIf="f.pathFile.errors.required">Por favor, ingresa la entidad</div>
-                    </div>
-                    
-                  </div>
-              </form>
-            </div>
-        
-      
-    </div>
-
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" (click)="onCloseImportar()">Cerrar</button>
-      <div><button type="submit" (click)="uploadFile()" class="btn btn-primary">Aceptar</button></div>
-      
-    </div>
-  </ng-template>
 
 <ngx-spinner></ngx-spinner>
 </div>

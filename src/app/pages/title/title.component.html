@@ -6,8 +6,10 @@
           <h4 class="card-title"></h4>
         </div>
       
-          <span  (click)="OpenTitleModal(template,'save', index)" class="btn btn-primary btn-xs">Nuevo Título</span>
-          <span (click)="getExportTitle()" class="btn btn-success btn-xs">Exportar Excel</span>
+          <span (click)="OpenTitleModal(template,'save', index)" class="btn btn-primary btn-xs">Nuevo Título</span>
+          <span *ngIf="seeExport" (click)="getExportTitle()" class="btn btn-success btn-xs">Exportar Excel</span>
+          <img src="assets/img/loaderF.gif" *ngIf="loaderExport" style="margin-left: 30px;"/>
+
           <br /><br />
           <div class="table-responsive">
             <table id="mytable" class="table table-bordred table-striped">
