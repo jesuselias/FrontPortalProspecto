@@ -16,6 +16,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { saveAs } from 'file-saver';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { prospect } from '../models/prospect';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'dashboard-cmp',
@@ -384,8 +385,8 @@ export class DashboardComponent implements OnInit {
           prospect_phonenumber: ['', [Validators.required,Validators.pattern('[0-9]+')]],
           prospect_address: ['', Validators.required],
           prospect_salary: ['', [Validators.required,Validators.pattern('[0-9]+')]],
-          prospect_cv: ['', Validators.required],
-          prospect_photo: ['', Validators.required],
+          //prospect_cv: ['', Validators.required],
+          //prospect_photo: ['', Validators.required],
           prospect_link: ['', Validators.required],
           experience_years: ['', [Validators.required,Validators.pattern('[0-9]+')]],
           email: ['', [Validators.required,Validators.email]],
@@ -982,10 +983,17 @@ getMinAge() {
      
       })
 
-      /*let sourceName = [];
-      this.source.map(item => {
-        sourceName.push({'idFuente': item.id, 'nombreFuente': item.name})
-      })*/
+      if(this.prospect.prospect_link === 1){
+        this.prospect.prospect_link = 'Gmail'
+      }else if(this.prospect.prospect_link === 2){
+        this.prospect.prospect_link = 'Breathehr'
+      }else if(this.prospect.prospect_link === 3){
+        this.prospect.prospect_link = 'LinkedIn'
+      }else if(this.prospect.prospect_link === 4){
+        this.prospect.prospect_link = 'twitter'
+      }else{
+        this.prospect.prospect_link = 'Otros'
+      }
 
     
     let postprospect = {
@@ -1001,7 +1009,7 @@ getMinAge() {
       //prospect_link: this.prospect.nombreFuente,
       // probando
       //id_Proveedor: this.listprovider[this.requestGP.id_Proveedor].id_Proveedor,
-      'prospect_link': this.source.nombreFuente,
+      'prospect_link': this.prospect.prospect_link,
 
       'prospect_salary': Number(this.prospect.prospect_salary),
       'title_id': this.prospect.title_id,
@@ -1084,6 +1092,18 @@ getMinAge() {
      
       })
     
+
+      if(this.prospect.prospect_link === 1){
+        this.prospect.prospect_link = 'Gmail'
+      }else if(this.prospect.prospect_link === 2){
+        this.prospect.prospect_link = 'Breathehr'
+      }else if(this.prospect.prospect_link === 3){
+        this.prospect.prospect_link = 'LinkedIn'
+      }else if(this.prospect.prospect_link === 4){
+        this.prospect.prospect_link = 'twitter'
+      }else{
+        this.prospect.prospect_link = 'Otros'
+      }
     
     let postprospect = {
       'prospect_id': this.prospect.prospect_id,
@@ -1096,8 +1116,8 @@ getMinAge() {
       'prospect_phonenumber': this.prospect.prospect_phonenumber,
       'prospect_cv':  this.prospect.prospect_cv,
       'prospect_photo':  this.prospect.prospect_photo,
-      //'prospect_link': this.prospect.prospect_link,
-      'prospect_link': Number(this.prospect.prospect_link),
+      'prospect_link': this.prospect.prospect_link,
+      //'prospect_link': this.sourceList.nombreFuente,
       'prospect_salary': Number(this.prospect.prospect_salary),
       'title_id': this.prospect.title_id,
       'software_prospect': arraysoft,
@@ -1246,7 +1266,16 @@ getMinAge() {
     
     });   
   
-  }  
+  } 
+
+  
+  getFuenteNombre(e){
+    console.log(e.target.value)
+    
+    //this.prospect.prospect_link = this.source[e.target.value].nombreFuente;
+    //this.sourceList.nombreFuente = this.prospectList[e.target.value].prospect_link;
+    
+  }
   
     
 }

@@ -18,8 +18,7 @@
                   <div class="input-group"  class="col-8" *ngIf="software.length">
                       <label  style="color: black;">Software</label> 
                      
-                        <ngx-multiselect 
-                          
+                        <ngx-multiselect                           
                           (ngModelChange)="prospectsoft($event)"
                           [(ngModel)]="softwares1"
                           [options]="software"
@@ -113,7 +112,7 @@
       <div style="padding-left: 15px;" class="row">
        <span (click)="OpenProspectModal(template,'save',index)" class="btn btn-primary btn-xs">Nuevo Prospecto</span>
        <span (click)="getExportProspect()" *ngIf="seeExport" class="btn btn-success btn-xs">Exportar Excel</span>
-       <img src="assets/img/loaderF.gif" *ngIf="loaderExport" style="margin: 30px;"/>
+       <img src="assets/img/loaderF.gif" *ngIf="loaderExport" style="margin: 15px"/>
        
        <label *ngIf="!exportExcel" class="btn btn-default btn-file">
          Importar Excel
@@ -336,7 +335,7 @@
                     <div class="form-group">
                       <label class="col-form-label">CV*</label>                      
                 
-                        <input type="file" style="opacity: initial; position: relative;" *ngIf="seeCV" formControlName="prospect_cv" class="form-control" (change)="onSelectFileCV($event)"
+                        <input type="file" style="opacity: initial; position: relative;" formControlName="prospect_cv" class="form-control" (change)="onSelectFileCV($event)"
                               [(ngModel)]="prospect.prospect_cv1" [ngClass]="{ 'is-invalid': submitted && f.prospect_cv.errors }"/>
                         <div *ngIf="submitted && f.prospect_cv.errors" class="invalid-feedback">
                           <div *ngIf="f.prospect_cv.errors.required">Por favor, ingrese cv</div>
@@ -363,7 +362,7 @@
                           <label class="col-form-label">Foto*</label>
                           
                          
-                            <input style="opacity: initial; position: relative;" type="file" *ngIf="seeFoto" value={this.state.image} class="form-control" formControlName="prospect_photo" [(ngModel)]="prospect.prospect_photo1"
+                            <input style="opacity: initial; position: relative;" type="file"  value={this.state.image} class="form-control" formControlName="prospect_photo" [(ngModel)]="prospect.prospect_photo1"
                                  [ngClass]="{ 'is-invalid': submitted && f.prospect_photo.errors }" (change)="onSelectFileFoto($event)"/>
                             <div *ngIf="submitted && f.prospect_photo.errors" class="invalid-feedback">
                                 <div *ngIf="f.prospect_photo.errors.required">Por favor, ingrese cv</div>                            
@@ -395,7 +394,8 @@
                         <label class="col-form-label">Fuente*</label> 
                         <div class="">
                             <select name="prospect_link" class="form-control" [(ngModel)]="prospect.prospect_link" required 
-                                  formControlName="prospect_link" [ngClass]="{ 'is-invalid': submitted && f.prospect_link.errors }">
+                                  formControlName="prospect_link" [ngClass]="{ 'is-invalid': submitted && f.prospect_link.errors }"
+                                  (change)="getFuenteNombre($event)">
           
                                   <option *ngFor="let item of sourceList; let i = index" [ngValue]="item.idFuente">
                                     {{item.nombreFuente}}
@@ -406,10 +406,7 @@
                                   </div>
           
                             </select>
-                            <!--<input type="text" formControlName="prospect_link" class="form-control" [(ngModel)]="prospect.prospect_link" [ngClass]="{ 'is-invalid': submitted && f.prospect_link.errors }" />
-                            <div *ngIf="submitted && f.prospect_link.errors" class="invalid-feedback">
-                                <div *ngIf="f.prospect_link.errors.required">Por favor, ingrese fuente</div>
-                            </div>-->
+                            
                         </div>
                       </div>
                     </div>
