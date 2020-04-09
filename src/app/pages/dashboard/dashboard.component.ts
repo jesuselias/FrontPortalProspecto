@@ -2,7 +2,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { GlobalService } from "../providers/global.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Options } from 'ng5-slider';
 import { ToastrService } from "ngx-toastr";
 import { NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
@@ -354,17 +354,15 @@ export class DashboardComponent implements OnInit {
           prospect_lastname: ['', Validators.required],
           prospect_birthday: ['', Validators.required],
           prospect_phonenumber: ['', [Validators.required,Validators.pattern('[0-9]+')]],
-          prospect_address: ['', Validators.required],
+          prospect_address: new FormControl(),
           prospect_salary: ['', [Validators.required,Validators.pattern('[0-9]+')]],
-          //prospect_cv: ['',[Validators.required]],
-          //prospect_photo: ['', [Validators.compose([Validators.required])]],
           codigoMoneda: ['', [Validators.required]],
-          prospect_cv: ['',[Validators.required]],
-          prospect_photo: ['', [Validators.required]],
-          prospect_link: ['', Validators.required],
+          //prospect_cv: new FormControl(),
+          //prospect_photo: new FormControl(),
+          prospect_link: new FormControl(),
           experience_years: ['', [Validators.required,Validators.pattern('[0-9]+')]],
           email: ['', [Validators.required,Validators.email]],
-          commentary: ['', Validators.required],
+          commentary: new FormControl(),
           referral_name: ['', Validators.required],
           title_id: ['', Validators.required],
           country_id: ['', Validators.required],
@@ -383,20 +381,20 @@ export class DashboardComponent implements OnInit {
           prospect_lastname: ['', Validators.required],
           prospect_birthday: ['', Validators.required],
           prospect_phonenumber: ['', [Validators.required,Validators.pattern('[0-9]+')]],
-          prospect_address: ['', Validators.required],
+          prospect_address: new FormControl(),
           prospect_salary: ['', [Validators.required,Validators.pattern('[0-9]+')]],
-          //prospect_cv: ['', Validators.required],
-          //prospect_photo: ['', Validators.required],
-          prospect_link: ['', Validators.required],
+          codigoMoneda: ['', [Validators.required]],
+          //prospect_cv: new FormControl(),
+          //prospect_photo: new FormControl(),
+          prospect_link: new FormControl(),
           experience_years: ['', [Validators.required,Validators.pattern('[0-9]+')]],
           email: ['', [Validators.required,Validators.email]],
-          commentary: ['', Validators.required],
+          commentary: new FormControl(),
+          referral_name: ['', Validators.required],
           title_id: ['', Validators.required],
-          experience_level:['', Validators.required],
           country_id: ['', Validators.required],
           city_id: ['', Validators.required],
-          referral_name: ['', Validators.required],
-          codigoMoneda: ['', [Validators.required]],
+          experience_level:['', Validators.required]
 
          
 
@@ -1005,12 +1003,8 @@ getMinAge() {
       'prospect_address': this.prospect.prospect_address,
       'prospect_phonenumber': this.prospect.prospect_phonenumber,
       'prospect_cv':  this.prospect.prospect_cv,
-      'prospect_photo':  this.prospect.prospect_photo,
-      //prospect_link: this.prospect.nombreFuente,
-      // probando
-      //id_Proveedor: this.listprovider[this.requestGP.id_Proveedor].id_Proveedor,
+      'prospect_photo':  this.prospect.prospect_photo,      
       'prospect_link': this.prospect.prospect_link,
-
       'prospect_salary': Number(this.prospect.prospect_salary),
       'title_id': this.prospect.title_id,
       'software_prospect': arraysoft,
@@ -1130,7 +1124,7 @@ getMinAge() {
      
     };
     console.log(postprospect)
-    this.globalService.addModel(postprospect, "/Prospect").then(
+    this.globalService.addModel(postprospect,"/prospect").then(
       result => {
   //      console.log(result);
         this.getprospects();

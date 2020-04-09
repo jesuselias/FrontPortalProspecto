@@ -57,14 +57,13 @@
             <label class="col-4 col-form-label">Funciones*</label> 
             <div class="col-8">
               <ngx-multiselect
-              [ngModelOptions]="{standalone: true}"
-              
-              name="functions"
+                       
+                name="functions"
                 [(ngModel)]="functiones"
                 [options]="function"
                 ngDefaultControl>
               </ngx-multiselect>
-              <div style="color: #dc3545; font-size: 9;" *ngIf="submitted && !functiones[0]">Por favor, ingrese funciones</div>
+                  <div style="color: #dc3545; font-size: 9;" *ngIf="submitted && !functiones[0]">Por favor, ingrese funciones</div>
               </div>
         </div>
           
