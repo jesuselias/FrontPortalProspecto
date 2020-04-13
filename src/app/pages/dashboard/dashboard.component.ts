@@ -1,5 +1,5 @@
 
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, Input } from '@angular/core';
 import { GlobalService } from "../providers/global.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -31,6 +31,21 @@ export class DashboardComponent implements OnInit {
   //@ViewChild('fileInput') fileInput;
   @ViewChild('fileInput', {static: false}) fileInput
   @ViewChild('pathFile', {static: false}) pathFile
+
+  @Input() valueNombre: any;
+  @Input() valueApellido: any;
+  @Input() valueFechaNac: any;
+  @Input() valueTelefono: any;
+  @Input() valueEmail: any;
+  @Input() valueTitulo: any;
+  @Input() valuePais: any;
+  @Input() valueCiudad: any;
+  @Input() valueSalario: any;
+  @Input() valueMoneda: any;
+  @Input() valueAnoExp: any;
+  @Input() valueNivExp: any;
+  @Input() valueRefererido: any;
+ 
   
   message: string;  
   //allProspect: Observable<prospect[]>;  
@@ -755,8 +770,7 @@ getFuente() {
         
       },
       err => {
-        console.log(err);
-      
+        console.log(err);      
       }
     );
 }

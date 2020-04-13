@@ -46,29 +46,36 @@
           <div class="form-group">
             <label class="col-sm-7s control-label">Rol</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" formControlName="role_name"  [(ngModel)]="role.role_name" [ngClass]="{ 'is-invalid': submitted && f.role_name.errors }" />
+              <input type="text" class="form-control" (keyup)="onKey($event)" minlength="1" formControlName="role_name"  [(ngModel)]="role.role_name" [ngClass]="{ 'is-invalid': submitted && f.role_name.errors }" />
               <div *ngIf="submitted && f.role_name.errors" class="invalid-feedback">
                   <div *ngIf="f.role_name.errors.required">Por favor, ingrese nombre del rol</div>
+                  <!--<p *ngIf="f.role_name.errors.minlength">Por favor, ingrese por lo menos un caracter</p>-->
               </div>
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-4 col-form-label">Funciones*</label> 
-            <div class="col-8">
-              <ngx-multiselect
-                       
-                name="functions"
-                [(ngModel)]="functiones"
-                [options]="function"
-                ngDefaultControl>
-              </ngx-multiselect>
-                  <div style="color: #dc3545; font-size: 9;" *ngIf="submitted && !functiones[0]">Por favor, ingrese funciones</div>
+            <div *ngIf="mostrar"> 
+              <div class="col-8">
+                <ngx-multiselect
+                
+                  [ngModelOptions]="{standalone: true}"              
+                  name="functions"
+                  [(ngModel)]="functiones"
+                  [options]="function"
+                  ngDefaultControl
+                >
+                </ngx-multiselect>
+                <div style="color: #dc3545; font-size: 9;" *ngIf="submitted && !functiones[0]">Por favor, ingrese funciones</div>
               </div>
-        </div>
+            </div>
+            
+           </div>
           
         </div>
         </form>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Cerrar</button>
           <div *ngIf="save"><button (click)="saverole()" type="submit" class="btn btn-primary">Guardar</button></div>
@@ -79,7 +86,7 @@
     <ng-template #confirm>
       <div class="modal-body text-center">
         <p>Estas seguro de Eliminar?</p>
-        <button type="button" class="btn btn-default" (click)="deleterole()" >Si</button>
+        <button type="button" class="btn btn-default" (click)="deleterole()">Si</button>
         <button type="button" class="btn btn-primary" (click)="onClose()" >No</button>
       </div>
     </ng-template>

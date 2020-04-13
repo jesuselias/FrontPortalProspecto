@@ -4,8 +4,8 @@ import { BehaviorSubject } from "rxjs";
 import { saveAs } from 'file-saver';
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { GlobalService } from "../providers/global.service";
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 
@@ -25,7 +25,7 @@ export class RoleComponent implements OnInit{
 
     contacto: FormGroup;
     submitted = false;
-
+    mostrar= false;
     index:any;
     pageActual: number = 1;
     roleList: any;
@@ -36,12 +36,16 @@ export class RoleComponent implements OnInit{
     functions: any;
     functionList: any;
     function_Prospect:any;
+    //reset=false;
 
     titleModal: string="";
     save: boolean=false;
     edit: boolean=false;
     loaderExport = false;
     seeExport = true;
+
+    selectedOptions;
+    
 
     constructor(private globalService: GlobalService, private bsModalService: BsModalService,
                 private formBuilder: FormBuilder, public http: HttpClient) {
@@ -52,6 +56,27 @@ export class RoleComponent implements OnInit{
        
     }
 
+    
+    values = '';
+
+  onKey(event) { // without type info
+    this.values = event.target.value;
+    //console.log(event);
+    if(this.values === ''){
+        this.mostrar = false
+    }else{
+      this.mostrar = true
+    }
+  }
+
+    
+  onSearchChange(searchValue: string): void {  
+    if(searchValue == null){
+      this.mostrar = false;
+    }else{
+      this.mostrar = true;
+    }
+  }
 
     checkfunction(id) 
     {
@@ -67,21 +92,26 @@ export class RoleComponent implements OnInit{
 
     }
 
+    
+
     OpenroleModal(template: TemplateRef<any>, option, item) {
     
       this.functiones=[];
       this.role=[]
       if(option==="save"){
         this.titleModal='Crear role';
-
+        this.mostrar = false;
         this.contacto = this.formBuilder.group({
-          role_name: ['', Validators.required]               
+          role_name: ['', Validators.required]
+          //role_name: new FormControl(Validators.required),
+          //role_name: new FormControl(this.role.role_name,Validators.required)
+        
         }); 
         this.save=true;
       }else
       if(option==="edit"){
         this.titleModal='Editar Rol';
-
+        this.mostrar = true;
         this.contacto = this.formBuilder.group({
           role_name: ['', Validators.required], 
                       
@@ -96,8 +126,8 @@ export class RoleComponent implements OnInit{
          
         this.functiones.push({
         
-        id: item.function_id,
-        name: this.checkfunction(item.function_id),
+          id: item.function_id,
+          name: this.checkfunction(item.function_id),
         
         });
 
@@ -236,10 +266,11 @@ export class RoleComponent implements OnInit{
       //console.log(this.role)
 
       this.submitted = true;
-
+      
+      
       if (this.contacto.invalid) {
         return;
-    }
+      }
 
       let arrayfun=[];
       this.functiones.map(item=>{
@@ -250,14 +281,15 @@ export class RoleComponent implements OnInit{
         })
       
       let postrole = {
+        'role_id': this.role.role_id,
         'role_name': this.role.role_name,
         'functions': arrayfun
        
       };
   
-      this.globalService.addModel(postrole, "/role").then(
+      this.globalService.addModel(postrole, "/Role").then(
         result => {
-          //console.log(result);
+          console.log(postrole);
           this.getroles();
         },
         err => {
@@ -286,6 +318,8 @@ export class RoleComponent implements OnInit{
 
       
   }
+
+  
   
     
 }
